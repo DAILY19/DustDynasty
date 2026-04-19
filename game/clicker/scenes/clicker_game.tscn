@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://psm0r75w8w0i"]
+[gd_scene format=4 uid="uid://psm0r75w8w0i"]
 
 [ext_resource type="Script" uid="uid://cxayhej8iibf2" path="res://game/clicker/scenes/clicker_game.gd" id="1_cg"]
 [ext_resource type="PackedScene" path="res://game/clicker/scenes/digging_view.tscn" id="2_dv"]
 [ext_resource type="FontFile" uid="uid://bsv8f2qbdtnp6" path="res://assets/fonts/Title/neatpixels-boss.ttf" id="6_cari4"]
 [ext_resource type="FontFile" uid="uid://bc41fkxaq6o3n" path="res://assets/fonts/Block/neatpixels-blocks.ttf" id="7_egqku"]
+[ext_resource type="Texture2D" uid="uid://cvdaaj1gs15mg" path="res://assets/sprites/tilesets/Platformer Series - Tileset #02/Tilesets/PS_Tileset_02.png" id="19_62afl"]
 [ext_resource type="Script" uid="uid://dclf2jvhwl66b" path="res://game/clicker/ui/crafting_panel.gd" id="cp_gd"]
 [ext_resource type="Script" uid="uid://cr76f8j5lobbq" path="res://game/clicker/ui/clicker_hud.gd" id="hud_gd"]
 [ext_resource type="Script" uid="uid://hmx6w8jcgal0" path="res://game/clicker/ui/offline_earnings_panel.gd" id="oep_gd"]
@@ -15,9 +16,240 @@
 [ext_resource type="Texture2D" uid="uid://c31n22nl1oqu4" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 6.png" id="tx_prestige"]
 [ext_resource type="Texture2D" uid="uid://w703iscd0a2v" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 11.png" id="tx_settings"]
 [ext_resource type="Texture2D" uid="uid://c07jwwb4eop6u" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 2.png" id="tx_shop"]
-[ext_resource type="Texture2D" uid="uid://d2ec25hxql3yy" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 3.png" id="tx_surface"]
 [ext_resource type="Texture2D" uid="uid://bpf0huoltqlnf" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 8.png" id="tx_workers"]
 [ext_resource type="Script" uid="uid://ddyng70uyiyrx" path="res://game/clicker/ui/workers_panel.gd" id="wp_gd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o2pud"]
+texture = ExtResource("19_62afl")
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+19:0/0 = 0
+24:0/0 = 0
+25:0/0 = 0
+26:0/0 = 0
+27:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+18:1/0 = 0
+19:1/0 = 0
+20:1/0 = 0
+23:1/0 = 0
+24:1/0 = 0
+25:1/0 = 0
+26:1/0 = 0
+27:1/0 = 0
+28:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+12:2/0 = 0
+16:2/0 = 0
+19:2/0 = 0
+22:2/0 = 0
+23:2/0 = 0
+24:2/0 = 0
+25:2/0 = 0
+26:2/0 = 0
+27:2/0 = 0
+28:2/0 = 0
+29:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+15:3/0 = 0
+16:3/0 = 0
+22:3/0 = 0
+23:3/0 = 0
+24:3/0 = 0
+25:3/0 = 0
+26:3/0 = 0
+27:3/0 = 0
+28:3/0 = 0
+29:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+18:4/0 = 0
+19:4/0 = 0
+20:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+24:5/0 = 0
+25:5/0 = 0
+26:5/0 = 0
+29:5/0 = 0
+13:6/0 = 0
+15:6/0 = 0
+18:6/0 = 0
+20:6/0 = 0
+23:6/0 = 0
+24:6/0 = 0
+25:6/0 = 0
+26:6/0 = 0
+27:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+9:7/0 = 0
+10:7/0 = 0
+12:7/0 = 0
+13:7/0 = 0
+15:7/0 = 0
+16:7/0 = 0
+18:7/0 = 0
+23:7/0 = 0
+24:7/0 = 0
+25:7/0 = 0
+26:7/0 = 0
+27:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+9:8/0 = 0
+10:8/0 = 0
+13:8/0 = 0
+15:8/0 = 0
+18:8/0 = 0
+23:8/0 = 0
+24:8/0 = 0
+25:8/0 = 0
+26:8/0 = 0
+27:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+24:9/0 = 0
+25:9/0 = 0
+26:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+6:10/0 = 0
+7:10/0 = 0
+9:10/0 = 0
+10:10/0 = 0
+13:10/0 = 0
+16:10/0 = 0
+17:10/0 = 0
+18:10/0 = 0
+20:10/0 = 0
+21:10/0 = 0
+23:10/0 = 0
+24:10/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+3:11/0 = 0
+6:11/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+9:11/0 = 0
+10:11/0 = 0
+12:11/0 = 0
+13:11/0 = 0
+14:11/0 = 0
+17:11/0 = 0
+21:11/0 = 0
+22:11/0 = 0
+23:11/0 = 0
+25:11/0 = 0
+26:11/0 = 0
+27:11/0 = 0
+28:11/0 = 0
+29:11/0 = 0
+11:12/0 = 0
+12:12/0 = 0
+13:12/0 = 0
+14:12/0 = 0
+22:12/0 = 0
+28:12/0 = 0
+29:12/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+3:13/0 = 0
+4:13/0 = 0
+5:13/0 = 0
+6:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+11:13/0 = 0
+12:13/0 = 0
+13:13/0 = 0
+14:13/0 = 0
+15:13/0 = 0
+16:13/0 = 0
+17:13/0 = 0
+18:13/0 = 0
+19:13/0 = 0
+20:13/0 = 0
+21:13/0 = 0
+22:13/0 = 0
+25:13/0 = 0
+26:13/0 = 0
+27:13/0 = 0
+28:13/0 = 0
+29:13/0 = 0
+14:14/0 = 0
+15:14/0 = 0
+16:14/0 = 0
+17:14/0 = 0
+18:14/0 = 0
+19:14/0 = 0
+20:14/0 = 0
+21:14/0 = 0
+22:14/0 = 0
+23:14/0 = 0
+24:14/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_hyp5m"]
+sources/0 = SubResource("TileSetAtlasSource_o2pud")
 
 [node name="ClickerGame" type="Node2D" unique_id=1598698194]
 script = ExtResource("1_cg")
@@ -38,114 +270,88 @@ grow_vertical = 2
 script = ExtResource("hud_gd")
 
 [node name="TitleLabel" type="Label" parent="ClickerHUD" unique_id=200000001]
+z_index = 2
 layout_mode = 1
-offset_left = -4.0
-offset_top = 22.0
-offset_right = 356.0
-offset_bottom = 42.0
+offset_top = 40.0
+offset_right = 360.0
+offset_bottom = 60.0
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 13
 text = "DUST DYNASTY"
 horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="ClickerHUD" unique_id=200000002]
+z_index = 2
 layout_mode = 1
-offset_left = -4.0
-offset_top = 54.0
-offset_right = 356.0
-offset_bottom = 68.0
+offset_top = 72.0
+offset_right = 360.0
+offset_bottom = 86.0
 theme_override_fonts/font = ExtResource("7_egqku")
 theme_override_font_sizes/font_size = 9
 text = "Diggers Unite"
 horizontal_alignment = 1
 
-[node name="DepthLabel" type="Label" parent="ClickerHUD" unique_id=100000003]
-unique_name_in_owner = true
-layout_mode = 1
-offset_left = 180.0
-offset_top = 95.0
-offset_right = 332.0
-offset_bottom = 110.0
-theme_override_fonts/font = ExtResource("std_font")
-theme_override_font_sizes/font_size = 11
-text = "Depth: 0"
-
 [node name="DustLabel" type="Label" parent="ClickerHUD" unique_id=100000004]
 unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
-offset_left = 27.0
-offset_top = 94.0
-offset_right = 157.0
-offset_bottom = 109.0
+offset_left = 280.0
+offset_top = 72.0
+offset_right = 410.0
+offset_bottom = 87.0
 theme_override_fonts/font = ExtResource("std_font")
 theme_override_font_sizes/font_size = 11
 text = "Dust: 0"
 
-[node name="DpsLabel" type="Label" parent="ClickerHUD" unique_id=100000005]
-unique_name_in_owner = true
-layout_mode = 1
-offset_left = 288.0
-offset_top = 4.0
-offset_right = 355.0
-offset_bottom = 18.0
-theme_override_fonts/font = ExtResource("std_font")
-theme_override_font_sizes/font_size = 10
-text = "0/s"
-
 [node name="ShopButton" type="TextureButton" parent="ClickerHUD" unique_id=100000006]
 unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
-offset_left = 38.0
-offset_top = 544.0
-offset_right = 118.0
-offset_bottom = 576.0
+offset_left = 280.0
+offset_top = 576.0
+offset_right = 360.0
+offset_bottom = 608.0
 texture_normal = ExtResource("tx_shop")
 
 [node name="WorkersButton" type="TextureButton" parent="ClickerHUD" unique_id=100000007]
 unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
-offset_left = 135.0
-offset_top = 545.0
-offset_right = 215.0
-offset_bottom = 577.0
+offset_left = 264.0
+offset_top = 544.0
+offset_right = 344.0
+offset_bottom = 576.0
 texture_normal = ExtResource("tx_workers")
 
 [node name="PrestigeButton" type="TextureButton" parent="ClickerHUD" unique_id=100000008]
 unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
-offset_left = 232.0
-offset_top = 553.0
-offset_right = 312.0
-offset_bottom = 585.0
+offset_left = 192.0
+offset_top = 576.0
+offset_right = 272.0
+offset_bottom = 608.0
 texture_normal = ExtResource("tx_prestige")
 
 [node name="CraftingButton" type="TextureButton" parent="ClickerHUD" unique_id=100000009]
 unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
-offset_left = 35.0
-offset_top = 594.0
-offset_right = 115.0
-offset_bottom = 626.0
+offset_left = 16.0
+offset_top = 576.0
+offset_right = 96.0
+offset_bottom = 608.0
 texture_normal = ExtResource("tx_craft")
 
 [node name="SettingsButton" type="TextureButton" parent="ClickerHUD" unique_id=100000010]
 unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
-offset_left = 150.0
-offset_top = 591.0
-offset_right = 230.0
-offset_bottom = 623.0
+offset_left = 104.0
+offset_top = 576.0
+offset_right = 184.0
+offset_bottom = 608.0
 texture_normal = ExtResource("tx_settings")
-
-[node name="SurfaceButton" type="TextureButton" parent="ClickerHUD" unique_id=100000011]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-offset_left = 230.0
-offset_top = 607.0
-offset_right = 310.0
-offset_bottom = 639.0
-texture_normal = ExtResource("tx_surface")
 
 [node name="ShopPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000012]
 unique_name_in_owner = true
@@ -331,3 +537,14 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 text = "Collect!"
+
+[node name="Foreground" type="TileMapLayer" parent="." unique_id=338617185]
+z_index = 1
+scale = Vector2(2, 2)
+tile_map_data = PackedByteArray("AAAAAAQAAAAHAAgAAAAAAAMAAAAHAAcAAAABAAMAAAAIAAcAAAACAAMAAAAIAAcAAAADAAMAAAAIAAcAAAAEAAMAAAAIAAcAAAAFAAMAAAAIAAcAAAAGAAMAAAAIAAcAAAAHAAMAAAAIAAcAAAAIAAMAAAAIAAcAAAAJAAMAAAAIAAcAAAAKAAMAAAAIAAcAAAALAAMAAAAJAAcAAAALAAQAAAABAAsAAAAAAAIAAAACAAoAAAABAAIAAAACAAoAAAACAAIAAAACAAoAAAADAAIAAAACAAoAAAAEAAIAAAACAAoAAAAFAAIAAAACAAoAAAAGAAIAAAACAAoAAAAHAAIAAAACAAoAAAAIAAIAAAAFAA0AAAAJAAIAAAACAAkAAAAKAAIAAAAGAA0AAAALAAIAAAACAAoAAAAAAAEAAAACAAoAAAABAAEAAAACAAoAAAACAAEAAAACAAoAAAADAAEAAAASAAQAAAAEAAEAAAATAAQAAAAFAAEAAAATAAQAAAAGAAEAAAATAAQAAAAHAAEAAAAUAAQAAAAIAAEAAAACAAoAAAAJAAEAAAACAAoAAAAKAAEAAAACAAoAAAALAAEAAAACAAoAAAAAAAAAAAACAAoAAAABAAAAAAACAAoAAAACAAAAAAACAAoAAAADAAAAAAACAAoAAAAEAAAAAAACAAoAAAAFAAAAAAACAAoAAAAGAAAAAAACAAoAAAAHAAAAAAACAAoAAAAIAAAAAAACAAoAAAAJAAAAAAACAAoAAAAKAAAAAAACAAoAAAALAAAAAAACAAoAAAAJABAAAAAZAAAAAAAIABAAAAAZAAAAAAAHABAAAAAYAAAAAAAHABEAAAAWAAMAAAAGABEAAAAZAAAAAAAFABEAAAAZAAAAAAAEABEAAAAZAAAAAAADABEAAAAZAAAAAAACABEAAAAZAAAAAAABABEAAAAZAAAAAAAAABEAAAAZAAAAAAAKABAAAAAZAAAAAAALABAAAAAZAAAAAAAAABIAAAAZAAEAAAABABIAAAAZAAEAAAACABIAAAAZAAEAAAADABIAAAAZAAEAAAAEABIAAAAZAAEAAAAFABIAAAAZAAEAAAAGABIAAAAZAAEAAAAHABIAAAAZAAEAAAAIABIAAAAZAAEAAAAJABIAAAAZAAEAAAAKABIAAAAZAAEAAAALABIAAAAZAAEAAAALABEAAAAZAAEAAAAKABEAAAAZAAEAAAAJABEAAAAZAAEAAAAIABEAAAAZAAEAAAAAABMAAAAZAAEAAAABABMAAAAZAAEAAAACABMAAAAZAAEAAAADABMAAAAZAAEAAAAEABMAAAAZAAEAAAAFABMAAAAZAAEAAAAGABMAAAAZAAEAAAAHABMAAAAZAAEAAAAIABMAAAAZAAEAAAAJABMAAAAZAAEAAAAKABMAAAAZAAEAAAALABMAAAAZAAEAAAAIAA8AAAAZAA0AAAAJAA8AAAAaAA0AAAAKAA8AAAAbAA0AAAA=")
+tile_set = SubResource("TileSet_hyp5m")
+
+[node name="Background" type="TileMapLayer" parent="." unique_id=215468283]
+scale = Vector2(2, 2)
+tile_map_data = PackedByteArray("AAABAA8AAAAZAAcAAAACAA8AAAAZAAcAAAADAA8AAAAZAAcAAAAEAA8AAAAZAAcAAAAFAA8AAAAZAAcAAAAGAA8AAAAZAAcAAAAHAA8AAAAZAAcAAAAIAA8AAAAZAAcAAAAJAA8AAAAZAAcAAAAJAA4AAAAZAAcAAAAJAA0AAAAZAAcAAAAJAAwAAAAZAAcAAAAJAAsAAAAZAAcAAAAJAAoAAAAZAAcAAAAJAAkAAAAZAAcAAAAJAAgAAAAZAAcAAAAJAAcAAAAZAAcAAAAJAAYAAAAZAAcAAAAJAAUAAAAZAAcAAAAIAAUAAAAZAAcAAAAHAAUAAAAZAAcAAAAGAAUAAAAZAAcAAAAFAAUAAAAZAAcAAAAEAAUAAAAZAAcAAAADAAUAAAAZAAcAAAACAAUAAAAZAAcAAAABAAUAAAAZAAcAAAABAAYAAAAZAAcAAAABAAcAAAAZAAcAAAABAAgAAAAZAAcAAAABAAkAAAAZAAcAAAABAAoAAAAZAAcAAAABAAsAAAAZAAcAAAABAAwAAAAZAAcAAAACAAwAAAAZAAcAAAACAA0AAAAZAAcAAAABAA4AAAAZAAcAAAABAA0AAAAZAAcAAAACAAYAAAAZAAcAAAADAAYAAAAZAAcAAAAEAAcAAAAZAAcAAAAFAAcAAAAZAAcAAAAGAAcAAAAZAAcAAAAHAAcAAAAZAAcAAAAHAAYAAAAZAAcAAAAIAAYAAAAZAAcAAAAGAAYAAAAZAAcAAAAFAAYAAAAZAAcAAAAEAAYAAAAZAAcAAAADAAcAAAAZAAcAAAACAAcAAAAZAAcAAAACAAgAAAAZAAcAAAADAAgAAAAZAAcAAAADAAkAAAAZAAcAAAADAAoAAAAZAAcAAAADAAsAAAAZAAcAAAADAAwAAAAZAAcAAAAEAAwAAAAZAAcAAAAEAA0AAAAZAAcAAAAFAA0AAAAZAAcAAAACAAkAAAAZAAcAAAACAAoAAAAZAAcAAAACAAsAAAAZAAcAAAACAA4AAAAZAAcAAAADAA0AAAAZAAcAAAADAA4AAAAZAAcAAAAEAAgAAAAZAAcAAAAEAAkAAAAZAAcAAAAEAAoAAAAZAAcAAAAEAAsAAAAZAAcAAAAEAA4AAAAZAAcAAAAFAAgAAAAZAAcAAAAFAAkAAAAZAAcAAAAFAAoAAAAZAAcAAAAFAAsAAAAZAAcAAAAFAAwAAAAZAAcAAAAFAA4AAAAZAAcAAAAGAAgAAAAZAAcAAAAGAAkAAAAZAAcAAAAGAAoAAAAZAAcAAAAGAAsAAAAZAAcAAAAGAAwAAAAZAAcAAAAGAA0AAAAZAAcAAAAGAA4AAAAZAAcAAAAHAAgAAAAZAAcAAAAHAAkAAAAZAAcAAAAHAAoAAAAZAAcAAAAHAAsAAAAZAAcAAAAHAAwAAAAZAAcAAAAHAA0AAAAZAAcAAAAHAA4AAAAZAAcAAAAIAAcAAAAZAAcAAAAIAAgAAAAZAAcAAAAIAAkAAAAZAAcAAAAIAAoAAAAZAAcAAAAIAAsAAAAZAAcAAAAIAAwAAAAZAAcAAAAIAA0AAAAZAAcAAAAIAA4AAAAZAAcAAAALAA8AAAAbAAcAAAALAA4AAAAbAAcAAAALAA0AAAAbAAcAAAALAAwAAAAbAAcAAAALAAsAAAAbAAcAAAALAAoAAAAbAAcAAAALAAkAAAAbAAcAAAALAAgAAAAbAAcAAAALAAcAAAAbAAcAAAALAAUAAAAbAAcAAAALAAYAAAAbAAcAAAALAAQAAAAbAAcAAAALAAMAAAAbAAcAAAALAAIAAAAbAAcAAAALAAEAAAAbAAcAAAALAAAAAAAaAAUAAAAAABMAAAAZAAkAAAALABMAAAAaAAkAAAABABMAAAAZAAkAAAACABMAAAAZAAkAAAADABMAAAAZAAkAAAAEABMAAAAZAAkAAAAFABMAAAAZAAkAAAAGABMAAAAZAAkAAAAHABMAAAAZAAkAAAAIABMAAAAZAAkAAAAJABMAAAAZAAkAAAAKABMAAAAZAAkAAAALABAAAAAbAAcAAAALABEAAAAbAAcAAAALABIAAAAbAAcAAAAAAAEAAAAZAAcAAAAAAAIAAAAZAAcAAAAAAAMAAAAZAAcAAAAAAAQAAAAZAAcAAAAAAAUAAAAZAAcAAAAAAAYAAAAZAAcAAAAAAAcAAAAZAAcAAAAAAAgAAAAZAAcAAAAAAAkAAAAZAAcAAAAAAAoAAAAZAAcAAAAAAAsAAAAZAAcAAAAAAAwAAAAZAAcAAAAAAA0AAAAZAAcAAAAAAA4AAAAZAAcAAAAAAA8AAAAZAAcAAAAAABAAAAAZAAcAAAAAABEAAAAZAAcAAAAAABIAAAAZAAcAAAABAAAAAAAZAAUAAAABAAEAAAAZAAcAAAABAAIAAAAZAAcAAAABAAMAAAAZAAcAAAABAAQAAAAZAAcAAAABABAAAAAZAAcAAAABABEAAAAZAAcAAAABABIAAAAZAAcAAAACAAAAAAAZAAUAAAACAAEAAAAZAAcAAAACAAIAAAAZAAcAAAACAAMAAAAZAAcAAAACAAQAAAAZAAcAAAACABAAAAAZAAcAAAACABEAAAAZAAcAAAACABIAAAAZAAcAAAADAAAAAAAZAAUAAAADAAEAAAAZAAcAAAADAAIAAAAZAAcAAAADAAMAAAAZAAcAAAADAAQAAAAZAAcAAAADABAAAAAZAAcAAAADABEAAAAZAAcAAAADABIAAAAZAAcAAAAEAAAAAAAZAAUAAAAEAAEAAAAZAAcAAAAEAAIAAAAZAAcAAAAEAAMAAAAZAAcAAAAEAAQAAAAZAAcAAAAEABAAAAAZAAcAAAAEABEAAAAZAAcAAAAEABIAAAAZAAcAAAAFAAAAAAAZAAUAAAAFAAEAAAAZAAcAAAAFAAIAAAAZAAcAAAAFAAMAAAAZAAcAAAAFAAQAAAAZAAcAAAAFABAAAAAZAAcAAAAFABEAAAAZAAcAAAAFABIAAAAZAAcAAAAGAAAAAAAZAAUAAAAGAAEAAAAZAAcAAAAGAAIAAAAZAAcAAAAGAAMAAAAZAAcAAAAGAAQAAAAZAAcAAAAGABAAAAAZAAcAAAAGABEAAAAZAAcAAAAGABIAAAAZAAcAAAAHAAAAAAAZAAUAAAAHAAEAAAAZAAcAAAAHAAIAAAAZAAcAAAAHAAMAAAAZAAcAAAAHAAQAAAAZAAcAAAAHABAAAAAZAAcAAAAHABEAAAAZAAcAAAAHABIAAAAZAAcAAAAIAAAAAAAZAAUAAAAIAAEAAAAZAAcAAAAIAAIAAAAZAAcAAAAIAAMAAAAZAAcAAAAIAAQAAAAZAAcAAAAIABAAAAAZAAcAAAAIABEAAAAZAAcAAAAIABIAAAAZAAcAAAAJAAAAAAAZAAUAAAAJAAEAAAAZAAcAAAAJAAIAAAAZAAcAAAAJAAMAAAAZAAcAAAAJAAQAAAAZAAcAAAAJABAAAAAZAAcAAAAJABEAAAAZAAcAAAAJABIAAAAZAAcAAAAKAAAAAAAZAAUAAAAKAAEAAAAZAAcAAAAKAAIAAAAZAAcAAAAKAAMAAAAZAAcAAAAKAAQAAAAZAAcAAAAKAAUAAAAZAAcAAAAKAAYAAAAZAAcAAAAKAAcAAAAZAAcAAAAKAAgAAAAZAAcAAAAKAAkAAAAZAAcAAAAKAAoAAAAZAAcAAAAKAAsAAAAZAAcAAAAKAAwAAAAZAAcAAAAKAA0AAAAZAAcAAAAKAA4AAAAZAAcAAAAKAA8AAAAZAAcAAAAKABAAAAAZAAcAAAAKABEAAAAZAAcAAAAKABIAAAAZAAcAAAAAAAAAAAAZAAUAAAD//wAAAAAYAAUAAAD//wEAAAAXAAcAAAD//wIAAAAXAAcAAAD//wMAAAAXAAcAAAD//wQAAAAXAAcAAAD//wUAAAAXAAcAAAD//wYAAAAXAAcAAAD//wcAAAAXAAcAAAD//wgAAAAXAAcAAAD//wkAAAAXAAcAAAD//woAAAAXAAcAAAD//wsAAAAXAAcAAAD//wwAAAAXAAcAAAD//w0AAAAXAAcAAAD//w4AAAAXAAcAAAD//w8AAAAXAAcAAAD//xAAAAAXAAcAAAD//xEAAAAXAAcAAAD//xIAAAAXAAcAAAD//xMAAAAXAAgAAAA=")
+tile_set = SubResource("TileSet_hyp5m")
