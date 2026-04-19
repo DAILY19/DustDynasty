@@ -1,0 +1,45 @@
+name: Export and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  export:
+    name: Godot Web Export
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Export with Godot
+        uses: dulvui/godot-github-action/export@v1
+        with:
+          godot-version: "4.2.2"
+          working-directory: "."
+          preset: "Web"
+
+      - name: Add .nojekyll (prevents GitHub Pages from ignoring underscore files)
+        run: touch build/web/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/web
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "deploy: ${{ github.sha }}"

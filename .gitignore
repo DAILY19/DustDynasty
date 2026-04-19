@@ -7,3 +7,7 @@ resources/tile_set.tres
 local/**
 !.gitkeep
 
+# Keep the exported web build in git (served by GitHub Pages)
+# but ignore Godot's temporary export files
+build/web/**.tmp
+
