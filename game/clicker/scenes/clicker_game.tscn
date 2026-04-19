@@ -283,6 +283,28 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("hud_gd")
 
+[node name="TitleLabel" type="Label" parent="ClickerHUD" unique_id=200000001]
+layout_mode = 1
+offset_left = 0.0
+offset_top = 2.0
+offset_right = 360.0
+offset_bottom = 22.0
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 13
+text = "DUST DYNASTY"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="ClickerHUD" unique_id=200000002]
+layout_mode = 1
+offset_left = 0.0
+offset_top = 22.0
+offset_right = 360.0
+offset_bottom = 36.0
+theme_override_fonts/font = ExtResource("7_egqku")
+theme_override_font_sizes/font_size = 9
+text = "Diggers Unite"
+horizontal_alignment = 1
+
 [node name="CoinLabel" type="Label" parent="ClickerHUD" unique_id=100000002]
 unique_name_in_owner = true
 layout_mode = 1
