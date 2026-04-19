@@ -17,7 +17,7 @@ func _on_earnings_awarded(amount: float, seconds: float) -> void:
 	var minutes: int = int(fmod(seconds, 3600) / 60)
 	earnings_label.text = "While you were away you earned:\n%s coins!" % ClickerGameState.format_number(amount)
 	time_label.text = "(%dh %dm offline)" % [hours, minutes]
-	popup_centered()
+	visible = true
 
 
 func _on_collect_button_pressed() -> void:
