@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorkerDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/worker_definition.gd" id="1_wkr"]
+
+[resource]
+script = ExtResource("1_wkr")
+name = "apprentice_digger"
+description = "A fresh-faced digger. Slow but cheap."
+base_cost = 50.0
+cost_scaling = 1.12
+dig_power = 1.0
+dig_speed = 0.5
+unlock_depth = 0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="OreDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/ore_definition.gd" id="1_oredef"]
+[ext_resource type="Texture2D" path="res://game/blocks/iron block/iron.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_oredef")
+name = "iron"
+texture = ExtResource("2_tex")
+value = 25.0
+hardness = 3.0
+particle_color = Color(0.6, 0.32, 0.21, 1)
+noise_threshold = 0.4
+min_depth = 100
+max_depth = 800
+background_color = Color(0.18, 0.12, 0.08, 1)

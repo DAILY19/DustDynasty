@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cpixba50fycdn"
+path="res://.godot/imported/GS2_Traps_Arrow_1.ogg-d5523dd44cb87a993b38fb6e792ccbb9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Traps_Arrow_1.ogg"
+dest_files=["res://.godot/imported/GS2_Traps_Arrow_1.ogg-d5523dd44cb87a993b38fb6e792ccbb9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

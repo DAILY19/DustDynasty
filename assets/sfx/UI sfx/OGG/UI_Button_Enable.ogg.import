@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c51ix8jr8n34"
+path="res://.godot/imported/UI_Button_Enable.ogg-ecf7fb1d3b06723584efce5408c0e708.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/UI sfx/OGG/UI_Button_Enable.ogg"
+dest_files=["res://.godot/imported/UI_Button_Enable.ogg-ecf7fb1d3b06723584efce5408c0e708.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

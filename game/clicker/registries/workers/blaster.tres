@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorkerDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/worker_definition.gd" id="1_wkr"]
+
+[resource]
+script = ExtResource("1_wkr")
+name = "blaster"
+description = "Clears entire sections with carefully placed explosives."
+base_cost = 50000.0
+cost_scaling = 1.15
+dig_power = 150.0
+dig_speed = 2.0
+unlock_depth = 500

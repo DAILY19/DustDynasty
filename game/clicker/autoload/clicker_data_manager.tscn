@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/autoload/clicker_data_manager.gd" id="1_cdm"]
+[ext_resource type="Resource" path="res://game/clicker/registries/clicker_config.tres" id="2_cfg"]
+
+[node name="ClickerDataManager" type="Node"]
+script = ExtResource("1_cdm")
+ores_path = "res://game/clicker/registries/ores"
+upgrades_path = "res://game/clicker/registries/upgrades"
+workers_path = "res://game/clicker/registries/workers"
+prestige_path = "res://game/clicker/registries/prestige"
+terrain_path = "res://game/clicker/registries/terrain"
+milestones_path = "res://game/clicker/registries/milestones"
+crafting_recipes_path = "res://game/clicker/registries/recipes"
+config = ExtResource("2_cfg")

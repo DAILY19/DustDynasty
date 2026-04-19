@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c32xp7xo1e4g0"
+path="res://.godot/imported/GS2_Bag_Open_1.ogg-a83e602e062a923dec7608c37658f3dd.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Bag_Open_1.ogg"
+dest_files=["res://.godot/imported/GS2_Bag_Open_1.ogg-a83e602e062a923dec7608c37658f3dd.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

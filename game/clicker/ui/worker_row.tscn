@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/ui/worker_row.gd" id="1_wr"]
+[ext_resource type="FontFile" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="2_font"]
+
+[node name="WorkerRow" type="HBoxContainer"]
+script = ExtResource("1_wr")
+custom_minimum_size = Vector2(0, 60)
+
+[node name="IconTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoVBox" type="VBoxContainer" parent="."]
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="InfoVBox"]
+unique_name_in_owner = true
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "Worker"
+
+[node name="DescriptionLabel" type="Label" parent="InfoVBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 13
+text = ""
+
+[node name="DpsLabel" type="Label" parent="InfoVBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 13
+text = "0/s"
+
+[node name="RightVBox" type="VBoxContainer" parent="."]
+
+[node name="CountLabel" type="Label" parent="RightVBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 15
+text = "x0"
+
+[node name="CostLabel" type="Label" parent="RightVBox"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 15
+text = "0"
+
+[node name="HireButton" type="Button" parent="RightVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 36)
+text = "Hire"

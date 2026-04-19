@@ -1,0 +1,283 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/ui/clicker_hud.gd" id="1_hud"]
+[ext_resource type="FontFile" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="2_font"]
+[ext_resource type="FontFile" path="res://assets/fonts/Title/neatpixels-boss.ttf" id="3_title_font"]
+[ext_resource type="Script" path="res://game/clicker/ui/shop_panel.gd" id="4_sp"]
+[ext_resource type="Script" path="res://game/clicker/ui/workers_panel.gd" id="5_wp"]
+[ext_resource type="Script" path="res://game/clicker/ui/prestige_panel.gd" id="6_pp"]
+[ext_resource type="Script" path="res://game/clicker/ui/settings_panel.gd" id="7_sep"]
+[ext_resource type="Script" path="res://game/clicker/ui/offline_earnings_panel.gd" id="8_oep"]
+
+[node name="ClickerHUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+layer = 10
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.08
+grow_horizontal = 2
+grow_vertical = 1
+
+[node name="CoinLabel" type="Label" parent="TopBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_title_font")
+theme_override_font_sizes/font_size = 28
+text = "0"
+
+[node name="DepthLabel" type="Label" parent="TopBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "Depth: 0"
+
+[node name="DustLabel" type="Label" parent="TopBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "Dust: 0"
+
+[node name="DpsLabel" type="Label" parent="TopBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "0/s"
+
+[node name="BottomBar" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.92
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ShopButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Shop"
+
+[node name="WorkersButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Workers"
+
+[node name="PrestigeButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Prestige"
+
+[node name="CraftingButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Craft"
+
+[node name="SettingsButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Settings"
+
+[node name="SurfaceButton" type="Button" parent="BottomBar"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Surface"
+
+[node name="ShopPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_sp")
+anchors_preset = 8
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+visible = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScrollContent" type="VBoxContainer" parent="ShopPanel/ScrollContainer"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="ShopPanel"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.06
+text = "X"
+
+[node name="WorkersPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_wp")
+anchors_preset = 8
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+visible = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WorkersPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScrollContent" type="VBoxContainer" parent="WorkersPanel/ScrollContainer"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="WorkersPanel"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.06
+text = "X"
+
+[node name="PrestigePanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_pp")
+anchors_preset = 8
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+visible = false
+
+[node name="PendingDustLabel" type="Label" parent="PrestigePanel"]
+unique_name_in_owner = true
+text = "Earn on Prestige: 0 Dust"
+
+[node name="OwnedDustLabel" type="Label" parent="PrestigePanel"]
+unique_name_in_owner = true
+text = "Owned Dust: 0"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PrestigePanel"]
+anchors_preset = -1
+anchor_top = 0.15
+anchor_right = 1.0
+anchor_bottom = 0.85
+
+[node name="ScrollContent" type="VBoxContainer" parent="PrestigePanel/ScrollContainer"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+
+[node name="PrestigeButton" type="Button" parent="PrestigePanel"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.87
+anchor_right = 0.9
+anchor_bottom = 0.95
+text = "PRESTIGE"
+
+[node name="ConfirmDialog" type="ConfirmationDialog" parent="PrestigePanel"]
+unique_name_in_owner = true
+title = "Prestige?"
+dialog_text = "Reset progress and earn Dust?\nPrestige bonuses are kept."
+
+[node name="CloseButton" type="Button" parent="PrestigePanel"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.06
+text = "X"
+
+[node name="CraftingPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+visible = false
+
+[node name="CloseButton" type="Button" parent="CraftingPanel"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.06
+text = "X"
+
+[node name="SettingsPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_sep")
+anchors_preset = 8
+anchor_left = 0.1
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.8
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="SettingsPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsPanel/VBox"]
+unique_name_in_owner = true
+min_value = 0.0
+max_value = 100.0
+value = 50.0
+
+[node name="MuteButton" type="CheckButton" parent="SettingsPanel/VBox"]
+unique_name_in_owner = true
+text = "Mute"
+
+[node name="ResetButton" type="Button" parent="SettingsPanel/VBox"]
+unique_name_in_owner = true
+text = "Reset Save"
+
+[node name="ConfirmResetDialog" type="ConfirmationDialog" parent="SettingsPanel"]
+unique_name_in_owner = true
+title = "Reset Save?"
+dialog_text = "This will delete all progress. Are you sure?"
+
+[node name="CloseButton" type="Button" parent="SettingsPanel"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.06
+text = "X"
+
+[node name="OfflineEarningsPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_oep")
+anchors_preset = 8
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.9
+anchor_bottom = 0.7
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="OfflineEarningsPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="EarningsLabel" type="Label" parent="OfflineEarningsPanel/VBox"]
+unique_name_in_owner = true
+text = "Welcome back!"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="OfflineEarningsPanel/VBox"]
+unique_name_in_owner = true
+text = ""
+horizontal_alignment = 1
+
+[node name="CollectButton" type="Button" parent="OfflineEarningsPanel/VBox"]
+unique_name_in_owner = true
+text = "Collect!"

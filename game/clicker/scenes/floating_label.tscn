@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/scenes/floating_label.gd" id="1_fl"]
+
+[node name="FloatingLabel" type="Label"]
+script = ExtResource("1_fl")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+rise_distance = 80.0
+duration = 0.9

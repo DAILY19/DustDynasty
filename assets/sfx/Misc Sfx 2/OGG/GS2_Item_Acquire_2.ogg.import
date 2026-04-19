@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dfh40m4xnun5r"
+path="res://.godot/imported/GS2_Item_Acquire_2.ogg-4d2b88a9fa0bf0250ee61cfe7adb022d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Item_Acquire_2.ogg"
+dest_files=["res://.godot/imported/GS2_Item_Acquire_2.ogg-4d2b88a9fa0bf0250ee61cfe7adb022d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

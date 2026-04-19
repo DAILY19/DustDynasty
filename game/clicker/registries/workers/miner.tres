@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorkerDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/worker_definition.gd" id="1_wkr"]
+
+[resource]
+script = ExtResource("1_wkr")
+name = "miner"
+description = "A seasoned miner with a sturdy pickaxe."
+base_cost = 500.0
+cost_scaling = 1.13
+dig_power = 5.0
+dig_speed = 1.0
+unlock_depth = 50

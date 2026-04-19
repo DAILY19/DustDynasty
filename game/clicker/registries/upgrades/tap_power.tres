@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/upgrade_definition.gd" id="1_upg"]
+
+[resource]
+script = ExtResource("1_upg")
+name = "tap_power"
+type = 0
+description = "Increases coins earned per tap."
+base_cost = 10.0
+cost_scaling = 1.5
+effect_per_level = 1.0
+max_level = 100
+unlock_depth = 0

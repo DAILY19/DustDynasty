@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://badf5md0jucbl"
+path="res://.godot/imported/UI_Keypad_Rejected.ogg-13679cc738ea1a33a01443512fec69d9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/UI sfx/OGG/UI_Keypad_Rejected.ogg"
+dest_files=["res://.godot/imported/UI_Keypad_Rejected.ogg-13679cc738ea1a33a01443512fec69d9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

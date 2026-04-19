@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ClickerTerrainInstruction" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/clicker_terrain_instruction.gd" id="1_cti"]
+[ext_resource type="Resource" path="res://game/clicker/registries/ores/stone.tres" id="2_stone"]
+[ext_resource type="Resource" path="res://game/clicker/registries/ores/gold.tres" id="3_gold"]
+
+[sub_resource type="FastNoiseLite" id="noise_abyss"]
+noise_type = 1
+seed = 4001
+frequency = 0.03
+
+[resource]
+script = ExtResource("1_cti")
+min_depth = 600
+max_depth = 9999
+ore_distributions = Array[Resource("res://game/clicker/resources/ore_definition.gd")]([ExtResource("3_gold"), ExtResource("2_stone")])
+noise = SubResource("noise_abyss")
+background_color = Color(0.08, 0.06, 0.04, 1)

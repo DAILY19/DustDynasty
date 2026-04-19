@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://5p0qkxw6opm0"
+path="res://.godot/imported/GS2_Vases_Breaking_1.ogg-2453d6929d9da14ef6f4bb655214d785.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Vases_Breaking_1.ogg"
+dest_files=["res://.godot/imported/GS2_Vases_Breaking_1.ogg-2453d6929d9da14ef6f4bb655214d785.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

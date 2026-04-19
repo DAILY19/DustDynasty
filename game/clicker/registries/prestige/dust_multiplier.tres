@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PrestigeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/prestige_definition.gd" id="1_prs"]
+
+[resource]
+script = ExtResource("1_prs")
+name = "dust_multiplier"
+type = 0
+description = "All earnings are multiplied each prestige."
+base_multiplier = 1.5
+cost_per_level = 1.0

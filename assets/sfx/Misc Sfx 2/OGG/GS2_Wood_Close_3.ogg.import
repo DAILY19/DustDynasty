@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://kbysuyp0xock"
+path="res://.godot/imported/GS2_Wood_Close_3.ogg-3c40ef02c2bb061188377a10b55edceb.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Wood_Close_3.ogg"
+dest_files=["res://.godot/imported/GS2_Wood_Close_3.ogg-3c40ef02c2bb061188377a10b55edceb.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

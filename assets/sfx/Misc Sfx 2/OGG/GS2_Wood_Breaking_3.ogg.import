@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cysgaj35jpiug"
+path="res://.godot/imported/GS2_Wood_Breaking_3.ogg-f45ef2d54fe3187db1eb780a44e59667.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Wood_Breaking_3.ogg"
+dest_files=["res://.godot/imported/GS2_Wood_Breaking_3.ogg-f45ef2d54fe3187db1eb780a44e59667.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

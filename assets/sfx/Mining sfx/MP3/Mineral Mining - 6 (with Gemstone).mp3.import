@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dxfvll6e42nia"
+path="res://.godot/imported/Mineral Mining - 6 (with Gemstone).mp3-153bc109c7a0df2e140f04071e1ff84a.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/Mining sfx/MP3/Mineral Mining - 6 (with Gemstone).mp3"
+dest_files=["res://.godot/imported/Mineral Mining - 6 (with Gemstone).mp3-153bc109c7a0df2e140f04071e1ff84a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

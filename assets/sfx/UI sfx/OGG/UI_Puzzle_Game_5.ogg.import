@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://de54k0ltuv283"
+path="res://.godot/imported/UI_Puzzle_Game_5.ogg-e79a261e099e38c3bf8e5ba2b1225e87.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/UI sfx/OGG/UI_Puzzle_Game_5.ogg"
+dest_files=["res://.godot/imported/UI_Puzzle_Game_5.ogg-e79a261e099e38c3bf8e5ba2b1225e87.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

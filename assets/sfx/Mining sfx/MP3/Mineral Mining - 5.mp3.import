@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://db82mauywn5h7"
+path="res://.godot/imported/Mineral Mining - 5.mp3-7bc8a9b19acdf09c034a1cce04b893e1.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/Mining sfx/MP3/Mineral Mining - 5.mp3"
+dest_files=["res://.godot/imported/Mineral Mining - 5.mp3-7bc8a9b19acdf09c034a1cce04b893e1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

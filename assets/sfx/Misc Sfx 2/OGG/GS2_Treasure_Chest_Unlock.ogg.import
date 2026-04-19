@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dhv4sxadqig2i"
+path="res://.godot/imported/GS2_Treasure_Chest_Unlock.ogg-8da87942cbc6588c247f0bad2147afa1.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/Misc Sfx 2/OGG/GS2_Treasure_Chest_Unlock.ogg"
+dest_files=["res://.godot/imported/GS2_Treasure_Chest_Unlock.ogg-8da87942cbc6588c247f0bad2147afa1.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://we24p242i04x"
+path="res://.godot/imported/UI_Keypad_Confirmed .ogg-74d01bd10ed2eedbd1872101fb57cd9f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/UI sfx/OGG/UI_Keypad_Confirmed .ogg"
+dest_files=["res://.godot/imported/UI_Keypad_Confirmed .ogg-74d01bd10ed2eedbd1872101fb57cd9f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

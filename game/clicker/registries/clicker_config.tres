@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ClickerConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/clicker_config.gd" id="1_cfg"]
+
+[resource]
+script = ExtResource("1_cfg")
+viewport_width = 720
+viewport_height = 1280
+grid_columns = 10
+grid_rows = 15
+tile_size = 32
+base_tap_power = 1.0
+base_tap_cooldown = 0.1
+prestige_cost_divisor = 1000000.0
+prestige_reset_depth = 0
+offline_earnings_cap_hours = 4.0
+autosave_interval_seconds = 30.0
+number_suffixes = PackedStringArray("K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No")
