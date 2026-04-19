@@ -4,7 +4,7 @@ extends Node2D
 
 signal mine_requested
 
-@onready var mine_button: Button = %MineButton
+@onready var mine_button: BaseButton = %MineButton
 
 
 func _ready() -> void:

@@ -16,13 +16,13 @@
 [ext_resource type="Script" uid="uid://bi66kk5f43q6q" path="res://game/clicker/ui/shop_panel.gd" id="sp_gd"]
 [ext_resource type="FontFile" uid="uid://d0be5ih81ejnd" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="std_font"]
 [ext_resource type="Texture2D" uid="uid://cemgqq5usxkpt" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 4.png" id="tx_craft"]
+[ext_resource type="Texture2D" uid="uid://0pjf5jdfm3qd" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 1.png" id="tx_play"]
 [ext_resource type="Texture2D" uid="uid://c31n22nl1oqu4" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 6.png" id="tx_prestige"]
 [ext_resource type="Texture2D" uid="uid://w703iscd0a2v" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 11.png" id="tx_settings"]
 [ext_resource type="Texture2D" uid="uid://c07jwwb4eop6u" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 2.png" id="tx_shop"]
 [ext_resource type="Texture2D" uid="uid://d2ec25hxql3yy" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 3.png" id="tx_surface"]
 [ext_resource type="Texture2D" uid="uid://bpf0huoltqlnf" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 8.png" id="tx_workers"]
 [ext_resource type="Script" uid="uid://ddyng70uyiyrx" path="res://game/clicker/ui/workers_panel.gd" id="wp_gd"]
-[ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 1.png" id="tx_play"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dpncw"]
 texture = ExtResource("3_3xktm")
@@ -298,10 +298,10 @@ anchor_left = 0.05
 anchor_top = 0.08
 anchor_right = 0.95
 anchor_bottom = 0.22
-offset_left = 47.0
-offset_top = 78.0
-offset_right = 266.0
-offset_bottom = 136.0
+offset_left = 70.0
+offset_top = 22.0
+offset_right = 289.0
+offset_bottom = 80.0
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 16
 text = "DUST DYNASTY"
@@ -315,10 +315,10 @@ anchor_left = 0.05
 anchor_top = 0.22
 anchor_right = 0.95
 anchor_bottom = 0.32
-offset_left = 73.0
-offset_top = 146.0
-offset_right = 270.0
-offset_bottom = 169.0
+offset_left = 81.0
+offset_top = 63.0
+offset_right = 278.0
+offset_bottom = 86.0
 theme_override_fonts/font = ExtResource("7_egqku")
 text = "Diggers Unite"
 horizontal_alignment = 1
@@ -331,10 +331,10 @@ anchor_left = 0.3
 anchor_top = 0.5
 anchor_right = 0.7
 anchor_bottom = 0.58
-offset_left = 130.0
-offset_top = 200.0
-offset_right = 230.0
-offset_bottom = 232.0
+offset_left = 131.0
+offset_top = 430.0
+offset_right = 231.0
+offset_bottom = 462.0
 texture_normal = ExtResource("tx_play")
 stretch_mode = 0
 
@@ -355,10 +355,10 @@ script = ExtResource("hud_gd")
 [node name="CoinLabel" type="Label" parent="ClickerHUD" unique_id=100000002]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 90.0
-offset_top = 288.0
-offset_right = 282.0
-offset_bottom = 306.0
+offset_left = 33.0
+offset_top = 140.0
+offset_right = 225.0
+offset_bottom = 158.0
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 14
 text = "0"
@@ -366,10 +366,10 @@ text = "0"
 [node name="DepthLabel" type="Label" parent="ClickerHUD" unique_id=100000003]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 25.0
-offset_top = 39.0
-offset_right = 177.0
-offset_bottom = 54.0
+offset_left = 180.0
+offset_top = 95.0
+offset_right = 332.0
+offset_bottom = 110.0
 theme_override_fonts/font = ExtResource("std_font")
 theme_override_font_sizes/font_size = 11
 text = "Depth: 0"
@@ -377,10 +377,10 @@ text = "Depth: 0"
 [node name="DustLabel" type="Label" parent="ClickerHUD" unique_id=100000004]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 170.0
-offset_top = 24.0
-offset_right = 300.0
-offset_bottom = 38.0
+offset_left = 27.0
+offset_top = 94.0
+offset_right = 157.0
+offset_bottom = 109.0
 theme_override_fonts/font = ExtResource("std_font")
 theme_override_font_sizes/font_size = 11
 text = "Dust: 0"
