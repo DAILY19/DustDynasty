@@ -3,7 +3,7 @@ extends Node
 ## All formulas reference ClickerDataManager registry data.
 ## Emit signals whenever state changes; UI nodes connect to these.
 
-signal coins_changed(new_amount: float)
+signal coins_changed(new_amount: float)  # kept for compat — connects to dust_changed
 signal dust_changed(new_amount: float)
 signal depth_changed(new_depth: int)
 signal upgrade_purchased(upgrade: UpgradeDefinition, new_level: int)
@@ -12,9 +12,8 @@ signal prestige_activated(new_prestige_count: int)
 signal offline_earnings_awarded(amount: float, seconds_elapsed: float)
 
 # ── Persistent state (saved/loaded by ClickerSaveManager) ──────────────────
-var coins: float = 0.0
-var total_coins_earned: float = 0.0
-var dust: float = 0.0          # prestige currency
+var dust: float = 0.0
+var total_dust_earned: float = 0.0
 var depth: int = 0
 var prestige_count: int = 0
 var upgrade_levels: Dictionary = {}   # upgrade name -> int level
@@ -28,7 +27,7 @@ var crit_chance: float = 0.0
 var crit_multiplier: float = 1.0
 var ore_value_bonus: float = 1.0
 var offline_rate: float = 1.0
-var worker_total_dps: float = 0.0     # coins per second from all workers
+var worker_total_dps: float = 0.0     # dust per second from all workers
 var prestige_multiplier: float = 1.0
 
 # ── Tap cooldown tracking ──────────────────────────────────────────────────
@@ -49,7 +48,7 @@ func _process(delta: float) -> void:
 
 	# Worker passive income
 	if worker_total_dps > 0.0:
-		add_coins(worker_total_dps * delta)
+		add_dust(worker_total_dps * delta)
 
 
 ## Called after any purchase or prestige to refresh derived values.
@@ -121,15 +120,21 @@ func _get_prestige_worker_efficiency() -> float:
 	return efficiency
 
 
-## Add coins, applying ore value bonus and prestige multiplier.
-func add_coins(amount: float) -> void:
+## Add dust, applying ore value bonus and prestige multiplier.
+func add_dust(amount: float) -> void:
 	var final_amount: float = amount * ore_value_bonus * prestige_multiplier
-	coins += final_amount
-	total_coins_earned += final_amount
-	coins_changed.emit(coins)
+	dust += final_amount
+	total_dust_earned += final_amount
+	dust_changed.emit(dust)
+	coins_changed.emit(dust)  # back-compat for panels still connected to coins_changed
 
 
-## Attempt a tap. Returns coins earned (0 if on cooldown).
+## Add coins is an alias kept for milestone reward compatibility.
+func add_coins(amount: float) -> void:
+	add_dust(amount)
+
+
+## Attempt a tap. Returns dust earned (0 if on cooldown).
 func try_tap(ore: OreDefinition) -> float:
 	if not _tap_ready:
 		return 0.0
@@ -139,7 +144,7 @@ func try_tap(ore: OreDefinition) -> float:
 	var earned: float = ore.value * tap_power
 	if randf() < crit_chance:
 		earned *= crit_multiplier
-	add_coins(earned)
+	add_dust(earned)
 	return earned
 
 
@@ -149,10 +154,11 @@ func buy_upgrade(upgrade: UpgradeDefinition) -> bool:
 	if current_level >= upgrade.max_level:
 		return false
 	var cost: float = get_upgrade_cost(upgrade)
-	if coins < cost:
+	if dust < cost:
 		return false
-	coins -= cost
-	coins_changed.emit(coins)
+	dust -= cost
+	dust_changed.emit(dust)
+	coins_changed.emit(dust)
 	upgrade_levels[upgrade.name] = current_level + 1
 	recalculate()
 	upgrade_purchased.emit(upgrade, current_level + 1)
@@ -170,10 +176,11 @@ func hire_worker(worker: WorkerDefinition) -> bool:
 	if depth < worker.unlock_depth:
 		return false
 	var cost: float = get_worker_cost(worker)
-	if coins < cost:
+	if dust < cost:
 		return false
-	coins -= cost
-	coins_changed.emit(coins)
+	dust -= cost
+	dust_changed.emit(dust)
+	coins_changed.emit(dust)
 	worker_counts[worker.name] = worker_counts.get(worker.name, 0) + 1
 	recalculate()
 	worker_hired.emit(worker, worker_counts[worker.name])
@@ -200,16 +207,15 @@ func buy_prestige_bonus(prestige: PrestigeDefinition) -> bool:
 	return true
 
 
-## Prestige: reset progress, award dust, keep prestige_levels.
+## Prestige: reset progress, award dust bonus, keep prestige_levels.
 func prestige() -> void:
 	var cfg: ClickerConfig = ClickerDataManager.config
-	var earned_dust: float = sqrt(total_coins_earned / cfg.prestige_cost_divisor)
+	var earned_dust: float = sqrt(total_dust_earned / cfg.prestige_cost_divisor)
 	dust += earned_dust
 	dust_changed.emit(dust)
 
 	prestige_count += 1
-	coins = 0.0
-	total_coins_earned = 0.0
+	total_dust_earned = 0.0
 	upgrade_levels.clear()
 	worker_counts.clear()
 	set_depth(cfg.prestige_reset_depth)

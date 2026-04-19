@@ -30,7 +30,7 @@ func refresh() -> void:
 		return
 	var count: int = ClickerGameState.worker_counts.get(_worker.name, 0)
 	var cost: float = ClickerGameState.get_worker_cost(_worker)
-	var can_afford: bool = ClickerGameState.coins >= cost
+	var can_afford: bool = ClickerGameState.dust >= cost
 	var unlocked: bool = ClickerGameState.depth >= _worker.unlock_depth
 
 	count_label.text = "x%d" % count

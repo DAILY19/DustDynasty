@@ -305,17 +305,6 @@ theme_override_font_sizes/font_size = 9
 text = "Diggers Unite"
 horizontal_alignment = 1
 
-[node name="CoinLabel" type="Label" parent="ClickerHUD" unique_id=100000002]
-unique_name_in_owner = true
-layout_mode = 1
-offset_left = 33.0
-offset_top = 140.0
-offset_right = 225.0
-offset_bottom = 158.0
-theme_override_fonts/font = ExtResource("6_cari4")
-theme_override_font_sizes/font_size = 14
-text = "0"
-
 [node name="DepthLabel" type="Label" parent="ClickerHUD" unique_id=100000003]
 unique_name_in_owner = true
 layout_mode = 1

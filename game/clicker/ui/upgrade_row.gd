@@ -29,7 +29,7 @@ func refresh() -> void:
 		return
 	var level: int = ClickerGameState.upgrade_levels.get(_upgrade.name, 0)
 	var cost: float = ClickerGameState.get_upgrade_cost(_upgrade)
-	var can_afford: bool = ClickerGameState.coins >= cost
+	var can_afford: bool = ClickerGameState.dust >= cost
 	var maxed: bool = level >= _upgrade.max_level
 	var unlocked: bool = ClickerGameState.depth >= _upgrade.unlock_depth
 

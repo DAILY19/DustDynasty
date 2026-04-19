@@ -19,7 +19,7 @@ func _ready() -> void:
 	close_button.pressed.connect(_on_close_button_pressed)
 	prestige_button.pressed.connect(_on_prestige_button_pressed)
 	confirm_dialog.confirmed.connect(_on_confirm_dialog_confirmed)
-	ClickerGameState.coins_changed.connect(_refresh)
+	ClickerGameState.dust_changed.connect(_refresh)
 	ClickerGameState.dust_changed.connect(_refresh)
 	ClickerGameState.prestige_activated.connect(_on_prestige_activated)
 	visible = false

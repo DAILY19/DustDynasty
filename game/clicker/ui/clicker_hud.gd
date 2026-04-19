@@ -2,7 +2,6 @@ extends Control
 ## ClickerHUD — always-visible heads-up display.
 ## Binds to ClickerGameState signals; no polling in _process.
 
-@onready var coin_label: Label = %CoinLabel
 @onready var depth_label: Label = %DepthLabel
 @onready var dust_label: Label = %DustLabel
 @onready var dps_label: Label = %DpsLabel
@@ -24,19 +23,11 @@ func _ready() -> void:
 	prestige_button.pressed.connect(_on_prestige_button_pressed)
 	crafting_button.pressed.connect(_on_crafting_button_pressed)
 	settings_button.pressed.connect(_on_settings_button_pressed)
-	ClickerGameState.coins_changed.connect(_on_coins_changed)
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
 	ClickerGameState.dust_changed.connect(_on_dust_changed)
 	# Initial display
-	_on_coins_changed(ClickerGameState.coins)
 	_on_depth_changed(ClickerGameState.depth)
 	_on_dust_changed(ClickerGameState.dust)
-
-
-func _on_coins_changed(amount: float) -> void:
-	coin_label.text = ClickerGameState.format_number(amount)
-	var dps: float = ClickerGameState.worker_total_dps
-	dps_label.text = "%s/s" % ClickerGameState.format_number(dps)
 
 
 func _on_depth_changed(new_depth: int) -> void:
@@ -45,6 +36,8 @@ func _on_depth_changed(new_depth: int) -> void:
 
 func _on_dust_changed(amount: float) -> void:
 	dust_label.text = "Dust: %s" % ClickerGameState.format_number(amount)
+	var dps: float = ClickerGameState.worker_total_dps
+	dps_label.text = "%s/s" % ClickerGameState.format_number(dps)
 
 
 func _on_shop_button_pressed() -> void:

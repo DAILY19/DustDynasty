@@ -27,8 +27,7 @@ func _process(delta: float) -> void:
 func save() -> void:
 	var state: ClickerGameState = ClickerGameState
 
-	_config.set_value("Stats", "coins", state.coins)
-	_config.set_value("Stats", "total_coins_earned", state.total_coins_earned)
+	_config.set_value("Stats", "total_dust_earned", state.total_dust_earned)
 	_config.set_value("Stats", "dust", state.dust)
 	_config.set_value("Stats", "depth", state.depth)
 	_config.set_value("Stats", "prestige_count", state.prestige_count)
@@ -52,9 +51,8 @@ func load_data() -> void:
 
 	var state: ClickerGameState = ClickerGameState
 
-	state.coins             = _config.get_value("Stats", "coins", 0.0)
-	state.total_coins_earned = _config.get_value("Stats", "total_coins_earned", 0.0)
-	state.dust              = _config.get_value("Stats", "dust", 0.0)
+	state.total_dust_earned  = _config.get_value("Stats", "total_dust_earned", 0.0)
+	state.dust               = _config.get_value("Stats", "dust", 0.0)
 	state.depth             = _config.get_value("Stats", "depth", 0)
 	state.prestige_count    = _config.get_value("Stats", "prestige_count", 0)
 
