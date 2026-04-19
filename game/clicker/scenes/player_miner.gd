@@ -23,6 +23,7 @@ func _ready() -> void:
 ## Called by DiggingView to start the pickaxe swing.
 func start_digging() -> void:
 	if state != State.IDLE:
+		push_warning("PlayerMiner: start_digging called in non-IDLE state (%d) — ignored" % state)
 		return
 	state = State.DIGGING
 	sprite.play("mine")

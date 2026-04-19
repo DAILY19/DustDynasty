@@ -40,6 +40,9 @@ var _cursor_col: int = 0
 var _cursor_row: int = 0
 var _blocks_broken_this_click: int = 0
 var _mining_active: bool = false
+## Watchdog: seconds _mining_active has been true without resolution.
+var _mining_stuck_timer: float = 0.0
+const MINING_STUCK_THRESHOLD: float = 2.0
 
 
 func _ready() -> void:
@@ -56,6 +59,20 @@ func _ready() -> void:
 	_generate_grid()
 	_refresh_workers()
 	_snap_player_to_cursor()
+
+
+# ── Watchdog ──────────────────────────────────────────────────────────────
+
+func _process(delta: float) -> void:
+	if _mining_active:
+		_mining_stuck_timer += delta
+		if _mining_stuck_timer >= MINING_STUCK_THRESHOLD:
+			push_error("DiggingView: _mining_active stuck for %.1fs — forcing unlock" % _mining_stuck_timer)
+			player_miner.finish_digging()
+			_mining_active = false
+			_mining_stuck_timer = 0.0
+	else:
+		_mining_stuck_timer = 0.0
 
 
 # ── Input ──────────────────────────────────────────────────────────────────
@@ -82,9 +99,17 @@ func _start_mining_sequence() -> void:
 
 
 func _mine_current_block() -> void:
+	if _cursor_col >= _config.grid_columns or _cursor_row >= _config.grid_rows:
+		push_error("DiggingView: _mine_current_block cursor OOB (%d,%d)" % [_cursor_col, _cursor_row])
+		_mining_active = false
+		return
 	# Skip null cells (shouldn't happen in normal flow, but defensive)
 	if _grid[_cursor_col][_cursor_row] == null:
 		_advance_and_move()
+		return
+	if player_miner.state != player_miner.State.IDLE:
+		push_warning("DiggingView: player_miner not IDLE (state=%d) before start_digging — skipping" % player_miner.state)
+		_mining_active = false
 		return
 	player_miner.start_digging()
 
@@ -94,10 +119,16 @@ func _on_player_hit_frame() -> void:
 	var col: int = _cursor_col
 	var row: int = _cursor_row
 	if col >= _config.grid_columns or row >= _config.grid_rows:
+		push_warning("DiggingView: hit_frame fired with cursor OOB (%d,%d) — unlocking" % [col, row])
+		player_miner.finish_digging()
+		_mining_active = false
 		return
 
 	var ore: OreDefinition = _grid[col][row]
 	if ore == null:
+		push_warning("DiggingView: hit_frame fired on null ore at (%d,%d) — unlocking" % [col, row])
+		player_miner.finish_digging()
+		_mining_active = false
 		return
 
 	# Deal damage
