@@ -39,9 +39,10 @@ script = ExtResource("hud_gd")
 
 [node name="TitleLabel" type="Label" parent="ClickerHUD" unique_id=200000001]
 layout_mode = 1
-offset_top = 2.0
-offset_right = 360.0
-offset_bottom = 22.0
+offset_left = -4.0
+offset_top = 22.0
+offset_right = 356.0
+offset_bottom = 42.0
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 13
 text = "DUST DYNASTY"
@@ -49,9 +50,10 @@ horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="ClickerHUD" unique_id=200000002]
 layout_mode = 1
-offset_top = 22.0
-offset_right = 360.0
-offset_bottom = 36.0
+offset_left = -4.0
+offset_top = 54.0
+offset_right = 356.0
+offset_bottom = 68.0
 theme_override_fonts/font = ExtResource("7_egqku")
 theme_override_font_sizes/font_size = 9
 text = "Diggers Unite"
@@ -93,46 +95,46 @@ text = "0/s"
 [node name="ShopButton" type="TextureButton" parent="ClickerHUD" unique_id=100000006]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 50.0
-offset_top = 573.0
-offset_right = 130.0
-offset_bottom = 605.0
+offset_left = 38.0
+offset_top = 544.0
+offset_right = 118.0
+offset_bottom = 576.0
 texture_normal = ExtResource("tx_shop")
 
 [node name="WorkersButton" type="TextureButton" parent="ClickerHUD" unique_id=100000007]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 140.0
-offset_top = 573.0
-offset_right = 220.0
-offset_bottom = 605.0
+offset_left = 135.0
+offset_top = 545.0
+offset_right = 215.0
+offset_bottom = 577.0
 texture_normal = ExtResource("tx_workers")
 
 [node name="PrestigeButton" type="TextureButton" parent="ClickerHUD" unique_id=100000008]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 230.0
-offset_top = 573.0
-offset_right = 310.0
-offset_bottom = 605.0
+offset_left = 232.0
+offset_top = 553.0
+offset_right = 312.0
+offset_bottom = 585.0
 texture_normal = ExtResource("tx_prestige")
 
 [node name="CraftingButton" type="TextureButton" parent="ClickerHUD" unique_id=100000009]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 50.0
-offset_top = 607.0
-offset_right = 130.0
-offset_bottom = 639.0
+offset_left = 35.0
+offset_top = 594.0
+offset_right = 115.0
+offset_bottom = 626.0
 texture_normal = ExtResource("tx_craft")
 
 [node name="SettingsButton" type="TextureButton" parent="ClickerHUD" unique_id=100000010]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 140.0
-offset_top = 607.0
-offset_right = 220.0
-offset_bottom = 639.0
+offset_left = 150.0
+offset_top = 591.0
+offset_right = 230.0
+offset_bottom = 623.0
 texture_normal = ExtResource("tx_settings")
 
 [node name="SurfaceButton" type="TextureButton" parent="ClickerHUD" unique_id=100000011]
