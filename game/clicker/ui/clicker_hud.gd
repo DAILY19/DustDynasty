@@ -2,8 +2,6 @@ extends Control
 ## ClickerHUD — always-visible heads-up display.
 ## Binds to ClickerGameState signals; no polling in _process.
 
-signal surface_view_requested
-
 @onready var coin_label: Label = %CoinLabel
 @onready var depth_label: Label = %DepthLabel
 @onready var dust_label: Label = %DustLabel
@@ -13,7 +11,6 @@ signal surface_view_requested
 @onready var prestige_button: BaseButton = %PrestigeButton
 @onready var crafting_button: BaseButton = %CraftingButton
 @onready var settings_button: BaseButton = %SettingsButton
-@onready var surface_button: BaseButton = %SurfaceButton
 @onready var shop_panel: PanelContainer = %ShopPanel
 @onready var workers_panel: PanelContainer = %WorkersPanel
 @onready var prestige_panel: PanelContainer = %PrestigePanel
@@ -27,7 +24,6 @@ func _ready() -> void:
 	prestige_button.pressed.connect(_on_prestige_button_pressed)
 	crafting_button.pressed.connect(_on_crafting_button_pressed)
 	settings_button.pressed.connect(_on_settings_button_pressed)
-	surface_button.pressed.connect(_on_surface_button_pressed)
 	ClickerGameState.coins_changed.connect(_on_coins_changed)
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
 	ClickerGameState.dust_changed.connect(_on_dust_changed)
@@ -69,12 +65,6 @@ func _on_crafting_button_pressed() -> void:
 
 func _on_settings_button_pressed() -> void:
 	_toggle_panel(settings_panel)
-
-
-func _on_surface_button_pressed() -> void:
-	_close_all_panels()
-	ClickerSoundPlayer.play_ui_click()
-	surface_view_requested.emit()
 
 
 func _close_all_panels() -> void:

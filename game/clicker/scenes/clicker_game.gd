@@ -1,9 +1,6 @@
 extends Node2D
 ## ClickerGame — root scene for the Dust Dynasty clicker game.
-## Switches between SurfaceView and DiggingView.
-## All child nodes are in the .tscn; this script only wires logic.
 
-@onready var surface_view: Node2D = $SurfaceView
 @onready var digging_view: Node2D = $DiggingView
 @onready var clicker_hud: Control = $ClickerHUD
 @onready var depth_milestone_container: Node2D = $DepthMilestoneContainer
@@ -11,33 +8,20 @@ extends Node2D
 
 func _ready() -> void:
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
-	clicker_hud.surface_view_requested.connect(_show_surface)
-	surface_view.mine_requested.connect(_show_digging)
-	_show_digging()
-
-
-func _show_surface() -> void:
-	surface_view.show()
-	digging_view.hide()
 
 
 func _show_digging() -> void:
-	surface_view.hide()
 	digging_view.show()
 
 
 func _show_milestone(milestone: DepthMilestone) -> void:
 	if milestone.milestone_scene == null:
 		return
-	# Clear any previous milestone
 	Utils.free_children(depth_milestone_container)
 	var instance: Node = milestone.milestone_scene.instantiate()
 	depth_milestone_container.add_child(instance)
 	digging_view.hide()
-	surface_view.hide()
 	depth_milestone_container.show()
-
-	# When milestone is cleared, resume digging
 	if instance.has_signal("milestone_cleared"):
 		instance.milestone_cleared.connect(_on_milestone_cleared.bind(milestone))
 
@@ -47,6 +31,7 @@ func _on_milestone_cleared(milestone: DepthMilestone) -> void:
 	ClickerGameState.dust += milestone.reward_prestige_currency
 	Utils.free_children(depth_milestone_container)
 	_show_digging()
+
 
 
 func _on_depth_changed(new_depth: int) -> void:

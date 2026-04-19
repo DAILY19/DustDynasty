@@ -269,75 +269,6 @@ sources/3 = SubResource("TileSetAtlasSource_fp7pu")
 [node name="ClickerGame" type="Node2D" unique_id=1598698194]
 script = ExtResource("1_cg")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=451443994]
-
-[node name="SurfaceView" type="Node2D" parent="." unique_id=676182163]
-script = ExtResource("4_sv")
-
-[node name="ForegroundLayer" type="TileMapLayer" parent="SurfaceView" unique_id=1477955895]
-texture_filter = 1
-tile_set = SubResource("TileSet_2v707")
-
-[node name="BackgroundLayer" type="TileMapLayer" parent="SurfaceView" unique_id=518348382]
-z_index = -1
-texture_filter = 1
-tile_set = SubResource("TileSet_2v707")
-
-[node name="UI" type="Control" parent="SurfaceView" unique_id=2064353456]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TitleLabel" type="Label" parent="SurfaceView/UI" unique_id=2036624829]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.08
-anchor_right = 0.95
-anchor_bottom = 0.22
-offset_left = 70.0
-offset_top = 22.0
-offset_right = 289.0
-offset_bottom = 80.0
-theme_override_fonts/font = ExtResource("6_cari4")
-theme_override_font_sizes/font_size = 16
-text = "DUST DYNASTY"
-label_settings = SubResource("LabelSettings_lvvtw")
-horizontal_alignment = 1
-
-[node name="SubtitleLabel" type="Label" parent="SurfaceView/UI" unique_id=291832469]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.22
-anchor_right = 0.95
-anchor_bottom = 0.32
-offset_left = 81.0
-offset_top = 63.0
-offset_right = 278.0
-offset_bottom = 86.0
-theme_override_fonts/font = ExtResource("7_egqku")
-text = "Diggers Unite"
-horizontal_alignment = 1
-
-[node name="MineButton" type="TextureButton" parent="SurfaceView/UI" unique_id=432992994]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.5
-anchor_right = 0.7
-anchor_bottom = 0.58
-offset_left = 131.0
-offset_top = 430.0
-offset_right = 231.0
-offset_bottom = 462.0
-texture_normal = ExtResource("tx_play")
-stretch_mode = 0
-
 [node name="DiggingView" parent="." unique_id=650743126 instance=ExtResource("2_dv")]
 
 [node name="DepthMilestoneContainer" type="Node2D" parent="." unique_id=771779767]
@@ -443,6 +374,7 @@ texture_normal = ExtResource("tx_settings")
 
 [node name="SurfaceButton" type="TextureButton" parent="ClickerHUD" unique_id=100000011]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 offset_left = 230.0
 offset_top = 607.0
