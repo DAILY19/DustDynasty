@@ -12,6 +12,11 @@ extends PanelContainer
 func _ready() -> void:
 	volume_slider.value = UserConfig.get_setting("volume")
 	mute_button.button_pressed = AudioServer.is_bus_mute(0)
+	volume_slider.value_changed.connect(_on_volume_slider_value_changed)
+	mute_button.toggled.connect(_on_mute_button_toggled)
+	reset_button.pressed.connect(_on_reset_button_pressed)
+	confirm_reset_dialog.confirmed.connect(_on_confirm_reset_dialog_confirmed)
+	close_button.pressed.connect(_on_close_button_pressed)
 	visible = false
 
 

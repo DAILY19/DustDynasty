@@ -188,3 +188,11 @@ left_mouse_button={
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.803922, 0.721569, 0.690196, 1)
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"

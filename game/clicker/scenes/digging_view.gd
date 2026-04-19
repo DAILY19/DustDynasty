@@ -76,6 +76,7 @@ func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	tile_map_layer.erase_cell(Vector2i(col, row))
 	tile_broken.emit(ore, tile_map_layer.map_to_local(Vector2i(col, row)))
 	ClickerSoundPlayer.play_break(ore.value >= 5.0)
+	_update_depth_progress_bar()
 
 	if _is_row_clear(row):
 		row_cleared.emit(ClickerGameState.depth + row)
@@ -107,6 +108,7 @@ func _shift_rows_up() -> void:
 
 	_repaint_tilemap()
 	_update_background()
+	_update_depth_progress_bar()
 
 
 func _generate_visible_rows() -> void:
@@ -127,6 +129,7 @@ func _generate_visible_rows() -> void:
 
 	_repaint_tilemap()
 	_update_background()
+	_update_depth_progress_bar()
 
 
 func _repaint_tilemap() -> void:
@@ -160,6 +163,19 @@ func _update_background() -> void:
 
 func _on_depth_changed(_new_depth: int) -> void:
 	_update_background()
+
+
+func _update_depth_progress_bar() -> void:
+	if not depth_progress_bar:
+		return
+	var empty: int = 0
+	for col in _config.grid_columns:
+		for row in _config.grid_rows:
+			if _grid[col][row] == null:
+				empty += 1
+	var total: int = _config.grid_columns * _config.grid_rows
+	depth_progress_bar.max_value = total
+	depth_progress_bar.value = empty
 
 
 func _on_worker_hired(_worker: WorkerDefinition, _new_count: int) -> void:

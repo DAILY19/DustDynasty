@@ -6,12 +6,13 @@ extends Node2D
 @onready var surface_view: Node2D = $SurfaceView
 @onready var digging_view: Node2D = $DiggingView
 @onready var clicker_hud: CanvasLayer = $ClickerHUD
-@onready var offline_earnings_panel: PanelContainer = $ClickerHUD/OfflineEarningsPanel
 @onready var depth_milestone_container: Node2D = $DepthMilestoneContainer
 
 
 func _ready() -> void:
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
+	clicker_hud.surface_view_requested.connect(_show_surface)
+	surface_view.mine_requested.connect(_show_digging)
 	_show_digging()
 
 

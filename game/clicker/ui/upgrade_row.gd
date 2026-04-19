@@ -11,6 +11,10 @@ extends HBoxContainer
 var _upgrade: UpgradeDefinition
 
 
+func _ready() -> void:
+	buy_button.pressed.connect(_on_buy_button_pressed)
+
+
 func setup(upgrade: UpgradeDefinition) -> void:
 	_upgrade = upgrade
 	name_label.text = upgrade.get_display_name()

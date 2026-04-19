@@ -14,6 +14,7 @@ var _rows: Array = []
 func _ready() -> void:
 	_row_scene = load(UPGRADE_ROW_SCENE)
 	_build_rows()
+	close_button.pressed.connect(_on_close_button_pressed)
 	ClickerGameState.coins_changed.connect(_refresh_rows)
 	ClickerGameState.upgrade_purchased.connect(_on_upgrade_purchased)
 	visible = false

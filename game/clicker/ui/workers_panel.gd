@@ -13,6 +13,7 @@ var _rows: Array = []
 func _ready() -> void:
 	_row_scene = load(WORKER_ROW_SCENE)
 	_build_rows()
+	close_button.pressed.connect(_on_close_button_pressed)
 	ClickerGameState.coins_changed.connect(_refresh_rows)
 	ClickerGameState.worker_hired.connect(_on_worker_hired)
 	ClickerGameState.depth_changed.connect(_refresh_rows)

@@ -12,6 +12,10 @@ extends HBoxContainer
 var _worker: WorkerDefinition
 
 
+func _ready() -> void:
+	hire_button.pressed.connect(_on_hire_button_pressed)
+
+
 func setup(worker: WorkerDefinition) -> void:
 	_worker = worker
 	name_label.text = worker.get_display_name()

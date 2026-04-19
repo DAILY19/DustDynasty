@@ -11,6 +11,10 @@ extends HBoxContainer
 var _prestige: PrestigeDefinition
 
 
+func _ready() -> void:
+	buy_button.pressed.connect(_on_buy_button_pressed)
+
+
 func setup(prestige: PrestigeDefinition) -> void:
 	_prestige = prestige
 	name_label.text = prestige.get_display_name()

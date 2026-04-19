@@ -7,6 +7,7 @@ extends PanelContainer
 
 
 func _ready() -> void:
+	collect_button.pressed.connect(_on_collect_button_pressed)
 	ClickerGameState.offline_earnings_awarded.connect(_on_earnings_awarded)
 	visible = false
 
