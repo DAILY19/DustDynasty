@@ -18,21 +18,33 @@ jobs:
   export:
     name: Godot Web Export
     runs-on: ubuntu-latest
+    env:
+      GODOT_TAG: "4.6.1-stable"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          lfs: false
 
-      - name: Export with Godot
-        uses: dulvui/godot-github-action/export@v1
-        with:
-          godot-version: "4.2.2"
-          working-directory: "."
-          preset: "Web"
+      - name: Install Godot ${{ env.GODOT_TAG }}
+        run: |
+          wget -q "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_TAG }}/Godot_v${{ env.GODOT_TAG }}_linux.x86_64.zip" -O godot.zip
+          unzip -q godot.zip
+          mv "Godot_v${{ env.GODOT_TAG }}_linux.x86_64" /usr/local/bin/godot
+          chmod +x /usr/local/bin/godot
 
-      - name: Add .nojekyll (prevents GitHub Pages from ignoring underscore files)
+      - name: Install export templates
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_TAG }}
+          wget -q "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_TAG }}/Godot_v${{ env.GODOT_TAG }}_export_templates.tpz" -O templates.tpz
+          unzip -q templates.tpz
+          mv templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_TAG }}/
+
+      - name: Export for Web
+        run: |
+          mkdir -p build/web
+          godot --headless --export-release "Web" build/web/index.html
+
+      - name: Add .nojekyll
         run: touch build/web/.nojekyll
 
       - name: Deploy to GitHub Pages
