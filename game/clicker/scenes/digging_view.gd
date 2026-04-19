@@ -74,7 +74,9 @@ func _handle_tap(local_pos: Vector2) -> void:
 func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	_grid[col][row] = null
 	tile_map_layer.erase_cell(Vector2i(col, row))
-	tile_broken.emit(ore, tile_map_layer.map_to_local(Vector2i(col, row)))
+	var tile_pos := Vector2(col * _config.tile_size + _config.tile_size * 0.5,
+			row * _config.tile_size + _config.tile_size * 0.5)
+	tile_broken.emit(ore, tile_pos)
 	ClickerSoundPlayer.play_break(ore.value >= 5.0)
 	_update_depth_progress_bar()
 
