@@ -5,7 +5,7 @@ extends Node2D
 
 @onready var surface_view: Node2D = $SurfaceView
 @onready var digging_view: Node2D = $DiggingView
-@onready var clicker_hud: CanvasLayer = $ClickerHUD
+@onready var clicker_hud: Control = $ClickerHUD
 @onready var depth_milestone_container: Node2D = $DepthMilestoneContainer
 
 
