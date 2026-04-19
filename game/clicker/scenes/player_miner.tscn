@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://game/clicker/scenes/player_miner.gd" id="1_pm"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Down_1.png" id="idle1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Down_2.png" id="idle2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Down_3.png" id="idle3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Down_4.png" id="idle4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Down_1.png" id="pick1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Down_2.png" id="pick2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Down_3.png" id="pick3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Down_4.png" id="pick4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Right_1.png" id="idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Right_2.png" id="idle2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Right_3.png" id="idle3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Idle_Right_4.png" id="idle4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Right_1.png" id="pick1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Right_2.png" id="pick2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Right_3.png" id="pick3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/Character 014/Single Sprites/Character_014_Pickaxe_Right_4.png" id="pick4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1"]
 animations = [{

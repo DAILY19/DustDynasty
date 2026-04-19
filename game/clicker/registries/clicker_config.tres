@@ -6,8 +6,8 @@
 script = ExtResource("1_cfg")
 viewport_width = 720
 viewport_height = 1280
-grid_columns = 10
-grid_rows = 15
+grid_columns = 8
+grid_rows = 10
 tile_size = 32
 blocks_per_click = 1
 player_move_duration = 0.15

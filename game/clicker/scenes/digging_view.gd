@@ -46,6 +46,7 @@ func _ready() -> void:
 	ClickerGameState.worker_hired.connect(_on_worker_hired)
 	player_miner.hit_frame.connect(_on_player_hit_frame)
 	player_miner.move_finished.connect(_on_player_move_finished)
+	_resize_to_grid()
 	_generate_grid()
 	_refresh_workers()
 	_snap_player_to_cursor()
@@ -178,6 +179,19 @@ func _get_cell_center(col: int, row: int) -> Vector2:
 
 func _snap_player_to_cursor() -> void:
 	player_miner.position = _get_cell_center(_cursor_col, _cursor_row)
+
+
+## Resize the background rect and progress bar to match the grid dimensions.
+func _resize_to_grid() -> void:
+	var grid_w: float = _config.grid_columns * _config.tile_size
+	var grid_h: float = _config.grid_rows * _config.tile_size
+	if background_rect:
+		background_rect.size = Vector2(grid_w, grid_h)
+	if depth_progress_bar:
+		depth_progress_bar.offset_left = 0
+		depth_progress_bar.offset_top = grid_h - 8
+		depth_progress_bar.offset_right = grid_w
+		depth_progress_bar.offset_bottom = grid_h
 
 
 func _is_row_clear(row: int) -> bool:
