@@ -16,3 +16,6 @@ extends MyNamedResource
 ## TileSet atlas source ID assigned in the Godot editor when building ClickerTileSet.tres.
 ## Update this value per-ore after creating the TileSet so digging_view uses the right tile.
 @export var tileset_source_id: int = 0
+## Crystal overlay color shown on top of the dirt tile for valuable/hard blocks.
+## Leave empty for common blocks. Values: "yellow", "green", "blue", "black".
+@export var crystal_color: String = ""

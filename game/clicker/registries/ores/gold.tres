@@ -15,3 +15,4 @@ min_depth = 200
 max_depth = 9999
 background_color = Color(0.2, 0.16, 0.05, 1)
 tileset_source_id = 3
+crystal_color = "blue"

@@ -31,7 +31,7 @@ func _ready() -> void:
 
 
 func _on_depth_changed(new_depth: int) -> void:
-	depth_label.text = "Depth: %d" % new_depth
+	depth_label.text = "Run: %d" % new_depth
 
 
 func _on_dust_changed(amount: float) -> void:

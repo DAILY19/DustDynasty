@@ -8,6 +8,7 @@ signal row_cleared(depth: int)
 
 const BREAK_LABEL_SCENE: String = "res://game/clicker/scenes/floating_label.tscn"
 const WORKER_SPRITE_SCENE: String = "res://game/clicker/scenes/worker_sprite.tscn"
+const ORE_BLOCK_SCENE: String = "res://game/clicker/scenes/ore_block.tscn"
 ## Maximum worker sprites shown at once regardless of total worker count.
 const MAX_VISIBLE_WORKERS: int = 8
 
@@ -15,6 +16,7 @@ const MAX_VISIBLE_WORKERS: int = 8
 @onready var background_rect: ColorRect = $BackgroundRect
 @onready var depth_progress_bar: ProgressBar = $DepthProgressBar
 @onready var break_particles: GPUParticles2D = $BreakParticles
+@onready var ore_layer: Node2D = $OreLayer
 @onready var worker_layer: Node2D = $WorkerLayer
 @onready var player_miner: Node2D = $PlayerMiner
 
@@ -22,12 +24,15 @@ const MAX_VISIBLE_WORKERS: int = 8
 var _grid: Array = []
 ## HP remaining per cell: indexed [col][row]
 var _hp: Array = []
+## Spawned OreBlock nodes indexed by cell position.
+var _ore_blocks: Dictionary = {}  # Vector2i -> Node2D
 ## World seed for noise variation
 var _world_seed: int = 0
 
 var _config: ClickerConfig
 var _floating_label_scene: PackedScene
 var _worker_sprite_scene: PackedScene
+var _ore_block_scene: PackedScene
 var _worker_sprites: Array = []
 
 # ── Traversal state ────────────────────────────────────────────────────────
@@ -41,6 +46,7 @@ func _ready() -> void:
 	_config = ClickerDataManager.config
 	_floating_label_scene = load(BREAK_LABEL_SCENE)
 	_worker_sprite_scene = load(WORKER_SPRITE_SCENE)
+	_ore_block_scene = load(ORE_BLOCK_SCENE)
 	_world_seed = randi()
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
 	ClickerGameState.worker_hired.connect(_on_worker_hired)
@@ -124,9 +130,7 @@ func _advance_and_move() -> void:
 	if _cursor_col >= _config.grid_columns:
 		_cursor_col = 0
 		_cursor_row += 1
-		# The previous row is now fully traversed → advance depth
-		ClickerGameState.advance_depth()
-		row_cleared.emit(ClickerGameState.depth)
+		row_cleared.emit(_cursor_row)
 
 	# Grid fully traversed?
 	if _cursor_row >= _config.grid_rows:
@@ -152,6 +156,7 @@ func _on_player_move_finished() -> void:
 func _begin_grid_reset() -> void:
 	_cursor_col = 0
 	_cursor_row = 0
+	ClickerGameState.advance_depth()
 	_generate_grid()
 	_update_depth_progress_bar()
 	var start_pos: Vector2 = _get_cell_center(0, 0)
@@ -163,8 +168,12 @@ func _begin_grid_reset() -> void:
 
 func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	_grid[col][row] = null
+	var cell := Vector2i(col, row)
+	if _ore_blocks.has(cell):
+		_ore_blocks[cell].break_animate()
+		_ore_blocks.erase(cell)
 	if tile_map_layer.tile_set != null:
-		tile_map_layer.erase_cell(Vector2i(col, row))
+		tile_map_layer.erase_cell(cell)
 	var tile_pos: Vector2 = _get_cell_center(col, row)
 	tile_broken.emit(ore, tile_pos)
 	ClickerSoundPlayer.play_break(ore.value >= 5.0)
@@ -212,14 +221,14 @@ func _generate_grid() -> void:
 		_hp.append([])
 
 	for row in _config.grid_rows:
-		var depth: int = ClickerGameState.depth + row
-		var new_row: Array = ClickerTerrainGenerator.generate_row(depth, _config.grid_columns, _world_seed)
+		var terrain_depth: int = ClickerGameState.depth * _config.grid_rows + row
+		var new_row: Array = ClickerTerrainGenerator.generate_row(terrain_depth, _config.grid_columns, _world_seed)
 		for col in _config.grid_columns:
 			var ore: OreDefinition = new_row[col]
 			_grid[col].append(ore)
 			_hp[col].append(ore.hardness if ore else 0.0)
 
-	_repaint_tilemap()
+	_spawn_ore_blocks()
 	_update_background()
 	_update_depth_progress_bar()
 
@@ -234,6 +243,25 @@ func _repaint_tilemap() -> void:
 			if ore == null:
 				continue
 			tile_map_layer.set_cell(Vector2i(col, row), _get_source_id(ore), Vector2i.ZERO)
+
+
+func _spawn_ore_blocks() -> void:
+	# Free any blocks that weren't broken during normal mining (e.g. on grid reset).
+	for block in _ore_blocks.values():
+		if is_instance_valid(block):
+			block.queue_free()
+	_ore_blocks.clear()
+
+	for col in _config.grid_columns:
+		for row in _config.grid_rows:
+			var ore: OreDefinition = _grid[col][row]
+			if ore == null:
+				continue
+			var block: Node2D = _ore_block_scene.instantiate()
+			ore_layer.add_child(block)
+			block.position = _get_cell_center(col, row)
+			block.setup(ore)
+			_ore_blocks[Vector2i(col, row)] = block
 
 
 ## Returns the TileSet source ID for this ore.
