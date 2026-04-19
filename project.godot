@@ -42,7 +42,7 @@ movie_writer/fps=30
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/sound_material_matrix/plugin.cfg")
+enabled=PackedStringArray()
 
 [file_customization]
 
