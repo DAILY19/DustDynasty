@@ -38,8 +38,8 @@ ClickerSoundPlayer="*res://game/clicker/audio/clicker_sound_player.tscn"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=360
+window/size/viewport_height=640
 window/size/resizable=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
@@ -65,6 +65,10 @@ folder_colors={
 [filesystem]
 
 import/blender/enabled=false
+
+[gui]
+
+theme/custom_font="uid://d0be5ih81ejnd"
 
 [importer_defaults]
 
