@@ -30,6 +30,7 @@ AdminPanel="*res://game/ui/admin/admin_panel.tscn"
 ClickerDataManager="*res://game/clicker/autoload/clicker_data_manager.tscn"
 ClickerGameState="*res://game/clicker/autoload/clicker_game_state.gd"
 ClickerSaveManager="*res://game/clicker/autoload/clicker_save_manager.gd"
+ClickerSoundPlayer="*res://game/clicker/audio/clicker_sound_player.tscn"
 
 [editor]
 

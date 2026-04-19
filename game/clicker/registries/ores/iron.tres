@@ -14,3 +14,4 @@ noise_threshold = 0.4
 min_depth = 100
 max_depth = 800
 background_color = Color(0.18, 0.12, 0.08, 1)
+tileset_source_id = 4

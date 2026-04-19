@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/audio/clicker_sound_player.gd" id="1_csp"]
+
+[node name="ClickerSoundPlayer" type="Node"]
+script = ExtResource("1_csp")
+
+[node name="Player1" type="AudioStreamPlayer" parent="."]
+
+[node name="Player2" type="AudioStreamPlayer" parent="."]
+
+[node name="Player3" type="AudioStreamPlayer" parent="."]
+
+[node name="Player4" type="AudioStreamPlayer" parent="."]
+
+[node name="Player5" type="AudioStreamPlayer" parent="."]
+
+[node name="Player6" type="AudioStreamPlayer" parent="."]

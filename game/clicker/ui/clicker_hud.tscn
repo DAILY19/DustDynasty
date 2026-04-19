@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://game/clicker/ui/clicker_hud.gd" id="1_hud"]
 [ext_resource type="FontFile" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="2_font"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://game/clicker/ui/prestige_panel.gd" id="6_pp"]
 [ext_resource type="Script" path="res://game/clicker/ui/settings_panel.gd" id="7_sep"]
 [ext_resource type="Script" path="res://game/clicker/ui/offline_earnings_panel.gd" id="8_oep"]
+[ext_resource type="Script" path="res://game/clicker/ui/crafting_panel.gd" id="9_cp"]
 
 [node name="ClickerHUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -198,12 +199,23 @@ text = "X"
 
 [node name="CraftingPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+script = ExtResource("9_cp")
 anchors_preset = 8
 anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
 visible = false
+
+[node name="ComingSoonLabel" type="Label" parent="CraftingPanel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Crafting — Coming Soon"
 
 [node name="CloseButton" type="Button" parent="CraftingPanel"]
 unique_name_in_owner = true

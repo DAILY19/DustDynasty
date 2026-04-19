@@ -13,3 +13,6 @@ extends MyNamedResource
 
 @export_category("Visual")
 @export var background_color: Color = Color(0.2, 0.15, 0.1)
+## TileSet atlas source ID assigned in the Godot editor when building ClickerTileSet.tres.
+## Update this value per-ore after creating the TileSet so digging_view uses the right tile.
+@export var tileset_source_id: int = 0

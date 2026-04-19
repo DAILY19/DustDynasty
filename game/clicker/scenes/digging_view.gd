@@ -7,11 +7,15 @@ signal tile_broken(ore: OreDefinition, position: Vector2)
 signal row_cleared(depth: int)
 
 const BREAK_LABEL_SCENE: String = "res://game/clicker/scenes/floating_label.tscn"
+const WORKER_SPRITE_SCENE: String = "res://game/clicker/scenes/worker_sprite.tscn"
+## Maximum worker sprites shown at once regardless of total worker count.
+const MAX_VISIBLE_WORKERS: int = 8
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var background_rect: ColorRect = $BackgroundRect
 @onready var depth_progress_bar: ProgressBar = $DepthProgressBar
 @onready var break_particles: GPUParticles2D = $BreakParticles
+@onready var worker_layer: Node2D = $WorkerLayer
 
 ## Indexed [col][row] -> OreDefinition (null = empty/broken)
 var _grid: Array = []
@@ -22,14 +26,19 @@ var _world_seed: int = 0
 
 var _config: ClickerConfig
 var _floating_label_scene: PackedScene
+var _worker_sprite_scene: PackedScene
+var _worker_sprites: Array = []
 
 
 func _ready() -> void:
 	_config = ClickerDataManager.config
 	_floating_label_scene = load(BREAK_LABEL_SCENE)
+	_worker_sprite_scene = load(WORKER_SPRITE_SCENE)
 	_world_seed = randi()
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
+	ClickerGameState.worker_hired.connect(_on_worker_hired)
 	_generate_visible_rows()
+	_refresh_workers()
 
 
 func _input(event: InputEvent) -> void:
@@ -53,6 +62,7 @@ func _handle_tap(local_pos: Vector2) -> void:
 	if earned <= 0.0:
 		return
 
+	ClickerSoundPlayer.play_tap()
 	_hp[col][row] -= ClickerGameState.tap_power
 	_spawn_floating_label(local_pos, ClickerGameState.format_number(earned))
 	_play_break_particles(local_pos, ore.particle_color)
@@ -65,6 +75,7 @@ func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	_grid[col][row] = null
 	tile_map_layer.erase_cell(Vector2i(col, row))
 	tile_broken.emit(ore, tile_map_layer.map_to_local(Vector2i(col, row)))
+	ClickerSoundPlayer.play_break(ore.value >= 5.0)
 
 	if _is_row_clear(row):
 		row_cleared.emit(ClickerGameState.depth + row)
@@ -130,24 +141,46 @@ func _repaint_tilemap() -> void:
 			tile_map_layer.set_cell(Vector2i(col, row), _get_source_id(ore), Vector2i.ZERO)
 
 
-## Returns the TileSet source ID for this ore. Source IDs are assigned
-## in the editor TileSet in the same order as ores registry sort (alphabetical).
-## This mapping is data-driven: ores are sorted by name and indexed 0..N.
+## Returns the TileSet source ID for this ore.
+## Configured per-ore in each .tres registry file via the tileset_source_id field.
 func _get_source_id(ore: OreDefinition) -> int:
-	for i in ClickerDataManager.ores.size():
-		if ClickerDataManager.ores[i].name == ore.name:
-			return i
-	return 0
+	return ore.tileset_source_id
 
 
 func _update_background() -> void:
 	var instruction: ClickerTerrainInstruction = ClickerDataManager.get_terrain_instruction(ClickerGameState.depth)
-	if instruction and background_rect:
-		background_rect.color = instruction.background_color
+	if not instruction or not background_rect:
+		return
+	var target_color: Color = instruction.background_color
+	if background_rect.color.is_equal_approx(target_color):
+		return
+	var tween: Tween = create_tween()
+	tween.tween_property(background_rect, "color", target_color, 1.5).set_ease(Tween.EASE_IN_OUT)
 
 
 func _on_depth_changed(_new_depth: int) -> void:
 	_update_background()
+
+
+func _on_worker_hired(_worker: WorkerDefinition, _new_count: int) -> void:
+	_refresh_workers()
+
+
+## Sync the number of visible WorkerSprites to the total workers hired
+## (capped at MAX_VISIBLE_WORKERS for performance).
+func _refresh_workers() -> void:
+	var total: int = 0
+	for count in ClickerGameState.worker_counts.values():
+		total += count
+	var target: int = min(total, MAX_VISIBLE_WORKERS)
+	while _worker_sprites.size() > target:
+		var s = _worker_sprites.pop_back()
+		s.queue_free()
+	while _worker_sprites.size() < target:
+		var s = _worker_sprite_scene.instantiate()
+		worker_layer.add_child(s)
+		s.setup(_config.grid_columns, _config.grid_rows, _config.tile_size)
+		_worker_sprites.append(s)
 
 
 func _spawn_floating_label(pos: Vector2, text: String) -> void:
