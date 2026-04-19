@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 ## ClickerHUD — always-visible heads-up display.
 ## Binds to ClickerGameState signals; no polling in _process.
 

@@ -284,10 +284,10 @@ anchor_left = 0.05
 anchor_top = 0.08
 anchor_right = 0.95
 anchor_bottom = 0.22
-offset_left = 65.0
-offset_top = 55.0
-offset_right = 284.0
-offset_bottom = 113.0
+offset_left = 74.0
+offset_top = 58.0
+offset_right = 293.0
+offset_bottom = 116.0
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 16
 text = "DUST DYNASTY"
@@ -329,3 +329,6 @@ text = "⛏ GO MINE"
 visible = false
 
 [node name="ClickerHUD" parent="." unique_id=905239416 instance=ExtResource("3_hud")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
