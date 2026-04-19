@@ -135,23 +135,23 @@ func add_coins(amount: float) -> void:
 
 
 ## Attempt a tap. Returns dust earned (0 if on cooldown).
-func try_tap(ore: OreDefinition) -> float:
+func try_tap(block: BlockDefinition) -> float:
 	if not _tap_ready:
 		return 0.0
 	_tap_ready = false
 	_tap_timer = tap_cooldown
 
-	var earned: float = ore.value * tap_power
+	var earned: float = block.get_effective_value() * tap_power
 	if randf() < crit_chance:
 		earned *= crit_multiplier
 	add_dust(earned)
 	return earned
 
 
-## Mine an ore block directly. No cooldown check.
+## Mine a block directly. No cooldown check.
 ## Used by the traversal mining loop for sequential block breaks.
-func mine_ore(ore: OreDefinition) -> float:
-	var earned: float = ore.value * tap_power
+func mine_block(block: BlockDefinition) -> float:
+	var earned: float = block.get_effective_value() * tap_power
 	if randf() < crit_chance:
 		earned *= crit_multiplier
 	add_dust(earned)

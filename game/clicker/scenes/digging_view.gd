@@ -3,7 +3,7 @@ extends Node2D
 ## Player traverses the grid in reading order (left→right, top→bottom).
 ## On grid completion the blocks refill and the player resets to the start.
 
-signal tile_broken(ore: OreDefinition, position: Vector2)
+signal tile_broken(block: BlockDefinition, position: Vector2)
 signal row_cleared(depth: int)
 
 const BREAK_LABEL_SCENE: String = "res://game/clicker/scenes/floating_label.tscn"
@@ -20,7 +20,7 @@ const MAX_VISIBLE_WORKERS: int = 8
 @onready var worker_layer: Node2D = $WorkerLayer
 @onready var player_miner: Node2D = $PlayerMiner
 
-## Indexed [col][row] -> OreDefinition (null = empty/broken)
+## Indexed [col][row] -> BlockDefinition (null = empty/broken)
 var _grid: Array = []
 ## HP remaining per cell: indexed [col][row]
 var _hp: Array = []
@@ -28,6 +28,8 @@ var _hp: Array = []
 var _ore_blocks: Dictionary = {}  # Vector2i -> Node2D
 ## World seed for noise variation
 var _world_seed: int = 0
+## Current digging view variant (picked per grid reset).
+var _current_variant: DiggingViewVariant = null
 
 var _config: ClickerConfig
 var _floating_label_scene: PackedScene
@@ -124,9 +126,9 @@ func _on_player_hit_frame() -> void:
 		_mining_active = false
 		return
 
-	var ore: OreDefinition = _grid[col][row]
-	if ore == null:
-		push_warning("DiggingView: hit_frame fired on null ore at (%d,%d) — unlocking" % [col, row])
+	var block: BlockDefinition = _grid[col][row]
+	if block == null:
+		push_warning("DiggingView: hit_frame fired on null block at (%d,%d) — unlocking" % [col, row])
 		player_miner.finish_digging()
 		_mining_active = false
 		return
@@ -135,16 +137,16 @@ func _on_player_hit_frame() -> void:
 	_hp[col][row] -= ClickerGameState.tap_power
 
 	# Earn dust for every hit
-	var earned: float = ClickerGameState.mine_ore(ore)
+	var earned: float = ClickerGameState.mine_block(block)
 	if earned > 0.0:
 		ClickerSoundPlayer.play_tap()
 		_spawn_floating_label(_get_cell_center(col, row), ClickerGameState.format_number(earned))
 
-	_play_break_particles(_get_cell_center(col, row), ore.particle_color)
+	_play_break_particles(_get_cell_center(col, row), block.particle_color)
 
 	if _hp[col][row] <= 0.0:
 		# Block destroyed — break it and advance
-		_break_tile(col, row, ore)
+		_break_tile(col, row, block)
 		_advance_and_move()
 	else:
 		# Block survived — wait for animation to finish, then unlock input
@@ -197,7 +199,7 @@ func _begin_grid_reset() -> void:
 
 # ── Tile / grid helpers ────────────────────────────────────────────────────
 
-func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
+func _break_tile(col: int, row: int, block: BlockDefinition) -> void:
 	_grid[col][row] = null
 	var cell := Vector2i(col, row)
 	if _ore_blocks.has(cell):
@@ -206,8 +208,8 @@ func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	if tile_map_layer.tile_set != null:
 		tile_map_layer.erase_cell(cell)
 	var tile_pos: Vector2 = _get_cell_center(col, row)
-	tile_broken.emit(ore, tile_pos)
-	ClickerSoundPlayer.play_break(ore.value >= 5.0)
+	tile_broken.emit(block, tile_pos)
+	ClickerSoundPlayer.play_break(block.get_effective_value() >= 5.0)
 	_update_depth_progress_bar()
 
 
@@ -247,17 +249,20 @@ func _generate_grid() -> void:
 	_grid.clear()
 	_hp.clear()
 
+	# Pick a variant for this grid
+	_current_variant = ClickerTerrainGenerator.pick_variant(ClickerGameState.depth)
+
 	for col in _config.grid_columns:
 		_grid.append([])
 		_hp.append([])
 
 	for row in _config.grid_rows:
 		var terrain_depth: int = ClickerGameState.depth * _config.grid_rows + row
-		var new_row: Array = ClickerTerrainGenerator.generate_row(terrain_depth, _config.grid_columns, _world_seed)
+		var new_row: Array = ClickerTerrainGenerator.generate_row(_current_variant, terrain_depth, _config.grid_columns, _world_seed)
 		for col in _config.grid_columns:
-			var ore: OreDefinition = new_row[col]
-			_grid[col].append(ore)
-			_hp[col].append(ore.hardness if ore else 0.0)
+			var block: BlockDefinition = new_row[col]
+			_grid[col].append(block)
+			_hp[col].append(block.hardness if block else 0.0)
 
 	_spawn_ore_blocks()
 	_update_background()
@@ -270,10 +275,10 @@ func _repaint_tilemap() -> void:
 		return
 	for col in _config.grid_columns:
 		for row in _config.grid_rows:
-			var ore: OreDefinition = _grid[col][row]
-			if ore == null:
+			var block: BlockDefinition = _grid[col][row]
+			if block == null:
 				continue
-			tile_map_layer.set_cell(Vector2i(col, row), _get_source_id(ore), Vector2i.ZERO)
+			tile_map_layer.set_cell(Vector2i(col, row), block.tileset_source_id, Vector2i.ZERO)
 
 
 func _spawn_ore_blocks() -> void:
@@ -285,26 +290,27 @@ func _spawn_ore_blocks() -> void:
 
 	for col in _config.grid_columns:
 		for row in _config.grid_rows:
-			var ore: OreDefinition = _grid[col][row]
-			if ore == null:
+			var block: BlockDefinition = _grid[col][row]
+			if block == null:
 				continue
-			var block: Node2D = _ore_block_scene.instantiate()
-			ore_layer.add_child(block)
-			block.position = _get_cell_center(col, row)
-			block.setup(ore)
-			_ore_blocks[Vector2i(col, row)] = block
-
-
-## Returns the TileSet source ID for this ore.
-func _get_source_id(ore: OreDefinition) -> int:
-	return ore.tileset_source_id
+			var ore_block: Node2D = _ore_block_scene.instantiate()
+			ore_layer.add_child(ore_block)
+			ore_block.position = _get_cell_center(col, row)
+			ore_block.setup(block)
+			_ore_blocks[Vector2i(col, row)] = ore_block
 
 
 func _update_background() -> void:
-	var instruction: ClickerTerrainInstruction = ClickerDataManager.get_terrain_instruction(ClickerGameState.depth)
-	if not instruction or not background_rect:
+	var target_color: Color
+	if _current_variant:
+		target_color = _current_variant.background_color
+	else:
+		var instruction: ClickerTerrainInstruction = ClickerDataManager.get_terrain_instruction(ClickerGameState.depth)
+		if not instruction or not background_rect:
+			return
+		target_color = instruction.background_color
+	if not background_rect:
 		return
-	var target_color: Color = instruction.background_color
 	if background_rect.color.is_equal_approx(target_color):
 		return
 	var tween: Tween = create_tween()

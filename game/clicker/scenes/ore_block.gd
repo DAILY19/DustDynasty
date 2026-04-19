@@ -17,13 +17,13 @@ const CRYSTAL_FPS: float = 8.0
 static var _crystal_frames: SpriteFrames = null
 
 
-func setup(ore: OreDefinition) -> void:
-	if ore.crystal_color == "":
+func setup(block: BlockDefinition) -> void:
+	if block.crystal_color == "":
 		crystal_overlay.visible = false
 		return
 	crystal_overlay.sprite_frames = _get_crystal_frames()
 	crystal_overlay.visible = true
-	crystal_overlay.play(ore.crystal_color)
+	crystal_overlay.play(block.crystal_color)
 
 
 ## Pops up briefly then shrinks to zero and frees the node.

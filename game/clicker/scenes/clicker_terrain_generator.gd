@@ -1,45 +1,64 @@
 class_name ClickerTerrainGenerator
 extends RefCounted
-## Populates a TileMapLayer with procedural ore tiles for a given depth row.
-## Reads ClickerTerrainInstruction registry data — no hardcoded values.
+## Generates grid rows from DiggingViewVariant data — fully data-driven.
+## Each variant defines its own block palette, noise, and generation weights.
 
 const TILE_SIZE: int = 32
 
-## Returns a flat array of OreDefinition (or null for empty) for one grid row.
-## Length == columns. null means "no ore placed here" (background only).
-static func generate_row(depth: int, columns: int, world_seed: int) -> Array:
-	var instruction: ClickerTerrainInstruction = ClickerDataManager.get_terrain_instruction(depth)
-	if instruction == null or instruction.ore_distributions.is_empty():
+
+## Pick a DiggingViewVariant using weighted random selection for the given depth.
+static func pick_variant(depth: int) -> DiggingViewVariant:
+	var candidates: Array[DiggingViewVariant] = []
+	var total_weight: float = 0.0
+	for v in ClickerDataManager.digging_variants:
+		if v.is_available_at_depth(depth):
+			candidates.append(v)
+			total_weight += v.weight
+	if candidates.is_empty():
+		return null
+	var roll: float = randf() * total_weight
+	var cumulative: float = 0.0
+	for v in candidates:
+		cumulative += v.weight
+		if roll <= cumulative:
+			return v
+	return candidates[-1]
+
+
+## Returns a flat array of BlockDefinition (or null for empty) for one grid row.
+## Length == columns. null means "no block placed here" (background only).
+static func generate_row(variant: DiggingViewVariant, depth: int, columns: int, world_seed: int) -> Array:
+	if variant == null or variant.blocks.is_empty():
 		return _empty_row(columns)
 
 	var row: Array = []
-	var noise: FastNoiseLite = instruction.noise
+	var noise: FastNoiseLite = variant.noise
 
 	for col in columns:
 		var pos := Vector2(col, depth)
-		var ore: OreDefinition = _pick_ore(instruction, noise, pos, world_seed)
-		row.append(ore)
+		var block: BlockDefinition = _pick_block(variant, noise, pos, world_seed)
+		row.append(block)
 
 	return row
 
 
-## Pick the highest-priority ore whose noise value passes its threshold.
-static func _pick_ore(
-		instruction: ClickerTerrainInstruction,
+## Pick the highest-priority block whose noise value passes its threshold.
+static func _pick_block(
+		variant: DiggingViewVariant,
 		noise: FastNoiseLite,
 		pos: Vector2,
-		world_seed: int) -> OreDefinition:
+		world_seed: int) -> BlockDefinition:
 
 	if noise == null:
-		return instruction.ore_distributions[-1]
+		return variant.blocks[-1]
 
-	for ore in instruction.ore_distributions:
+	for block in variant.blocks:
 		var sample: float = noise.get_noise_2d(pos.x + world_seed * 0.001, pos.y)
-		if sample > ore.noise_threshold:
-			return ore
+		if sample > block.noise_threshold:
+			return block
 
 	# Fallback: last entry is always the common filler block
-	return instruction.ore_distributions[-1]
+	return variant.blocks[-1]
 
 
 static func _empty_row(columns: int) -> Array:
