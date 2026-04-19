@@ -64,9 +64,11 @@ func _on_frame_changed() -> void:
 func _on_animation_finished() -> void:
 	if sprite.animation == &"mine":
 		sprite.play("idle")
-		# If still in DIGGING state after animation ends, the block survived.
+		# If still DIGGING when animation ends, hit_frame never resolved.
+		# Fire it now so DiggingView can process the hit and unlock.
 		if state == State.DIGGING:
-			state = State.IDLE
+			push_warning("PlayerMiner: mine animation ended without hit_frame resolution — firing fallback hit")
+			hit_frame.emit()
 
 
 func _on_tween_finished() -> void:
