@@ -112,11 +112,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="ScrollContent" type="VBoxContainer" parent="ShopPanel/ScrollContainer"]
-unique_name_in_owner = true
 size_flags_horizontal = 3
 
 [node name="CloseButton" type="Button" parent="ShopPanel"]
-unique_name_in_owner = true
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.06
@@ -138,11 +136,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="ScrollContent" type="VBoxContainer" parent="WorkersPanel/ScrollContainer"]
-unique_name_in_owner = true
 size_flags_horizontal = 3
 
 [node name="CloseButton" type="Button" parent="WorkersPanel"]
-unique_name_in_owner = true
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.06
@@ -173,11 +169,9 @@ anchor_right = 1.0
 anchor_bottom = 0.85
 
 [node name="ScrollContent" type="VBoxContainer" parent="PrestigePanel/ScrollContainer"]
-unique_name_in_owner = true
 size_flags_horizontal = 3
 
 [node name="PrestigeButton" type="Button" parent="PrestigePanel"]
-unique_name_in_owner = true
 anchors_preset = -1
 anchor_left = 0.1
 anchor_top = 0.87
@@ -191,7 +185,6 @@ title = "Prestige?"
 dialog_text = "Reset progress and earn Dust?\nPrestige bonuses are kept."
 
 [node name="CloseButton" type="Button" parent="PrestigePanel"]
-unique_name_in_owner = true
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.06
@@ -218,7 +211,6 @@ grow_vertical = 2
 text = "Crafting — Coming Soon"
 
 [node name="CloseButton" type="Button" parent="CraftingPanel"]
-unique_name_in_owner = true
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.06
@@ -259,7 +251,6 @@ title = "Reset Save?"
 dialog_text = "This will delete all progress. Are you sure?"
 
 [node name="CloseButton" type="Button" parent="SettingsPanel"]
-unique_name_in_owner = true
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.06

@@ -2,11 +2,11 @@ extends PanelContainer
 ## SettingsPanel — volume, mute, reset save, credits.
 ## Delegates to existing UserConfig singleton.
 
-@onready var volume_slider: HSlider = %VolumeSlider
-@onready var mute_button: CheckButton = %MuteButton
-@onready var reset_button: Button = %ResetButton
-@onready var close_button: Button = %CloseButton
-@onready var confirm_reset_dialog: ConfirmationDialog = %ConfirmResetDialog
+@onready var volume_slider: HSlider = $VBox/VolumeSlider
+@onready var mute_button: CheckButton = $VBox/MuteButton
+@onready var reset_button: Button = $VBox/ResetButton
+@onready var close_button: Button = $CloseButton
+@onready var confirm_reset_dialog: ConfirmationDialog = $ConfirmResetDialog
 
 
 func _ready() -> void:

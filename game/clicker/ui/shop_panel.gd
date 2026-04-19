@@ -4,8 +4,8 @@ extends PanelContainer
 
 const UPGRADE_ROW_SCENE: String = "res://game/clicker/ui/upgrade_row.tscn"
 
-@onready var scroll_content: VBoxContainer = %ScrollContent
-@onready var close_button: Button = %CloseButton
+@onready var scroll_content: VBoxContainer = $ScrollContainer/ScrollContent
+@onready var close_button: Button = $CloseButton
 
 var _row_scene: PackedScene
 var _rows: Array = []

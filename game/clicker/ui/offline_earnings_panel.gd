@@ -1,9 +1,9 @@
 extends PanelContainer
 ## OfflineEarningsPanel — shown on launch when offline earnings are awarded.
 
-@onready var earnings_label: Label = %EarningsLabel
-@onready var time_label: Label = %TimeLabel
-@onready var collect_button: Button = %CollectButton
+@onready var earnings_label: Label = $VBox/EarningsLabel
+@onready var time_label: Label = $VBox/TimeLabel
+@onready var collect_button: Button = $VBox/CollectButton
 
 
 func _ready() -> void:

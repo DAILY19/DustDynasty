@@ -3,12 +3,12 @@ extends PanelContainer
 
 const PRESTIGE_ROW_SCENE: String = "res://game/clicker/ui/prestige_row.tscn"
 
-@onready var pending_dust_label: Label = %PendingDustLabel
-@onready var owned_dust_label: Label = %OwnedDustLabel
-@onready var scroll_content: VBoxContainer = %ScrollContent
-@onready var prestige_button: Button = %PrestigeButton
-@onready var close_button: Button = %CloseButton
-@onready var confirm_dialog: ConfirmationDialog = %ConfirmDialog
+@onready var pending_dust_label: Label = $PendingDustLabel
+@onready var owned_dust_label: Label = $OwnedDustLabel
+@onready var scroll_content: VBoxContainer = $ScrollContainer/ScrollContent
+@onready var prestige_button: Button = $PrestigeButton
+@onready var close_button: Button = $CloseButton
+@onready var confirm_dialog: ConfirmationDialog = $ConfirmDialog
 
 var _row_scene: PackedScene
 
