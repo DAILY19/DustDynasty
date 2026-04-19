@@ -13,6 +13,12 @@ extends Resource
 @export var grid_rows: int = 15
 @export var tile_size: int = 32
 
+@export_category("Mining Traversal")
+@export var blocks_per_click: int = 1
+@export var player_move_duration: float = 0.15
+@export var block_break_delay: float = 0.08
+@export var grid_reset_pause: float = 0.4
+
 @export_category("Tap")
 @export var base_tap_power: float = 1.0
 @export var base_tap_cooldown: float = 0.1

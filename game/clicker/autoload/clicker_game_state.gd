@@ -148,6 +148,16 @@ func try_tap(ore: OreDefinition) -> float:
 	return earned
 
 
+## Mine an ore block directly. No cooldown check.
+## Used by the traversal mining loop for sequential block breaks.
+func mine_ore(ore: OreDefinition) -> float:
+	var earned: float = ore.value * tap_power
+	if randf() < crit_chance:
+		earned *= crit_multiplier
+	add_dust(earned)
+	return earned
+
+
 ## Buy one level of an upgrade. Returns true if successful.
 func buy_upgrade(upgrade: UpgradeDefinition) -> bool:
 	var current_level: int = upgrade_levels.get(upgrade.name, 0)
@@ -262,4 +272,4 @@ func format_number(value: float) -> String:
 ## Returns prestige currency that would be earned right now.
 func get_pending_dust() -> float:
 	var cfg: ClickerConfig = ClickerDataManager.config
-	return sqrt(total_coins_earned / cfg.prestige_cost_divisor)
+	return sqrt(total_dust_earned / cfg.prestige_cost_divisor)

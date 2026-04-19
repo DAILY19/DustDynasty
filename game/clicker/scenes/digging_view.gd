@@ -1,7 +1,7 @@
 extends Node2D
 ## DiggingView — the main interactive digging area.
-## A TileMapLayer is populated procedurally per row using ClickerTerrainGenerator.
-## Tapping/clicking a tile mines it; breaking it earns coins and may advance depth.
+## Player traverses the grid in reading order (left→right, top→bottom).
+## On grid completion the blocks refill and the player resets to the start.
 
 signal tile_broken(ore: OreDefinition, position: Vector2)
 signal row_cleared(depth: int)
@@ -30,6 +30,12 @@ var _floating_label_scene: PackedScene
 var _worker_sprite_scene: PackedScene
 var _worker_sprites: Array = []
 
+# ── Traversal state ────────────────────────────────────────────────────────
+var _cursor_col: int = 0
+var _cursor_row: int = 0
+var _blocks_broken_this_click: int = 0
+var _mining_active: bool = false
+
 
 func _ready() -> void:
 	_config = ClickerDataManager.config
@@ -38,56 +44,140 @@ func _ready() -> void:
 	_world_seed = randi()
 	ClickerGameState.depth_changed.connect(_on_depth_changed)
 	ClickerGameState.worker_hired.connect(_on_worker_hired)
-	_generate_visible_rows()
+	player_miner.hit_frame.connect(_on_player_hit_frame)
+	player_miner.move_finished.connect(_on_player_move_finished)
+	_generate_grid()
 	_refresh_workers()
+	_snap_player_to_cursor()
 
+
+# ── Input ──────────────────────────────────────────────────────────────────
 
 func _input(event: InputEvent) -> void:
+	if _mining_active:
+		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_handle_tap(get_local_mouse_position())
+		_start_mining_sequence()
 	elif event is InputEventScreenTouch and event.pressed:
-		_handle_tap(to_local(event.position))
+		_start_mining_sequence()
 
 
-func _handle_tap(local_pos: Vector2) -> void:
-	var col: int = int(local_pos.x / _config.tile_size)
-	var row: int = int(local_pos.y / _config.tile_size)
-	if col < 0 or col >= _config.grid_columns or row < 0 or row >= _config.grid_rows:
+# ── Mining loop ────────────────────────────────────────────────────────────
+
+func _start_mining_sequence() -> void:
+	if _mining_active:
+		return
+	if _cursor_row >= _config.grid_rows:
+		return
+	_mining_active = true
+	_blocks_broken_this_click = 0
+	_mine_current_block()
+
+
+func _mine_current_block() -> void:
+	# Skip null cells (shouldn't happen in normal flow, but defensive)
+	if _grid[_cursor_col][_cursor_row] == null:
+		_advance_and_move()
+		return
+	player_miner.start_digging()
+
+
+## Called when the pickaxe animation reaches the impact frame.
+func _on_player_hit_frame() -> void:
+	var col: int = _cursor_col
+	var row: int = _cursor_row
+	if col >= _config.grid_columns or row >= _config.grid_rows:
 		return
 
 	var ore: OreDefinition = _grid[col][row]
 	if ore == null:
 		return
 
-	var earned: float = ClickerGameState.try_tap(ore)
-	if earned <= 0.0:
-		return
-
-	ClickerSoundPlayer.play_tap()
+	# Deal damage
 	_hp[col][row] -= ClickerGameState.tap_power
-	_spawn_floating_label(local_pos, ClickerGameState.format_number(earned))
-	_play_break_particles(local_pos, ore.particle_color)
-	if player_miner:
-		player_miner.play_mine()
+
+	# Earn dust for every hit
+	var earned: float = ClickerGameState.mine_ore(ore)
+	if earned > 0.0:
+		ClickerSoundPlayer.play_tap()
+		_spawn_floating_label(_get_cell_center(col, row), ClickerGameState.format_number(earned))
+
+	_play_break_particles(_get_cell_center(col, row), ore.particle_color)
 
 	if _hp[col][row] <= 0.0:
+		# Block destroyed — break it and advance
 		_break_tile(col, row, ore)
+		_advance_and_move()
+	else:
+		# Block survived — wait for animation to finish, then unlock input
+		player_miner.finish_digging()
+		_mining_active = false
 
+
+## Advance the cursor to the next cell and tween the player there.
+func _advance_and_move() -> void:
+	_blocks_broken_this_click += 1
+	var prev_row: int = _cursor_row
+	_cursor_col += 1
+
+	if _cursor_col >= _config.grid_columns:
+		_cursor_col = 0
+		_cursor_row += 1
+		# The previous row is now fully traversed → advance depth
+		ClickerGameState.advance_depth()
+		row_cleared.emit(ClickerGameState.depth)
+
+	# Grid fully traversed?
+	if _cursor_row >= _config.grid_rows:
+		_begin_grid_reset()
+		return
+
+	# Tween player to next cell
+	var target: Vector2 = _get_cell_center(_cursor_col, _cursor_row)
+	player_miner.move_to(target, _config.player_move_duration)
+
+
+## Called when the player's move tween finishes.
+func _on_player_move_finished() -> void:
+	# Continue multi-block mining?
+	if _blocks_broken_this_click < _config.blocks_per_click and _cursor_row < _config.grid_rows:
+		_mine_current_block()
+	else:
+		_mining_active = false
+
+
+# ── Grid reset ─────────────────────────────────────────────────────────────
+
+func _begin_grid_reset() -> void:
+	_cursor_col = 0
+	_cursor_row = 0
+	_generate_grid()
+	_update_depth_progress_bar()
+	var start_pos: Vector2 = _get_cell_center(0, 0)
+	player_miner.reset_to(start_pos, _config.grid_reset_pause)
+	# move_finished will fire from reset_to → _on_player_move_finished unlocks input
+
+
+# ── Tile / grid helpers ────────────────────────────────────────────────────
 
 func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	_grid[col][row] = null
 	if tile_map_layer.tile_set != null:
 		tile_map_layer.erase_cell(Vector2i(col, row))
-	var tile_pos := Vector2(col * _config.tile_size + _config.tile_size * 0.5,
-			row * _config.tile_size + _config.tile_size * 0.5)
+	var tile_pos: Vector2 = _get_cell_center(col, row)
 	tile_broken.emit(ore, tile_pos)
 	ClickerSoundPlayer.play_break(ore.value >= 5.0)
 	_update_depth_progress_bar()
 
-	if _is_row_clear(row):
-		row_cleared.emit(ClickerGameState.depth + row)
-		ClickerGameState.advance_depth()
-		_shift_rows_up()
+
+func _get_cell_center(col: int, row: int) -> Vector2:
+	return Vector2(
+		col * _config.tile_size + _config.tile_size * 0.5,
+		row * _config.tile_size + _config.tile_size * 0.5)
+
+
+func _snap_player_to_cursor() -> void:
+	player_miner.position = _get_cell_center(_cursor_col, _cursor_row)
 
 
 func _is_row_clear(row: int) -> bool:
@@ -97,27 +187,9 @@ func _is_row_clear(row: int) -> bool:
 	return true
 
 
-func _shift_rows_up() -> void:
-	# Remove top row data, shift everything up, generate new bottom row
-	for col in _config.grid_columns:
-		_grid[col].pop_front()
-		_hp[col].pop_front()
+# ── Grid generation ────────────────────────────────────────────────────────
 
-	tile_map_layer.clear()
-	var new_depth: int = ClickerGameState.depth + _config.grid_rows - 1
-	var new_row: Array = ClickerTerrainGenerator.generate_row(new_depth, _config.grid_columns, _world_seed)
-
-	for col in _config.grid_columns:
-		var ore: OreDefinition = new_row[col]
-		_grid[col].append(ore)
-		_hp[col].append(ore.hardness if ore else 0.0)
-
-	_repaint_tilemap()
-	_update_background()
-	_update_depth_progress_bar()
-
-
-func _generate_visible_rows() -> void:
+func _generate_grid() -> void:
 	_grid.clear()
 	_hp.clear()
 
@@ -151,7 +223,6 @@ func _repaint_tilemap() -> void:
 
 
 ## Returns the TileSet source ID for this ore.
-## Configured per-ore in each .tres registry file via the tileset_source_id field.
 func _get_source_id(ore: OreDefinition) -> int:
 	return ore.tileset_source_id
 
@@ -184,12 +255,12 @@ func _update_depth_progress_bar() -> void:
 	depth_progress_bar.value = empty
 
 
+# ── Workers (cosmetic) ─────────────────────────────────────────────────────
+
 func _on_worker_hired(_worker: WorkerDefinition, _new_count: int) -> void:
 	_refresh_workers()
 
 
-## Sync the number of visible WorkerSprites to the total workers hired
-## (capped at MAX_VISIBLE_WORKERS for performance).
 func _refresh_workers() -> void:
 	var total: int = 0
 	for count in ClickerGameState.worker_counts.values():
@@ -204,6 +275,8 @@ func _refresh_workers() -> void:
 		s.setup(_config.grid_columns, _config.grid_rows, _config.tile_size)
 		_worker_sprites.append(s)
 
+
+# ── Visual helpers ─────────────────────────────────────────────────────────
 
 func _spawn_floating_label(pos: Vector2, text: String) -> void:
 	if not _floating_label_scene:
