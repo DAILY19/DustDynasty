@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://game/clicker/scenes/clicker_game.gd" id="1_cg"]
-[ext_resource type="Script" path="res://game/clicker/scenes/digging_view.gd" id="2_dv"]
+[ext_resource type="PackedScene" path="res://game/clicker/scenes/digging_view.tscn" id="2_dv"]
 [ext_resource type="Script" path="res://game/clicker/scenes/surface_view.gd" id="4_sv"]
-[ext_resource type="Script" path="res://game/clicker/ui/clicker_hud.gd" id="3_hud"]
+[ext_resource type="PackedScene" path="res://game/clicker/ui/clicker_hud.tscn" id="3_hud"]
 
 [node name="ClickerGame" type="Node2D"]
 script = ExtResource("1_cg")
@@ -51,11 +51,9 @@ anchor_right = 0.8
 anchor_bottom = 0.62
 text = "⛏ GO MINE"
 
-[node name="DiggingView" type="Node2D" parent="."]
-script = ExtResource("2_dv")
+[node name="DiggingView" parent="." instance=ExtResource("2_dv")]
 
 [node name="DepthMilestoneContainer" type="Node2D" parent="."]
 visible = false
 
-[node name="ClickerHUD" type="CanvasLayer" parent="."]
-script = ExtResource("3_hud")
+[node name="ClickerHUD" parent="." instance=ExtResource("3_hud")]
