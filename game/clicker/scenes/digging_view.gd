@@ -16,6 +16,7 @@ const MAX_VISIBLE_WORKERS: int = 8
 @onready var depth_progress_bar: ProgressBar = $DepthProgressBar
 @onready var break_particles: GPUParticles2D = $BreakParticles
 @onready var worker_layer: Node2D = $WorkerLayer
+@onready var player_miner: Node2D = $PlayerMiner
 
 ## Indexed [col][row] -> OreDefinition (null = empty/broken)
 var _grid: Array = []
@@ -66,6 +67,8 @@ func _handle_tap(local_pos: Vector2) -> void:
 	_hp[col][row] -= ClickerGameState.tap_power
 	_spawn_floating_label(local_pos, ClickerGameState.format_number(earned))
 	_play_break_particles(local_pos, ore.particle_color)
+	if player_miner:
+		player_miner.play_mine()
 
 	if _hp[col][row] <= 0.0:
 		_break_tile(col, row, ore)
