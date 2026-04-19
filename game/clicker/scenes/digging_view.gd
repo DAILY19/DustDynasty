@@ -73,7 +73,8 @@ func _handle_tap(local_pos: Vector2) -> void:
 
 func _break_tile(col: int, row: int, ore: OreDefinition) -> void:
 	_grid[col][row] = null
-	tile_map_layer.erase_cell(Vector2i(col, row))
+	if tile_map_layer.tile_set != null:
+		tile_map_layer.erase_cell(Vector2i(col, row))
 	var tile_pos := Vector2(col * _config.tile_size + _config.tile_size * 0.5,
 			row * _config.tile_size + _config.tile_size * 0.5)
 	tile_broken.emit(ore, tile_pos)
@@ -136,13 +137,13 @@ func _generate_visible_rows() -> void:
 
 func _repaint_tilemap() -> void:
 	tile_map_layer.clear()
+	if tile_map_layer.tile_set == null:
+		return
 	for col in _config.grid_columns:
 		for row in _config.grid_rows:
 			var ore: OreDefinition = _grid[col][row]
 			if ore == null:
 				continue
-			# Use atlas coords sourced from the ore texture; source 0 covers all ores
-			# The actual TileSet is configured in the editor
 			tile_map_layer.set_cell(Vector2i(col, row), _get_source_id(ore), Vector2i.ZERO)
 
 
