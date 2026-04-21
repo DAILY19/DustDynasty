@@ -5,6 +5,9 @@ static func load_directory_recursively(path: String) -> Array[String]:
 	var result: Array[String] = []
 	path += "/"
 	var dir := DirAccess.open(path)
+	if dir == null:
+		push_warning("Utils.load_directory_recursively: cannot open '%s' (error %d)" % [path, DirAccess.get_open_error()])
+		return result
 	for sub_dir in dir.get_directories():
 		result.append_array(load_directory_recursively(path + sub_dir))
 	for file in dir.get_files():

@@ -26,11 +26,16 @@ func _ready() -> void:
 
 
 func _load_all() -> void:
-	_load_resource_array(ores_path, ores)
-	_load_resource_array(upgrades_path, upgrades)
-	_load_resource_array(workers_path, workers)
-	_load_resource_array(prestige_path, prestige_bonuses)
-	_load_resource_array(areas_path, terrain_instructions)
+	for item in _load_resource_array(ores_path):
+		ores.append(item)
+	for item in _load_resource_array(upgrades_path):
+		upgrades.append(item)
+	for item in _load_resource_array(workers_path):
+		workers.append(item)
+	for item in _load_resource_array(prestige_path):
+		prestige_bonuses.append(item)
+	for item in _load_resource_array(areas_path):
+		terrain_instructions.append(item)
 
 	# Merge terrain instructions into digging_variants
 	for ti in terrain_instructions:
@@ -41,9 +46,15 @@ func _load_all() -> void:
 	digging_variants.sort_custom(func(a, b): return a.sort_index < b.sort_index)
 
 
-func _load_resource_array(folder: String, array: Array) -> void:
+func _load_resource_array(folder: String) -> Array:
 	if folder.is_empty():
-		return
+		return []
+	var result: Array = []
 	for file_path in Utils.load_directory_recursively(folder):
 		if file_path.ends_with(".tres"):
-			array.append(load(file_path))
+			var resource = load(file_path)
+			if resource != null:
+				result.append(resource)
+			else:
+				push_warning("ClickerDataManager: failed to load '%s'" % file_path)
+	return result
