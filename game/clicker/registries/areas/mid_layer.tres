@@ -14,6 +14,6 @@ frequency = 0.04
 script = ExtResource("1_cti")
 min_depth = 100
 max_depth = 299
-ore_distributions = Array[Resource("res://game/clicker/resources/ore_definition.gd")]([ExtResource("4_iron"), ExtResource("3_silver"), ExtResource("2_stone")])
+blocks = Array[Resource("res://game/clicker/resources/block_definition.gd")]([ExtResource("4_iron"), ExtResource("3_silver"), ExtResource("2_stone")])
 noise = SubResource("noise_mid")
 background_color = Color(0.15, 0.15, 0.15, 1)
