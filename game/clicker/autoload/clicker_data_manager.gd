@@ -10,6 +10,8 @@ extends Node
 @export_dir var areas_path: String
 
 @export var config: ClickerConfig
+## Explicit area references loaded unconditionally — bypasses DirAccess for web compatibility.
+@export var areas: Array[Resource]
 
 var ores: Array[OreDefinition]
 var upgrades: Array[UpgradeDefinition]
@@ -37,7 +39,12 @@ func _load_all() -> void:
 	for item in _load_resource_array(areas_path):
 		terrain_instructions.append(item)
 
-	# Merge terrain instructions into digging_variants
+	# Merge explicit area references first — these are guaranteed on web where DirAccess may fail.
+	for area in areas:
+		if area is DiggingViewVariant and area not in digging_variants:
+			digging_variants.append(area as DiggingViewVariant)
+
+	# Merge anything the dynamic scan picked up that isn't already present.
 	for ti in terrain_instructions:
 		if ti not in digging_variants:
 			digging_variants.append(ti)

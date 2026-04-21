@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://game/clicker/autoload/clicker_data_manager.gd" id="1_cdm"]
 [ext_resource type="Resource" path="res://game/clicker/registries/clicker_config.tres" id="2_cfg"]
+[ext_resource type="Resource" path="res://game/clicker/registries/areas/shallow_layer.tres" id="3_shallow"]
+[ext_resource type="Resource" path="res://game/clicker/registries/areas/mid_layer.tres" id="4_mid"]
+[ext_resource type="Resource" path="res://game/clicker/registries/areas/deep_layer.tres" id="5_deep"]
+[ext_resource type="Resource" path="res://game/clicker/registries/areas/abyss_layer.tres" id="6_abyss"]
 
 [node name="ClickerDataManager" type="Node"]
 script = ExtResource("1_cdm")
@@ -11,3 +15,4 @@ workers_path = "res://game/clicker/registries/workers"
 prestige_path = "res://game/clicker/registries/prestige"
 areas_path = "res://game/clicker/registries/areas"
 config = ExtResource("2_cfg")
+areas = [ExtResource("3_shallow"), ExtResource("4_mid"), ExtResource("5_deep"), ExtResource("6_abyss")]
