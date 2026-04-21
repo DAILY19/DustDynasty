@@ -72,6 +72,16 @@ func play_ui_click() -> void:
 	_play_from(UI_CLICK_SOUNDS, -6.0)
 
 
+## Play an arbitrary AudioStream (used for per-block sound overrides).
+func play_stream(stream: AudioStream, volume_db: float = -10.0) -> void:
+	var player: AudioStreamPlayer = _get_free_player()
+	if player == null or stream == null:
+		return
+	player.stream = stream
+	player.volume_db = volume_db
+	player.play()
+
+
 func _preload_sounds() -> void:
 	var all: Array[String] = []
 	all.append_array(MINING_SOUNDS)

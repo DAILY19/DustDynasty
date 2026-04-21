@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/upgrade_definition.gd" id="1_upg"]
+
+[resource]
+script = ExtResource("1_upg")
+name = "fortunes_favor"
+type = 3
+description = "When it crits, it really crits."
+base_cost = 150.0
+cost_scaling = 2.0
+effect_per_level = 0.5
+max_level = 20

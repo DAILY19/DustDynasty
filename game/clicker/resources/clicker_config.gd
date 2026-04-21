@@ -26,8 +26,6 @@ extends Resource
 @export_category("Prestige")
 ## prestige_currency = sqrt(total_coins / prestige_cost_divisor)
 @export var prestige_cost_divisor: float = 1_000_000.0
-@export var prestige_reset_depth: int = 0
-
 @export_category("Offline")
 ## Maximum hours of offline earnings awarded on return.
 @export var offline_earnings_cap_hours: float = 4.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://game/clicker/ui/clicker_hud.gd" id="1_hud"]
 [ext_resource type="FontFile" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="2_font"]
@@ -8,11 +8,9 @@
 [ext_resource type="Script" path="res://game/clicker/ui/prestige_panel.gd" id="6_pp"]
 [ext_resource type="Script" path="res://game/clicker/ui/settings_panel.gd" id="7_sep"]
 [ext_resource type="Script" path="res://game/clicker/ui/offline_earnings_panel.gd" id="8_oep"]
-[ext_resource type="Script" path="res://game/clicker/ui/crafting_panel.gd" id="9_cp"]
 [ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 2.png" id="tx_shop"]
 [ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 8.png" id="tx_workers"]
 [ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 6.png" id="tx_prestige"]
-[ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 4.png" id="tx_craft"]
 [ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 11.png" id="tx_settings"]
 [ext_resource type="Texture2D" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 3.png" id="tx_surface"]
 
@@ -21,16 +19,6 @@ script = ExtResource("1_hud")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="DepthLabel" type="Label" parent="."]
-unique_name_in_owner = true
-offset_left = 8.0
-offset_top = 24.0
-offset_right = 160.0
-offset_bottom = 38.0
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 11
-text = "Depth: 0"
 
 [node name="DustLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -75,14 +63,6 @@ offset_top = 573.0
 offset_right = 310.0
 offset_bottom = 605.0
 texture_normal = ExtResource("tx_prestige")
-
-[node name="CraftingButton" type="TextureButton" parent="."]
-unique_name_in_owner = true
-offset_left = 50.0
-offset_top = 607.0
-offset_right = 130.0
-offset_bottom = 639.0
-texture_normal = ExtResource("tx_craft")
 
 [node name="SettingsButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
@@ -189,32 +169,6 @@ title = "Prestige?"
 dialog_text = "Reset progress and earn Dust?\nPrestige bonuses are kept."
 
 [node name="CloseButton" type="Button" parent="PrestigePanel"]
-anchors_preset = -1
-anchor_right = 0.2
-anchor_bottom = 0.06
-text = "X"
-
-[node name="CraftingPanel" type="PanelContainer" parent="."]
-unique_name_in_owner = true
-script = ExtResource("9_cp")
-anchors_preset = 8
-anchor_left = 0.05
-anchor_top = 0.1
-anchor_right = 0.95
-anchor_bottom = 0.9
-visible = false
-
-[node name="ComingSoonLabel" type="Label" parent="CraftingPanel"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Crafting — Coming Soon"
-
-[node name="CloseButton" type="Button" parent="CraftingPanel"]
 anchors_preset = -1
 anchor_right = 0.2
 anchor_bottom = 0.06

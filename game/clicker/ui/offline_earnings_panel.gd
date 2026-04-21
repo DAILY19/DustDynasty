@@ -1,12 +1,18 @@
 extends PanelContainer
 ## OfflineEarningsPanel — shown on launch when offline earnings are awarded.
 
-@onready var earnings_label: Label = $VBox/EarningsLabel
-@onready var time_label: Label = $VBox/TimeLabel
-@onready var collect_button: Button = $VBox/CollectButton
+@onready var earnings_label: Label = $VBoxContainer/VBox/EarningsLabel
+@onready var time_label: Label = $VBoxContainer/VBox/TimeLabel
+@onready var collect_button: Button = $VBoxContainer/VBox/CollectButton
 
 
 func _ready() -> void:
+	set_anchors_preset(Control.PRESET_TOP_LEFT)
+	position = UIStyle.SMALL_PANEL_POS
+	size = UIStyle.SMALL_PANEL_SIZE
+	add_theme_stylebox_override("panel", UIStyle.make_panel_bg())
+	var title_lbl: Label = $VBoxContainer/Header/TitleLabel
+	title_lbl.add_theme_color_override("font_color", UIStyle.TEXT_WHITE)
 	collect_button.pressed.connect(_on_collect_button_pressed)
 	ClickerGameState.offline_earnings_awarded.connect(_on_earnings_awarded)
 	visible = false

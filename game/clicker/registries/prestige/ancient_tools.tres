@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PrestigeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/prestige_definition.gd" id="1_prs"]
+
+[resource]
+script = ExtResource("1_prs")
+name = "ancient_tools"
+type = 4
+description = "Prestige-era pick techniques. Tap power grows with each rebirth."
+base_multiplier = 1.3
+cost_per_level = 3.0

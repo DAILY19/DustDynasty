@@ -10,4 +10,3 @@ base_cost = 50.0
 cost_scaling = 1.12
 dig_power = 1.0
 dig_speed = 0.5
-unlock_depth = 0

@@ -1,0 +1,35 @@
+[gd_scene format=4 uid="uid://area_card_001"]
+
+[ext_resource type="Script" path="res://game/clicker/ui/area_card.gd" id="1_ac"]
+
+[node name="AreaCard" type="PanelContainer"]
+script = ExtResource("1_ac")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AreaNameLabel" type="Label" parent="VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Area Name"
+
+[node name="CostLabel" type="Label" parent="VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="HBoxButtons" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="SwitchButton" type="Button" parent="VBox/HBoxButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Enter"
+
+[node name="UnlockButton" type="Button" parent="VBox/HBoxButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unlock"

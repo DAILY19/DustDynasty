@@ -16,22 +16,27 @@ extends MyNamedResource
 @export var particle_color: Color = Color.WHITE
 ## TileSet atlas source ID for the TileMapLayer display.
 @export var tileset_source_id: int = 0
-## Crystal overlay color: "yellow", "green", "blue", "black", or "" for none.
-@export var crystal_color: String = ""
+## Sprite sheet used for the dirt/background tile (16×16, 2× scaled in OreBlock).
+@export var block_texture: Texture2D
+## Optional crystal overlay spritesheet (horizontal strip, 8 frames × 16px).
+## Leave null for blocks with no crystal. Replaces the old crystal_color string.
+@export var crystal_texture: Texture2D
 ## Optional standalone texture for block icon / inventory display.
 @export var texture: Texture2D
-
-@export_category("Depth Range")
-## Minimum depth where this block can appear.
-@export var min_depth: int = 0
-## Maximum depth where this block can appear.
-@export var max_depth: int = 9999
 
 @export_category("Generation")
 ## Noise threshold used by ClickerTerrainGenerator to decide placement.
 @export var noise_threshold: float = 0.0
+## Relative spawn weight for non-noise weighted random selection (editors, future generators).
+@export var spawn_weight: float = 1.0
 ## Background color hint when the majority of the grid is this block.
 @export var background_color: Color = Color(0.2, 0.15, 0.1)
+
+@export_category("Audio")
+## Sound played on every tap hit. Leave null to use the default tap sound.
+@export var tap_sound: AudioStream
+## Sound played when the block breaks. Leave null to use the default break sound.
+@export var break_sound: AudioStream
 
 ## Convenience: the effective dust value taking scale into account.
 func get_effective_value() -> float:

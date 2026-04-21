@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PrestigeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/prestige_definition.gd" id="1_prs"]
+
+[resource]
+script = ExtResource("1_prs")
+name = "deep_knowledge"
+type = 0
+description = "The earth reveals its secrets. All dust earned is multiplied."
+base_multiplier = 1.25
+cost_per_level = 5.0

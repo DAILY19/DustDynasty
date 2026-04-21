@@ -3,9 +3,9 @@ extends Node2D
 ## Moves tile-to-tile using tweens and plays a small squash-and-stretch dig animation.
 ## Instantiated and managed by digging_view.gd in response to worker_hired signal.
 
-var _columns: int = 10
-var _rows: int = 15
-var _tile_size: int = 32
+var _columns: int = 0
+var _rows: int = 0
+var _tile_size: int = 0
 var _col: int = 0
 var _row: int = 0
 

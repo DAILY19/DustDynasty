@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="OreDefinition" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://game/clicker/resources/ore_definition.gd" id="1_oredef"]
-[ext_resource type="Texture2D" path="res://game/blocks/stone block/stone.png" id="2_tex"]
+[ext_resource type="Texture2D" path="res://assets/blocks/stone.png" id="2_tex"]
 
 [resource]
 script = ExtResource("1_oredef")
@@ -11,7 +11,5 @@ value = 3.0
 hardness = 1.5
 particle_color = Color(0.36, 0.36, 0.36, 1)
 noise_threshold = 0.0
-min_depth = 10
-max_depth = 200
 background_color = Color(0.18, 0.18, 0.18, 1)
 tileset_source_id = 5

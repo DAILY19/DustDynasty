@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends PanelContainer
 ## PrestigeRow — one bonus entry inside PrestigePanel.
 
 @onready var icon_texture: TextureRect = %IconTexture
@@ -12,6 +12,14 @@ var _prestige: PrestigeDefinition
 
 
 func _ready() -> void:
+	add_theme_stylebox_override("panel", UIStyle.make_row_bg())
+	name_label.add_theme_color_override("font_color", UIStyle.TEXT_WHITE)
+	description_label.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
+	level_label.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
+	cost_label.add_theme_color_override("font_color", UIStyle.GOLD_ACCENT)
+	buy_button.add_theme_stylebox_override("normal", UIStyle.make_button_normal())
+	buy_button.add_theme_stylebox_override("hover", UIStyle.make_button_hover())
+	buy_button.add_theme_stylebox_override("pressed", UIStyle.make_button_pressed())
 	buy_button.pressed.connect(_on_buy_button_pressed)
 
 

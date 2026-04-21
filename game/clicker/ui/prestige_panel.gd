@@ -3,17 +3,29 @@ extends PanelContainer
 
 const PRESTIGE_ROW_SCENE: String = "res://game/clicker/ui/prestige_row.tscn"
 
-@onready var pending_dust_label: Label = $PendingDustLabel
-@onready var owned_dust_label: Label = $OwnedDustLabel
-@onready var scroll_content: VBoxContainer = $ScrollContainer/ScrollContent
-@onready var prestige_button: Button = $PrestigeButton
-@onready var close_button: Button = $CloseButton
+@onready var pending_dust_label: Label = $VBoxContainer/PendingDustLabel
+@onready var owned_dust_label: Label = $VBoxContainer/OwnedDustLabel
+@onready var scroll_content: VBoxContainer = $VBoxContainer/ScrollContainer/ScrollContent
+@onready var prestige_button: Button = $VBoxContainer/PrestigeButton
+@onready var close_button: Button = $VBoxContainer/Header/CloseButton
 @onready var confirm_dialog: ConfirmationDialog = $ConfirmDialog
 
 var _row_scene: PackedScene
 
 
 func _ready() -> void:
+	set_anchors_preset(Control.PRESET_TOP_LEFT)
+	position = UIStyle.MAIN_PANEL_POS
+	size = UIStyle.MAIN_PANEL_SIZE
+	add_theme_stylebox_override("panel", UIStyle.make_panel_bg())
+	var title_lbl: Label = $VBoxContainer/Header/TitleLabel
+	title_lbl.add_theme_color_override("font_color", UIStyle.TEXT_WHITE)
+	close_button.add_theme_stylebox_override("normal", UIStyle.make_button_normal())
+	close_button.add_theme_stylebox_override("hover", UIStyle.make_button_hover())
+	close_button.add_theme_stylebox_override("pressed", UIStyle.make_button_pressed())
+	close_button.add_theme_color_override("font_color", UIStyle.TEXT_WHITE)
+	pending_dust_label.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
+	owned_dust_label.add_theme_color_override("font_color", UIStyle.TEXT_DIM)
 	_row_scene = load(PRESTIGE_ROW_SCENE)
 	_build_rows()
 	close_button.pressed.connect(_on_close_button_pressed)

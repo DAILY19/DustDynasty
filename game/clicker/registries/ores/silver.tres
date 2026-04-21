@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="OreDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/clicker/resources/ore_definition.gd" id="1_oredef"]
+[ext_resource type="Texture2D" path="res://assets/blocks/coal.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_oredef")
+name = "silver"
+texture = ExtResource("2_tex")
+value = 18.0
+hardness = 2.5
+particle_color = Color(0.75, 0.75, 0.82, 1)
+noise_threshold = 0.35
+background_color = Color(0.2, 0.2, 0.22, 1)
+tileset_source_id = 1

@@ -6,15 +6,16 @@ extends Node2D
 signal tile_broken(block: BlockDefinition, position: Vector2)
 signal row_cleared(depth: int)
 
-const BREAK_LABEL_SCENE: String = "res://game/clicker/scenes/floating_label.tscn"
-const WORKER_SPRITE_SCENE: String = "res://game/clicker/scenes/worker_sprite.tscn"
-const ORE_BLOCK_SCENE: String = "res://game/clicker/scenes/ore_block.tscn"
 ## Maximum worker sprites shown at once regardless of total worker count.
 const MAX_VISIBLE_WORKERS: int = 8
 
+## Default scenes — set in the Inspector. Variants can override ore_block_scene per-grid.
+@export var default_ore_block_scene: PackedScene
+@export var default_floating_label_scene: PackedScene
+@export var default_worker_sprite_scene: PackedScene
+
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var background_rect: ColorRect = $BackgroundRect
-@onready var depth_progress_bar: ProgressBar = $DepthProgressBar
 @onready var break_particles: GPUParticles2D = $BreakParticles
 @onready var ore_layer: Node2D = $OreLayer
 @onready var worker_layer: Node2D = $WorkerLayer
@@ -32,8 +33,7 @@ var _world_seed: int = 0
 var _current_variant: DiggingViewVariant = null
 
 var _config: ClickerConfig
-var _floating_label_scene: PackedScene
-var _worker_sprite_scene: PackedScene
+## Resolved at runtime — either variant override or the exported default.
 var _ore_block_scene: PackedScene
 var _worker_sprites: Array = []
 
@@ -49,11 +49,15 @@ const MINING_STUCK_THRESHOLD: float = 2.0
 
 func _ready() -> void:
 	_config = ClickerDataManager.config
-	_floating_label_scene = load(BREAK_LABEL_SCENE)
-	_worker_sprite_scene = load(WORKER_SPRITE_SCENE)
-	_ore_block_scene = load(ORE_BLOCK_SCENE)
 	_world_seed = randi()
-	ClickerGameState.depth_changed.connect(_on_depth_changed)
+	# Fall back to hard-coded paths when the Inspector exports are not set.
+	if not default_ore_block_scene:
+		default_ore_block_scene = load("res://game/clicker/scenes/ore_block.tscn")
+	if not default_floating_label_scene:
+		default_floating_label_scene = load("res://game/clicker/scenes/floating_label.tscn")
+	if not default_worker_sprite_scene:
+		default_worker_sprite_scene = load("res://game/clicker/scenes/worker_sprite.tscn")
+	ClickerGameState.area_changed.connect(_on_area_changed)
 	ClickerGameState.worker_hired.connect(_on_worker_hired)
 	player_miner.hit_frame.connect(_on_player_hit_frame)
 	player_miner.move_finished.connect(_on_player_move_finished)
@@ -78,8 +82,10 @@ func _process(delta: float) -> void:
 
 
 # ── Input ──────────────────────────────────────────────────────────────────
+# _unhandled_input only fires when no GUI control (button, panel, etc.)
+# has already consumed the event, so no guard is needed here.
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if _mining_active:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -139,7 +145,10 @@ func _on_player_hit_frame() -> void:
 	# Earn dust for every hit
 	var earned: float = ClickerGameState.mine_block(block)
 	if earned > 0.0:
-		ClickerSoundPlayer.play_tap()
+		if block.tap_sound:
+			ClickerSoundPlayer.play_stream(block.tap_sound)
+		else:
+			ClickerSoundPlayer.play_tap()
 		_spawn_floating_label(_get_cell_center(col, row), ClickerGameState.format_number(earned))
 
 	_play_break_particles(_get_cell_center(col, row), block.particle_color)
@@ -189,7 +198,6 @@ func _on_player_move_finished() -> void:
 func _begin_grid_reset() -> void:
 	_cursor_col = 0
 	_cursor_row = 0
-	ClickerGameState.advance_depth()
 	_generate_grid()
 	_update_depth_progress_bar()
 	var start_pos: Vector2 = _get_cell_center(0, 0)
@@ -209,7 +217,10 @@ func _break_tile(col: int, row: int, block: BlockDefinition) -> void:
 		tile_map_layer.erase_cell(cell)
 	var tile_pos: Vector2 = _get_cell_center(col, row)
 	tile_broken.emit(block, tile_pos)
-	ClickerSoundPlayer.play_break(block.get_effective_value() >= 5.0)
+	if block.break_sound:
+		ClickerSoundPlayer.play_stream(block.break_sound)
+	else:
+		ClickerSoundPlayer.play_break(block.get_effective_value() >= 5.0)
 	_update_depth_progress_bar()
 
 
@@ -223,17 +234,12 @@ func _snap_player_to_cursor() -> void:
 	player_miner.position = _get_cell_center(_cursor_col, _cursor_row)
 
 
-## Resize the background rect and progress bar to match the grid dimensions.
+## Resize the background rect to match the grid dimensions.
 func _resize_to_grid() -> void:
 	var grid_w: float = _config.grid_columns * _config.tile_size
 	var grid_h: float = _config.grid_rows * _config.tile_size
 	if background_rect:
 		background_rect.size = Vector2(grid_w, grid_h)
-	if depth_progress_bar:
-		depth_progress_bar.offset_left = 0
-		depth_progress_bar.offset_top = grid_h - 8
-		depth_progress_bar.offset_right = grid_w
-		depth_progress_bar.offset_bottom = grid_h
 
 
 func _is_row_clear(row: int) -> bool:
@@ -249,15 +255,20 @@ func _generate_grid() -> void:
 	_grid.clear()
 	_hp.clear()
 
-	# Pick a variant for this grid
-	_current_variant = ClickerTerrainGenerator.pick_variant(ClickerGameState.depth)
+	# Use the currently selected area, falling back to the first registered variant.
+	_current_variant = ClickerGameState.current_area
+	if _current_variant == null and not ClickerDataManager.digging_variants.is_empty():
+		_current_variant = ClickerDataManager.digging_variants[0]
+	_ore_block_scene = (_current_variant.ore_block_scene
+		if _current_variant and _current_variant.ore_block_scene
+		else default_ore_block_scene)
 
 	for col in _config.grid_columns:
 		_grid.append([])
 		_hp.append([])
 
 	for row in _config.grid_rows:
-		var terrain_depth: int = ClickerGameState.depth * _config.grid_rows + row
+		var terrain_depth: int = row  # row index within the current area (no global depth)
 		var new_row: Array = ClickerTerrainGenerator.generate_row(_current_variant, terrain_depth, _config.grid_columns, _world_seed)
 		for col in _config.grid_columns:
 			var block: BlockDefinition = new_row[col]
@@ -301,37 +312,23 @@ func _spawn_ore_blocks() -> void:
 
 
 func _update_background() -> void:
-	var target_color: Color
-	if _current_variant:
-		target_color = _current_variant.background_color
-	else:
-		var instruction: ClickerTerrainInstruction = ClickerDataManager.get_terrain_instruction(ClickerGameState.depth)
-		if not instruction or not background_rect:
-			return
-		target_color = instruction.background_color
-	if not background_rect:
+	if not background_rect or not _current_variant:
 		return
+	var target_color: Color = _current_variant.background_color
 	if background_rect.color.is_equal_approx(target_color):
 		return
 	var tween: Tween = create_tween()
 	tween.tween_property(background_rect, "color", target_color, 1.5).set_ease(Tween.EASE_IN_OUT)
 
 
-func _on_depth_changed(_new_depth: int) -> void:
-	_update_background()
+func _on_area_changed(_area: DiggingViewVariant) -> void:
+	_world_seed = randi()  # new seed so the grid looks different
+	_generate_grid()
+	_snap_player_to_cursor()
 
 
 func _update_depth_progress_bar() -> void:
-	if not depth_progress_bar:
-		return
-	var empty: int = 0
-	for col in _config.grid_columns:
-		for row in _config.grid_rows:
-			if _grid[col][row] == null:
-				empty += 1
-	var total: int = _config.grid_columns * _config.grid_rows
-	depth_progress_bar.max_value = total
-	depth_progress_bar.value = empty
+	pass  # DepthProgressBar node removed from scene
 
 
 # ── Workers (cosmetic) ─────────────────────────────────────────────────────
@@ -349,7 +346,7 @@ func _refresh_workers() -> void:
 		var s = _worker_sprites.pop_back()
 		s.queue_free()
 	while _worker_sprites.size() < target:
-		var s = _worker_sprite_scene.instantiate()
+		var s = default_worker_sprite_scene.instantiate()
 		worker_layer.add_child(s)
 		s.setup(_config.grid_columns, _config.grid_rows, _config.tile_size)
 		_worker_sprites.append(s)
@@ -358,9 +355,9 @@ func _refresh_workers() -> void:
 # ── Visual helpers ─────────────────────────────────────────────────────────
 
 func _spawn_floating_label(pos: Vector2, text: String) -> void:
-	if not _floating_label_scene:
+	if not default_floating_label_scene:
 		return
-	var label: Node = _floating_label_scene.instantiate()
+	var label: Node = default_floating_label_scene.instantiate()
 	add_child(label)
 	label.global_position = to_global(pos)
 	if label.has_method("show_value"):

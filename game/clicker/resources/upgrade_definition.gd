@@ -22,5 +22,4 @@ enum UpgradeType {
 @export var effect_per_level: float = 1.0
 @export var max_level: int = 50
 
-@export_category("Unlock")
-@export var unlock_depth: int = 0
+

@@ -11,4 +11,3 @@ base_cost = 10.0
 cost_scaling = 1.5
 effect_per_level = 1.0
 max_level = 100
-unlock_depth = 0

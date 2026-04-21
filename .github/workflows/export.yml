@@ -19,9 +19,9 @@ jobs:
     name: Godot Web Export
     runs-on: ubuntu-latest
     env:
-      GODOT_TAG: "4.6.1-stable"
-      # Godot's template folder uses dots, not dashes: 4.6.1.stable
-      GODOT_TEMPLATES_DIR: "4.6.1.stable"
+      GODOT_TAG: "4.6.2-stable"
+      # Godot's template folder uses dots, not dashes: 4.6.2.stable
+      GODOT_TEMPLATES_DIR: "4.6.2.stable"
 
     steps:
       - name: Checkout repository

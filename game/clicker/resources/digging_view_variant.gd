@@ -1,14 +1,13 @@
 class_name DiggingViewVariant
 extends MyNamedResource
 
-@export_category("Selection")
-## Relative probability of this variant being chosen for a new grid.
-## Higher weight = more likely. A weight of 0 disables the variant.
-@export var weight: float = 1.0
-## Minimum depth before this variant can be selected.
-@export var min_depth: int = 0
-## Maximum depth at which this variant can appear (-1 = unlimited).
-@export var max_depth: int = -1
+@export_category("Identity")
+## Display name shown in the area-select UI.
+@export var area_name: String = ""
+## Dust cost to unlock this area. 0 = unlocked from the start (starter area).
+@export var purchase_cost: float = 0.0
+## Sort order for the area picker (lower index appears first).
+@export var sort_index: int = 0
 
 @export_category("Block Palette")
 ## Ordered list of blocks available in this variant.
@@ -28,12 +27,6 @@ extends MyNamedResource
 @export var noise: FastNoiseLite
 
 
-## Returns true if this variant is valid for the given depth.
-func is_available_at_depth(depth: int) -> bool:
-	if weight <= 0.0:
-		return false
-	if depth < min_depth:
-		return false
-	if max_depth >= 0 and depth > max_depth:
-		return false
-	return true
+## True if this variant is the starter (free) area.
+func is_starter() -> bool:
+	return purchase_cost <= 0.0

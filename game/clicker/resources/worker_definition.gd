@@ -12,5 +12,4 @@ extends MyNamedResource
 @export var dig_power: float = 1.0
 @export var dig_speed: float = 1.0
 
-@export_category("Unlock")
-@export var unlock_depth: int = 0
+

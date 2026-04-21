@@ -6,12 +6,8 @@
 [node name="ClickerDataManager" type="Node"]
 script = ExtResource("1_cdm")
 ores_path = "res://game/clicker/registries/ores"
-blocks_path = "res://game/clicker/registries/blocks"
 upgrades_path = "res://game/clicker/registries/upgrades"
 workers_path = "res://game/clicker/registries/workers"
 prestige_path = "res://game/clicker/registries/prestige"
-terrain_path = "res://game/clicker/registries/terrain"
-digging_variants_path = "res://game/clicker/registries/variants"
-milestones_path = "res://game/clicker/registries/milestones"
-crafting_recipes_path = "res://game/clicker/registries/recipes"
+areas_path = "res://game/clicker/registries/areas"
 config = ExtResource("2_cfg")

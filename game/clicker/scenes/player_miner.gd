@@ -12,6 +12,9 @@ enum State { IDLE, DIGGING, MOVING, RESETTING }
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var state: int = State.IDLE
+## The animation frame index on the "mine" animation that emits hit_frame.
+## Matches the pickaxe-impact frame in the current sprite sheet (frame 2 for Character 014).
+@export var impact_frame: int = 2
 
 
 func _ready() -> void:
@@ -57,7 +60,7 @@ func finish_digging() -> void:
 
 
 func _on_frame_changed() -> void:
-	if state == State.DIGGING and sprite.animation == &"mine" and sprite.frame == 2:
+	if state == State.DIGGING and sprite.animation == &"mine" and sprite.frame == impact_frame:
 		hit_frame.emit()
 
 

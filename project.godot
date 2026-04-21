@@ -17,11 +17,11 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Dust Dynasty: Diggers Unite"
 run/main_scene="res://game/clicker/scenes/clicker_game.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://game/items/pickaxe/pickaxe.png"
+config/icon="res://assets/items/pickaxe/pickaxe.png"
 
 [autoload]
 
-UserConfig="*res://game/autoload singletons/user_config.gd"
+UserConfig="*res://game/autoload/user_config.gd"
 ClickerDataManager="*res://game/clicker/autoload/clicker_data_manager.tscn"
 ClickerGameState="*res://game/clicker/autoload/clicker_game_state.gd"
 ClickerSaveManager="*res://game/clicker/autoload/clicker_save_manager.gd"
@@ -47,10 +47,7 @@ enabled=PackedStringArray()
 [file_customization]
 
 folder_colors={
-"res://game/": "yellow",
-"res://game/blocks/": "orange",
-"res://game/items/": "teal",
-"res://media/": "gray"
+"res://game/": "yellow"
 }
 
 [filesystem]
@@ -80,7 +77,8 @@ texture={
 "process/premult_alpha": false,
 "process/size_limit": 0,
 "roughness/mode": 0,
-"roughness/src_normal": ""
+"roughness/src_normal": "",
+"sampling/filter": 2
 }
 
 [input]
@@ -192,6 +190,5 @@ left_mouse_button={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.803922, 0.721569, 0.690196, 1)
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"

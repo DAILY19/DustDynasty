@@ -1,18 +1,18 @@
 [gd_scene format=4 uid="uid://psm0r75w8w0i"]
 
 [ext_resource type="Script" uid="uid://cxayhej8iibf2" path="res://game/clicker/scenes/clicker_game.gd" id="1_cg"]
-[ext_resource type="PackedScene" path="res://game/clicker/scenes/digging_view.tscn" id="2_dv"]
+[ext_resource type="PackedScene" uid="uid://c1aua0b6osa0k" path="res://game/clicker/scenes/digging_view.tscn" id="2_dv"]
 [ext_resource type="FontFile" uid="uid://bsv8f2qbdtnp6" path="res://assets/fonts/Title/neatpixels-boss.ttf" id="6_cari4"]
 [ext_resource type="FontFile" uid="uid://bc41fkxaq6o3n" path="res://assets/fonts/Block/neatpixels-blocks.ttf" id="7_egqku"]
-[ext_resource type="Texture2D" uid="uid://cvdaaj1gs15mg" path="res://assets/sprites/tilesets/Platformer Series - Tileset #02/Tilesets/PS_Tileset_02.png" id="19_62afl"]
-[ext_resource type="Script" uid="uid://dclf2jvhwl66b" path="res://game/clicker/ui/crafting_panel.gd" id="cp_gd"]
+[ext_resource type="Texture2D" uid="uid://d2ec25hxql3yy" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 3.png" id="9_r10rm"]
+[ext_resource type="Texture2D" uid="uid://cvdaaj1gs15mg" path="res://assets/tilesets/Dirt Tileset/PS_Tileset_02.png" id="19_62afl"]
+[ext_resource type="Script" uid="uid://bwiyg0bspmrn2" path="res://game/clicker/ui/areas_panel.gd" id="areas_panel_gd"]
 [ext_resource type="Script" uid="uid://cr76f8j5lobbq" path="res://game/clicker/ui/clicker_hud.gd" id="hud_gd"]
 [ext_resource type="Script" uid="uid://hmx6w8jcgal0" path="res://game/clicker/ui/offline_earnings_panel.gd" id="oep_gd"]
 [ext_resource type="Script" uid="uid://bos2lgwwypvwf" path="res://game/clicker/ui/prestige_panel.gd" id="pp_gd"]
 [ext_resource type="Script" uid="uid://cvhg4e1avutn5" path="res://game/clicker/ui/settings_panel.gd" id="sep_gd"]
 [ext_resource type="Script" uid="uid://bi66kk5f43q6q" path="res://game/clicker/ui/shop_panel.gd" id="sp_gd"]
 [ext_resource type="FontFile" uid="uid://d0be5ih81ejnd" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="std_font"]
-[ext_resource type="Texture2D" uid="uid://cemgqq5usxkpt" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 4.png" id="tx_craft"]
 [ext_resource type="Texture2D" uid="uid://c31n22nl1oqu4" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 6.png" id="tx_prestige"]
 [ext_resource type="Texture2D" uid="uid://w703iscd0a2v" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 11.png" id="tx_settings"]
 [ext_resource type="Texture2D" uid="uid://c07jwwb4eop6u" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 2.png" id="tx_shop"]
@@ -257,9 +257,6 @@ script = ExtResource("1_cg")
 [node name="DiggingView" parent="." unique_id=650743126 instance=ExtResource("2_dv")]
 position = Vector2(52, 185)
 
-[node name="DepthMilestoneContainer" type="Node2D" parent="." unique_id=771779767]
-visible = false
-
 [node name="ClickerHUD" type="Control" parent="." unique_id=100000001]
 layout_mode = 3
 anchors_preset = 15
@@ -267,6 +264,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("hud_gd")
 
 [node name="TitleLabel" type="Label" parent="ClickerHUD" unique_id=200000001]
@@ -274,7 +272,7 @@ z_index = 2
 layout_mode = 1
 offset_top = 40.0
 offset_right = 360.0
-offset_bottom = 60.0
+offset_bottom = 66.0
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 13
 text = "DUST DYNASTY"
@@ -283,9 +281,9 @@ horizontal_alignment = 1
 [node name="SubtitleLabel" type="Label" parent="ClickerHUD" unique_id=200000002]
 z_index = 2
 layout_mode = 1
-offset_top = 72.0
+offset_top = 64.0
 offset_right = 360.0
-offset_bottom = 86.0
+offset_bottom = 85.0
 theme_override_fonts/font = ExtResource("7_egqku")
 theme_override_font_sizes/font_size = 9
 text = "Diggers Unite"
@@ -295,143 +293,187 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 z_index = 2
 layout_mode = 1
-offset_left = 280.0
+offset_left = 32.0
 offset_top = 72.0
-offset_right = 410.0
-offset_bottom = 87.0
+offset_right = 162.0
+offset_bottom = 99.0
 theme_override_fonts/font = ExtResource("std_font")
 theme_override_font_sizes/font_size = 11
 text = "Dust: 0"
 
-[node name="ShopButton" type="TextureButton" parent="ClickerHUD" unique_id=100000006]
+[node name="DpsLabel" type="Label" parent="ClickerHUD" unique_id=100000005]
 unique_name_in_owner = true
 z_index = 2
 layout_mode = 1
-offset_left = 280.0
-offset_top = 576.0
-offset_right = 360.0
-offset_bottom = 608.0
-texture_normal = ExtResource("tx_shop")
+offset_left = 240.0
+offset_top = 72.0
+offset_right = 448.0
+offset_bottom = 99.0
+theme_override_fonts/font = ExtResource("std_font")
+theme_override_font_sizes/font_size = 11
+text = "0/s"
 
-[node name="WorkersButton" type="TextureButton" parent="ClickerHUD" unique_id=100000007]
-unique_name_in_owner = true
+[node name="NavBar" type="HBoxContainer" parent="ClickerHUD" unique_id=100000050]
 z_index = 2
 layout_mode = 1
-offset_left = 248.0
-offset_top = 536.0
-offset_right = 328.0
-offset_bottom = 568.0
-texture_normal = ExtResource("tx_workers")
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="PrestigeButton" type="TextureButton" parent="ClickerHUD" unique_id=100000008]
+[node name="SettingsButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000010]
 unique_name_in_owner = true
-z_index = 2
-layout_mode = 1
-offset_left = 192.0
-offset_top = 576.0
-offset_right = 272.0
-offset_bottom = 608.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ignore_texture_size = true
+texture_normal = ExtResource("tx_settings")
+
+[node name="PrestigeButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000008]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ignore_texture_size = true
 texture_normal = ExtResource("tx_prestige")
 
-[node name="CraftingButton" type="TextureButton" parent="ClickerHUD" unique_id=100000009]
+[node name="AreasButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000043]
 unique_name_in_owner = true
-z_index = 2
-layout_mode = 1
-offset_left = 16.0
-offset_top = 576.0
-offset_right = 96.0
-offset_bottom = 608.0
-texture_normal = ExtResource("tx_craft")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ignore_texture_size = true
+texture_normal = ExtResource("9_r10rm")
 
-[node name="SettingsButton" type="TextureButton" parent="ClickerHUD" unique_id=100000010]
+[node name="WorkersButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000007]
 unique_name_in_owner = true
-z_index = 2
-layout_mode = 1
-offset_left = 104.0
-offset_top = 576.0
-offset_right = 184.0
-offset_bottom = 608.0
-texture_normal = ExtResource("tx_settings")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ignore_texture_size = true
+texture_normal = ExtResource("tx_workers")
+
+[node name="ShopButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000006]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ignore_texture_size = true
+texture_normal = ExtResource("tx_shop")
 
 [node name="ShopPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000012]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.1
-anchor_right = 0.95
-anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("sp_gd")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/ShopPanel" unique_id=100000013]
+[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/ShopPanel" unique_id=100000060]
 layout_mode = 2
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/ShopPanel/ScrollContainer" unique_id=100000014]
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/ShopPanel/VBoxContainer" unique_id=100000061]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/ShopPanel/VBoxContainer/Header" unique_id=100000062]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+text = "UPGRADES"
 
-[node name="CloseButton" type="Button" parent="ClickerHUD/ShopPanel" unique_id=100000015]
+[node name="CloseButton" type="Button" parent="ClickerHUD/ShopPanel/VBoxContainer/Header" unique_id=100000015]
 layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
 text = "X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/ShopPanel/VBoxContainer" unique_id=100000013]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/ShopPanel/VBoxContainer/ScrollContainer" unique_id=100000014]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="WorkersPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000016]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.1
-anchor_right = 0.95
-anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("wp_gd")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/WorkersPanel" unique_id=100000017]
+[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/WorkersPanel" unique_id=100000070]
 layout_mode = 2
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/WorkersPanel/ScrollContainer" unique_id=100000018]
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/WorkersPanel/VBoxContainer" unique_id=100000071]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/WorkersPanel/VBoxContainer/Header" unique_id=100000072]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+text = "WORKERS"
 
-[node name="CloseButton" type="Button" parent="ClickerHUD/WorkersPanel" unique_id=100000019]
+[node name="CloseButton" type="Button" parent="ClickerHUD/WorkersPanel/VBoxContainer/Header" unique_id=100000019]
 layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
 text = "X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/WorkersPanel/VBoxContainer" unique_id=100000017]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/WorkersPanel/VBoxContainer/ScrollContainer" unique_id=100000018]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PrestigePanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000020]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.1
-anchor_right = 0.95
-anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("pp_gd")
 
-[node name="PendingDustLabel" type="Label" parent="ClickerHUD/PrestigePanel" unique_id=100000021]
+[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/PrestigePanel" unique_id=100000080]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000081]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/PrestigePanel/VBoxContainer/Header" unique_id=100000082]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+text = "PRESTIGE"
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/PrestigePanel/VBoxContainer/Header" unique_id=100000027]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+text = "X"
+
+[node name="PendingDustLabel" type="Label" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000021]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Earn on Prestige: 0 Dust"
 
-[node name="OwnedDustLabel" type="Label" parent="ClickerHUD/PrestigePanel" unique_id=100000022]
+[node name="OwnedDustLabel" type="Label" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000022]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Owned Dust: 0"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/PrestigePanel" unique_id=100000023]
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000023]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/PrestigePanel/ScrollContainer" unique_id=100000024]
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/PrestigePanel/VBoxContainer/ScrollContainer" unique_id=100000024]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PrestigeButton" type="Button" parent="ClickerHUD/PrestigePanel" unique_id=100000025]
+[node name="PrestigeButton" type="Button" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000025]
 layout_mode = 2
 text = "PRESTIGE"
 
@@ -441,58 +483,48 @@ title = "Prestige?"
 dialog_text = "Reset progress and earn Dust?
 Prestige bonuses are kept."
 
-[node name="CloseButton" type="Button" parent="ClickerHUD/PrestigePanel" unique_id=100000027]
-layout_mode = 2
-text = "X"
-
-[node name="CraftingPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000028]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.1
-anchor_right = 0.95
-anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("cp_gd")
-
-[node name="ComingSoonLabel" type="Label" parent="ClickerHUD/CraftingPanel" unique_id=100000029]
-layout_mode = 2
-text = "Crafting — Coming Soon"
-
-[node name="CloseButton" type="Button" parent="ClickerHUD/CraftingPanel" unique_id=100000030]
-layout_mode = 2
-text = "X"
-
 [node name="SettingsPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000031]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.2
-anchor_right = 0.9
-anchor_bottom = 0.8
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("sep_gd")
 
-[node name="VBox" type="VBoxContainer" parent="ClickerHUD/SettingsPanel" unique_id=100000032]
+[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/SettingsPanel" unique_id=100000090]
 layout_mode = 2
 
-[node name="VolumeSlider" type="HSlider" parent="ClickerHUD/SettingsPanel/VBox" unique_id=100000033]
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/SettingsPanel/VBoxContainer" unique_id=100000091]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/SettingsPanel/VBoxContainer/Header" unique_id=100000092]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+text = "SETTINGS"
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/SettingsPanel/VBoxContainer/Header" unique_id=100000037]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+text = "X"
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/SettingsPanel/VBoxContainer" unique_id=100000032]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VolumeSlider" type="HSlider" parent="ClickerHUD/SettingsPanel/VBoxContainer/VBox" unique_id=100000033]
 unique_name_in_owner = true
 layout_mode = 2
 value = 50.0
 
-[node name="MuteButton" type="CheckButton" parent="ClickerHUD/SettingsPanel/VBox" unique_id=100000034]
+[node name="MuteButton" type="CheckButton" parent="ClickerHUD/SettingsPanel/VBoxContainer/VBox" unique_id=100000034]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Mute"
 
-[node name="ResetButton" type="Button" parent="ClickerHUD/SettingsPanel/VBox" unique_id=100000035]
+[node name="ResetButton" type="Button" parent="ClickerHUD/SettingsPanel/VBoxContainer/VBox" unique_id=100000035]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Reset Save"
@@ -502,46 +534,87 @@ unique_name_in_owner = true
 title = "Reset Save?"
 dialog_text = "This will delete all progress. Are you sure?"
 
-[node name="CloseButton" type="Button" parent="ClickerHUD/SettingsPanel" unique_id=100000037]
-layout_mode = 2
-text = "X"
-
 [node name="OfflineEarningsPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000038]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.3
-anchor_right = 0.9
-anchor_bottom = 0.7
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("oep_gd")
 
-[node name="VBox" type="VBoxContainer" parent="ClickerHUD/OfflineEarningsPanel" unique_id=100000039]
+[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/OfflineEarningsPanel" unique_id=100000095]
 layout_mode = 2
 
-[node name="EarningsLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBox" unique_id=100000040]
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer" unique_id=100000096]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/Header" unique_id=100000097]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+text = "WELCOME BACK"
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer" unique_id=100000039]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EarningsLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/VBox" unique_id=100000040]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Welcome back!"
 horizontal_alignment = 1
 
-[node name="TimeLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBox" unique_id=100000041]
+[node name="TimeLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/VBox" unique_id=100000041]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="CollectButton" type="Button" parent="ClickerHUD/OfflineEarningsPanel/VBox" unique_id=100000042]
+[node name="CollectButton" type="Button" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/VBox" unique_id=100000042]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Collect!"
 
+[node name="AreasPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000044]
+unique_name_in_owner = true
+visible = false
+z_index = 2
+layout_mode = 1
+anchors_preset = 0
+script = ExtResource("areas_panel_gd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/AreasPanel" unique_id=100000100]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/AreasPanel/VBoxContainer" unique_id=100000101]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/AreasPanel/VBoxContainer/Header" unique_id=100000102]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+text = "AREAS"
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/AreasPanel/VBoxContainer/Header" unique_id=100000047]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+text = "X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/AreasPanel/VBoxContainer" unique_id=100000045]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/AreasPanel/VBoxContainer/ScrollContainer" unique_id=100000046]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Foreground" type="TileMapLayer" parent="." unique_id=338617185]
 z_index = 1
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAAAAQAAAAHAAgAAAAAAAMAAAAHAAcAAAABAAMAAAAIAAcAAAACAAMAAAAIAAcAAAADAAMAAAAIAAcAAAAEAAMAAAAIAAcAAAAFAAMAAAAIAAcAAAAGAAMAAAAIAAcAAAAHAAMAAAAIAAcAAAAIAAMAAAAIAAcAAAAJAAMAAAAIAAcAAAAKAAMAAAAIAAcAAAALAAMAAAAJAAcAAAALAAQAAAABAAsAAAAAAAIAAAACAAoAAAABAAIAAAACAAoAAAACAAIAAAACAAoAAAADAAIAAAACAAoAAAAEAAIAAAACAAoAAAAFAAIAAAACAAoAAAAGAAIAAAACAAoAAAAHAAIAAAACAAoAAAAIAAIAAAAFAA0AAAAJAAIAAAACAAkAAAAKAAIAAAAGAA0AAAALAAIAAAACAAoAAAAAAAEAAAACAAoAAAABAAEAAAACAAoAAAACAAEAAAACAAoAAAADAAEAAAASAAQAAAAEAAEAAAATAAQAAAAFAAEAAAATAAQAAAAGAAEAAAATAAQAAAAHAAEAAAAUAAQAAAAIAAEAAAACAAoAAAAJAAEAAAACAAoAAAAKAAEAAAACAAoAAAALAAEAAAACAAoAAAAAAAAAAAACAAoAAAABAAAAAAACAAoAAAACAAAAAAACAAoAAAADAAAAAAACAAoAAAAEAAAAAAACAAoAAAAFAAAAAAACAAoAAAAGAAAAAAACAAoAAAAHAAAAAAACAAoAAAAIAAAAAAACAAoAAAAJAAAAAAACAAoAAAAKAAAAAAACAAoAAAALAAAAAAACAAoAAAAJABAAAAAZAAAAAAAIABAAAAAZAAAAAAAHABAAAAAYAAAAAAAHABEAAAAWAAMAAAAGABEAAAAZAAAAAAAFABEAAAAZAAAAAAAEABEAAAAZAAAAAAADABEAAAAZAAAAAAACABEAAAAIAAsAAAABABEAAAAIAAsAAAAAABEAAAAIAAsAAAAKABAAAAAZAAAAAAALABAAAAAZAAAAAAAAABIAAAAZAAEAAAABABIAAAAZAAEAAAACABIAAAAZAAEAAAADABIAAAAZAAEAAAAEABIAAAAZAAEAAAAFABIAAAAZAAEAAAAGABIAAAAZAAEAAAAHABIAAAAZAAEAAAAIABIAAAAZAAEAAAAJABIAAAAZAAEAAAAKABIAAAAZAAEAAAALABIAAAAZAAEAAAALABEAAAAZAAEAAAAKABEAAAAZAAEAAAAJABEAAAAZAAEAAAAIABEAAAAZAAEAAAAAABMAAAAZAAEAAAABABMAAAAZAAEAAAACABMAAAAZAAEAAAADABMAAAAZAAEAAAAEABMAAAAZAAEAAAAFABMAAAAZAAEAAAAGABMAAAAZAAEAAAAHABMAAAAZAAEAAAAIABMAAAAZAAEAAAAJABMAAAAZAAEAAAAKABMAAAAZAAEAAAALABMAAAAZAAEAAAAIAA8AAAAZAA0AAAAJAA8AAAAaAA0AAAAKAA8AAAAbAA0AAAD//xEAAAAIAAsAAAAAAA8AAAAWAAwAAAAAABAAAAAWAA0AAAALAA8AAAAVAA0AAAAJAAQAAAAXAA4AAAD//xIAAAAZAAIAAAD//xMAAAAZAAIAAAD//wAAAAAZAAIAAAD//wEAAAAZAAIAAAD//wIAAAAGAAcAAAD//wMAAAAGAAcAAAD//wUAAAAHAAgAAAD//wQAAAAHAAcAAAA=")
+tile_map_data = PackedByteArray("AAAAAAQAAAAHAAgAAAAAAAMAAAAHAAcAAAABAAMAAAAIAAcAAAACAAMAAAAIAAcAAAADAAMAAAAIAAcAAAAEAAMAAAAIAAcAAAAFAAMAAAAIAAcAAAAGAAMAAAAIAAcAAAAHAAMAAAAIAAcAAAAIAAMAAAAIAAcAAAAJAAMAAAAIAAcAAAAKAAMAAAAIAAcAAAALAAMAAAAJAAcAAAALAAQAAAABAAsAAAAAAAIAAAACAAoAAAABAAIAAAACAAoAAAACAAIAAAACAAoAAAADAAIAAAACAAoAAAAEAAIAAAACAAoAAAAFAAIAAAACAAoAAAAGAAIAAAACAAoAAAAHAAIAAAACAAoAAAAIAAIAAAAFAA0AAAAJAAIAAAACAAkAAAAKAAIAAAAGAA0AAAALAAIAAAABAA0AAAAAAAEAAAACAAoAAAABAAEAAAACAAoAAAACAAEAAAACAAoAAAADAAEAAAASAAQAAAAEAAEAAAATAAQAAAAFAAEAAAATAAQAAAAGAAEAAAATAAQAAAAHAAEAAAAUAAQAAAAIAAEAAAACAAoAAAAJAAEAAAACAAoAAAAKAAEAAAACAAoAAAALAAEAAAACAAoAAAAAAAAAAAAHAA0AAAABAAAAAAACAAoAAAACAAAAAAACAAoAAAADAAAAAAACAAoAAAAEAAAAAAACAAoAAAAFAAAAAAACAAoAAAAGAAAAAAACAAoAAAAHAAAAAAACAAoAAAAIAAAAAAACAAoAAAAJAAAAAAACAAoAAAAKAAAAAAACAAoAAAALAAAAAAACAAoAAAAJABAAAAAZAAAAAAAIABAAAAAZAAAAAAAHABAAAAAYAAAAAAAHABEAAAAWAAMAAAAGABEAAAAZAAAAAAAFABEAAAAZAAAAAAAEABEAAAAZAAAAAAADABEAAAAZAAAAAAACABEAAAAIAAsAAAABABEAAAAIAAsAAAAAABEAAAAIAAsAAAAKABAAAAAZAAAAAAALABAAAAAZAAAAAAAAABIAAAAZAAEAAAABABIAAAAZAAEAAAACABIAAAAZAAEAAAADABIAAAAZAAEAAAAEABIAAAAZAAEAAAAFABIAAAAZAAEAAAAGABIAAAAZAAEAAAAHABIAAAAEAA0AAAAIABIAAAAZAAEAAAAJABIAAAAZAAEAAAAKABIAAAAGAA0AAAALABIAAAABAA0AAAALABEAAAAZAAEAAAAKABEAAAAZAAEAAAAJABEAAAAZAAEAAAAIABEAAAAZAAEAAAAAABMAAAAZAAEAAAABABMAAAAZAAEAAAACABMAAAAZAAEAAAADABMAAAAZAAEAAAAEABMAAAAZAAEAAAAFABMAAAAZAAEAAAAGABMAAAAZAAEAAAAHABMAAAAZAAEAAAAIABMAAAAZAAEAAAAJABMAAAAZAAEAAAAKABMAAAAZAAEAAAALABMAAAAZAAEAAAAIAA8AAAAZAA0AAAAJAA8AAAAaAA0AAAAKAA8AAAAbAA0AAAD//xEAAAAIAAsAAAAAAA8AAAAWAAwAAAAAABAAAAAWAA0AAAALAA8AAAAVAA0AAAAJAAQAAAAXAA4AAAD//xIAAAAZAAIAAAD//xMAAAAFAA0AAAD//wAAAAAZAAIAAAD//wEAAAAZAAIAAAD//wIAAAAGAAcAAAD//wMAAAACAA0AAAD//wUAAAAHAAgAAAD//wQAAAAHAAcAAAA=")
 tile_set = SubResource("TileSet_hyp5m")
 
 [node name="Background" type="TileMapLayer" parent="." unique_id=215468283]

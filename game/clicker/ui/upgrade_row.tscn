@@ -3,43 +3,46 @@
 [ext_resource type="Script" path="res://game/clicker/ui/upgrade_row.gd" id="1_ur"]
 [ext_resource type="FontFile" path="res://assets/fonts/Standard/neatpixels-standard.ttf" id="2_font"]
 
-[node name="UpgradeRow" type="HBoxContainer"]
+[node name="UpgradeRow" type="PanelContainer"]
 script = ExtResource("1_ur")
 custom_minimum_size = Vector2(0, 60)
 
-[node name="IconTexture" type="TextureRect" parent="."]
+[node name="HBoxContent" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="HBoxContent"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 expand_mode = 1
 stretch_mode = 5
 
-[node name="InfoVBox" type="VBoxContainer" parent="."]
+[node name="InfoVBox" type="VBoxContainer" parent="HBoxContent"]
 size_flags_horizontal = 3
 
-[node name="NameLabel" type="Label" parent="InfoVBox"]
+[node name="NameLabel" type="Label" parent="HBoxContent/InfoVBox"]
 unique_name_in_owner = true
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 18
 text = "Upgrade"
 
-[node name="DescriptionLabel" type="Label" parent="InfoVBox"]
+[node name="DescriptionLabel" type="Label" parent="HBoxContent/InfoVBox"]
 unique_name_in_owner = true
 theme_override_font_sizes/font_size = 13
 text = ""
 
-[node name="LevelLabel" type="Label" parent="InfoVBox"]
+[node name="LevelLabel" type="Label" parent="HBoxContent/InfoVBox"]
 unique_name_in_owner = true
 theme_override_font_sizes/font_size = 13
 text = "Lv 0 / 0"
 
-[node name="RightVBox" type="VBoxContainer" parent="."]
+[node name="RightVBox" type="VBoxContainer" parent="HBoxContent"]
 
-[node name="CostLabel" type="Label" parent="RightVBox"]
+[node name="CostLabel" type="Label" parent="HBoxContent/RightVBox"]
 unique_name_in_owner = true
 theme_override_font_sizes/font_size = 15
 text = "0"
 
-[node name="BuyButton" type="Button" parent="RightVBox"]
+[node name="BuyButton" type="Button" parent="HBoxContent/RightVBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 36)
 text = "Buy"

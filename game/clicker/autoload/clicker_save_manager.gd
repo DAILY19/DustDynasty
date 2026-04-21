@@ -29,9 +29,12 @@ func save() -> void:
 
 	_config.set_value("Stats", "total_dust_earned", state.total_dust_earned)
 	_config.set_value("Stats", "dust", state.dust)
-	_config.set_value("Stats", "depth", state.depth)
 	_config.set_value("Stats", "prestige_count", state.prestige_count)
 	_config.set_value("Stats", "last_online", Time.get_unix_time_from_system())
+	_config.set_value("Stats", "current_area_name",
+			state.current_area.name if state.current_area else "")
+
+	_config.set_value("Areas", "unlocked_area_names", state.unlocked_area_names)
 
 	_config.set_value("Upgrades", "levels", state.upgrade_levels)
 	_config.set_value("Workers", "counts", state.worker_counts)
@@ -53,14 +56,23 @@ func load_data() -> void:
 
 	state.total_dust_earned  = _config.get_value("Stats", "total_dust_earned", 0.0)
 	state.dust               = _config.get_value("Stats", "dust", 0.0)
-	state.depth             = _config.get_value("Stats", "depth", 0)
-	state.prestige_count    = _config.get_value("Stats", "prestige_count", 0)
+	state.prestige_count     = _config.get_value("Stats", "prestige_count", 0)
+	state.unlocked_area_names.assign(_config.get_value("Areas", "unlocked_area_names", []))
 
 	state.upgrade_levels    = _config.get_value("Upgrades", "levels", {})
 	state.worker_counts     = _config.get_value("Workers",  "counts", {})
 	state.prestige_levels   = _config.get_value("Prestige", "levels", {})
 
 	state.recalculate()
+	# Rebuild area runtime state with the loaded unlock list
+	state._init_areas()
+	# Restore last active area
+	var saved_area_name: String = _config.get_value("Stats", "current_area_name", "")
+	if saved_area_name != "":
+		for area in state.unlocked_areas:
+			if area.name == saved_area_name:
+				state.current_area = area
+				break
 
 	# Offline earnings
 	var last_online: float = _config.get_value("Stats", "last_online", -1.0)

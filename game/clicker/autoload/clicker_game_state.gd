@@ -5,7 +5,8 @@ extends Node
 
 signal coins_changed(new_amount: float)  # kept for compat — connects to dust_changed
 signal dust_changed(new_amount: float)
-signal depth_changed(new_depth: int)
+signal area_changed(area: DiggingViewVariant)
+signal area_unlocked(area: DiggingViewVariant)
 signal upgrade_purchased(upgrade: UpgradeDefinition, new_level: int)
 signal worker_hired(worker: WorkerDefinition, new_count: int)
 signal prestige_activated(new_prestige_count: int)
@@ -14,11 +15,20 @@ signal offline_earnings_awarded(amount: float, seconds_elapsed: float)
 # ── Persistent state (saved/loaded by ClickerSaveManager) ──────────────────
 var dust: float = 0.0
 var total_dust_earned: float = 0.0
-var depth: int = 0
+## Names of variants the player has purchased (persisted as Array[String]).
+var unlocked_area_names: Array[String] = []
 var prestige_count: int = 0
 var upgrade_levels: Dictionary = {}   # upgrade name -> int level
 var worker_counts: Dictionary = {}    # worker name -> int count
 var prestige_levels: Dictionary = {}  # prestige bonus name -> int level
+
+# ── Runtime area state (not serialised directly) ────────────────────────────
+## All available variants from ClickerDataManager, sorted by sort_index.
+var all_areas: Array[DiggingViewVariant] = []
+## Areas the player has unlocked (subset of all_areas).
+var unlocked_areas: Array[DiggingViewVariant] = []
+## The area currently being mined.
+var current_area: DiggingViewVariant = null
 
 # ── Derived / cached values (recalculated via recalculate()) ───────────────
 var tap_power: float = 0.0
@@ -36,7 +46,21 @@ var _tap_timer: float = 0.0
 
 
 func _ready() -> void:
+	_init_areas()
 	recalculate()
+
+
+## Build all_areas from the registry and restore unlocked state.
+func _init_areas() -> void:
+	all_areas = ClickerDataManager.digging_variants.duplicate()
+	all_areas.sort_custom(func(a, b): return a.sort_index < b.sort_index)
+	unlocked_areas.clear()
+	for area in all_areas:
+		if area.is_starter() or unlocked_area_names.has(area.name):
+			unlocked_areas.append(area)
+	# Default to first unlocked area
+	if not unlocked_areas.is_empty() and current_area == null:
+		current_area = unlocked_areas[0]
 
 
 func _process(delta: float) -> void:
@@ -120,6 +144,33 @@ func _get_prestige_worker_efficiency() -> float:
 	return efficiency
 
 
+## Purchase an area. Returns true on success.
+func unlock_area(area: DiggingViewVariant) -> bool:
+	if area == null or unlocked_areas.has(area):
+		return false
+	if dust < area.purchase_cost:
+		return false
+	dust -= area.purchase_cost
+	dust_changed.emit(dust)
+	coins_changed.emit(dust)
+	unlocked_areas.append(area)
+	if not unlocked_area_names.has(area.name):
+		unlocked_area_names.append(area.name)
+	area_unlocked.emit(area)
+	ClickerSaveManager.save()
+	return true
+
+
+## Switch the active mining area. Must already be unlocked.
+func switch_area(area: DiggingViewVariant) -> void:
+	if area == null or not unlocked_areas.has(area):
+		return
+	if current_area == area:
+		return
+	current_area = area
+	area_changed.emit(area)
+
+
 ## Add dust, applying ore value bonus and prestige multiplier.
 func add_dust(amount: float) -> void:
 	var final_amount: float = amount * ore_value_bonus * prestige_multiplier
@@ -183,8 +234,6 @@ func get_upgrade_cost(upgrade: UpgradeDefinition) -> float:
 
 ## Hire one worker. Returns true if successful.
 func hire_worker(worker: WorkerDefinition) -> bool:
-	if depth < worker.unlock_depth:
-		return false
 	var cost: float = get_worker_cost(worker)
 	if dust < cost:
 		return false
@@ -228,21 +277,15 @@ func prestige() -> void:
 	total_dust_earned = 0.0
 	upgrade_levels.clear()
 	worker_counts.clear()
-	set_depth(cfg.prestige_reset_depth)
+	# Reset purchased areas — player keeps starter only
+	unlocked_area_names.clear()
+	_init_areas()
 	recalculate()
 
 	prestige_activated.emit(prestige_count)
 	ClickerSaveManager.save()
 
 
-## Advance depth by one.
-func advance_depth() -> void:
-	set_depth(depth + 1)
-
-
-func set_depth(new_depth: int) -> void:
-	depth = new_depth
-	depth_changed.emit(depth)
 
 
 ## Award offline earnings. Called by ClickerSaveManager on load.
