@@ -18,6 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://c07jwwb4eop6u" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 2.png" id="tx_shop"]
 [ext_resource type="Texture2D" uid="uid://bpf0huoltqlnf" path="res://assets/ui/pixelart gui/User Interface 03/Menu Buttons/Menu Buttons 8.png" id="tx_workers"]
 [ext_resource type="Script" uid="uid://ddyng70uyiyrx" path="res://game/clicker/ui/workers_panel.gd" id="wp_gd"]
+[ext_resource type="Script" path="res://game/clicker/ui/nav_button.gd" id="nav_btn_gd"]
+[ext_resource type="Script" path="res://game/clicker/ui/bottom_sheet.gd" id="bsheet_gd"]
+[ext_resource type="Script" path="res://game/clicker/ui/confirm_dialog.gd" id="cd_gd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o2pud"]
 texture = ExtResource("19_62afl")
@@ -266,6 +269,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("hud_gd")
+std_font = ExtResource("std_font")
+title_font = ExtResource("6_cari4")
 
 [node name="TitleLabel" type="Label" parent="ClickerHUD" unique_id=200000001]
 z_index = 2
@@ -313,303 +318,850 @@ theme_override_fonts/font = ExtResource("std_font")
 theme_override_font_sizes/font_size = 11
 text = "0/s"
 
-[node name="NavBar" type="HBoxContainer" parent="ClickerHUD" unique_id=100000050]
-z_index = 2
+[node name="ShopSheet" type="Control" parent="ClickerHUD"]
+unique_name_in_owner = true
+z_index = 3
 layout_mode = 1
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("bsheet_gd")
+sheet_title = "UPGRADES"
 
-[node name="SettingsButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000010]
-unique_name_in_owner = true
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/ShopSheet"]
+layout_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/ShopSheet/Panel"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-ignore_texture_size = true
-texture_normal = ExtResource("tx_settings")
 
-[node name="PrestigeButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000008]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-ignore_texture_size = true
-texture_normal = ExtResource("tx_prestige")
+[node name="Handle" type="Control" parent="ClickerHUD/ShopSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
 
-[node name="AreasButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000043]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-ignore_texture_size = true
-texture_normal = ExtResource("9_r10rm")
-
-[node name="WorkersButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000007]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-ignore_texture_size = true
-texture_normal = ExtResource("tx_workers")
-
-[node name="ShopButton" type="TextureButton" parent="ClickerHUD/NavBar" unique_id=100000006]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-ignore_texture_size = true
-texture_normal = ExtResource("tx_shop")
-
-[node name="ShopPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000012]
-unique_name_in_owner = true
-visible = false
-z_index = 2
+[node name="HandleBar" type="ColorRect" parent="ClickerHUD/ShopSheet/Panel/VBox/Handle"]
 layout_mode = 1
-anchors_preset = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.35, 0.45, 0.60, 0.8)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/ShopSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/ShopSheet/Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/ShopSheet/Panel/VBox/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "X"
+
+[node name="ContentSlot" type="VBoxContainer" parent="ClickerHUD/ShopSheet/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ShopContent" type="Control" parent="ClickerHUD/ShopSheet/Panel/VBox/ContentSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("sp_gd")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/ShopPanel" unique_id=100000060]
-layout_mode = 2
-
-[node name="Header" type="HBoxContainer" parent="ClickerHUD/ShopPanel/VBoxContainer" unique_id=100000061]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
-
-[node name="TitleLabel" type="Label" parent="ClickerHUD/ShopPanel/VBoxContainer/Header" unique_id=100000062]
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/ShopSheet/Panel/VBox/ContentSlot/ShopContent"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("6_cari4")
-theme_override_font_sizes/font_size = 14
-text = "UPGRADES"
-
-[node name="CloseButton" type="Button" parent="ClickerHUD/ShopPanel/VBoxContainer/Header" unique_id=100000015]
-layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
-text = "X"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/ShopPanel/VBoxContainer" unique_id=100000013]
-layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/ShopPanel/VBoxContainer/ScrollContainer" unique_id=100000014]
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/ShopSheet/Panel/VBox/ContentSlot/ShopContent/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WorkersPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000016]
+[node name="WorkersSheet" type="Control" parent="ClickerHUD"]
 unique_name_in_owner = true
-visible = false
-z_index = 2
+z_index = 3
 layout_mode = 1
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("bsheet_gd")
+sheet_title = "WORKERS"
+
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/WorkersSheet"]
+layout_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/WorkersSheet/Panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Handle" type="Control" parent="ClickerHUD/WorkersSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HandleBar" type="ColorRect" parent="ClickerHUD/WorkersSheet/Panel/VBox/Handle"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.35, 0.45, 0.60, 0.8)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/WorkersSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/WorkersSheet/Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/WorkersSheet/Panel/VBox/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "X"
+
+[node name="ContentSlot" type="VBoxContainer" parent="ClickerHUD/WorkersSheet/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="WorkersContent" type="Control" parent="ClickerHUD/WorkersSheet/Panel/VBox/ContentSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("wp_gd")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/WorkersPanel" unique_id=100000070]
-layout_mode = 2
-
-[node name="Header" type="HBoxContainer" parent="ClickerHUD/WorkersPanel/VBoxContainer" unique_id=100000071]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
-
-[node name="TitleLabel" type="Label" parent="ClickerHUD/WorkersPanel/VBoxContainer/Header" unique_id=100000072]
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/WorkersSheet/Panel/VBox/ContentSlot/WorkersContent"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("6_cari4")
-theme_override_font_sizes/font_size = 14
-text = "WORKERS"
-
-[node name="CloseButton" type="Button" parent="ClickerHUD/WorkersPanel/VBoxContainer/Header" unique_id=100000019]
-layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
-text = "X"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/WorkersPanel/VBoxContainer" unique_id=100000017]
-layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/WorkersPanel/VBoxContainer/ScrollContainer" unique_id=100000018]
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/WorkersSheet/Panel/VBox/ContentSlot/WorkersContent/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PrestigePanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000020]
+[node name="AreasSheet" type="Control" parent="ClickerHUD"]
 unique_name_in_owner = true
-visible = false
-z_index = 2
+z_index = 3
 layout_mode = 1
-anchors_preset = 0
-script = ExtResource("pp_gd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("bsheet_gd")
+sheet_title = "AREAS"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/PrestigePanel" unique_id=100000080]
-layout_mode = 2
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/AreasSheet"]
+layout_mode = 0
 
-[node name="Header" type="HBoxContainer" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000081]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
-
-[node name="TitleLabel" type="Label" parent="ClickerHUD/PrestigePanel/VBoxContainer/Header" unique_id=100000082]
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/AreasSheet/Panel"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Handle" type="Control" parent="ClickerHUD/AreasSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HandleBar" type="ColorRect" parent="ClickerHUD/AreasSheet/Panel/VBox/Handle"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.35, 0.45, 0.60, 0.8)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/AreasSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/AreasSheet/Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_alignment = 1
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 14
-text = "PRESTIGE"
 
-[node name="CloseButton" type="Button" parent="ClickerHUD/PrestigePanel/VBoxContainer/Header" unique_id=100000027]
+[node name="CloseButton" type="Button" parent="ClickerHUD/AreasSheet/Panel/VBox/Header"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
 text = "X"
 
-[node name="PendingDustLabel" type="Label" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000021]
+[node name="ContentSlot" type="VBoxContainer" parent="ClickerHUD/AreasSheet/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AreasContent" type="Control" parent="ClickerHUD/AreasSheet/Panel/VBox/ContentSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("areas_panel_gd")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/AreasSheet/Panel/VBox/ContentSlot/AreasContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/AreasSheet/Panel/VBox/ContentSlot/AreasContent/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PrestigeSheet" type="Control" parent="ClickerHUD"]
+unique_name_in_owner = true
+z_index = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("bsheet_gd")
+sheet_title = "PRESTIGE"
+
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/PrestigeSheet"]
+layout_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/PrestigeSheet/Panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Handle" type="Control" parent="ClickerHUD/PrestigeSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HandleBar" type="ColorRect" parent="ClickerHUD/PrestigeSheet/Panel/VBox/Handle"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.35, 0.45, 0.60, 0.8)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/PrestigeSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/PrestigeSheet/Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/PrestigeSheet/Panel/VBox/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "X"
+
+[node name="ContentSlot" type="VBoxContainer" parent="ClickerHUD/PrestigeSheet/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PrestigeContent" type="Control" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("pp_gd")
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot/PrestigeContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="PendingDustLabel" type="Label" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot/PrestigeContent/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Earn on Prestige: 0 Dust"
 
-[node name="OwnedDustLabel" type="Label" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000022]
+[node name="OwnedDustLabel" type="Label" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot/PrestigeContent/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Owned Dust: 0"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000023]
+[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot/PrestigeContent/VBox"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/PrestigePanel/VBoxContainer/ScrollContainer" unique_id=100000024]
+[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot/PrestigeContent/VBox/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PrestigeButton" type="Button" parent="ClickerHUD/PrestigePanel/VBoxContainer" unique_id=100000025]
+[node name="PrestigeButton" type="Button" parent="ClickerHUD/PrestigeSheet/Panel/VBox/ContentSlot/PrestigeContent/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "PRESTIGE"
 
-[node name="ConfirmDialog" type="ConfirmationDialog" parent="ClickerHUD/PrestigePanel" unique_id=100000026]
+[node name="SettingsSheet" type="Control" parent="ClickerHUD"]
 unique_name_in_owner = true
-title = "Prestige?"
-dialog_text = "Reset progress and earn Dust?
-Prestige bonuses are kept."
-
-[node name="SettingsPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000031]
-unique_name_in_owner = true
-visible = false
-z_index = 2
+z_index = 3
 layout_mode = 1
-anchors_preset = 0
-script = ExtResource("sep_gd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("bsheet_gd")
+sheet_title = "SETTINGS"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/SettingsPanel" unique_id=100000090]
-layout_mode = 2
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/SettingsSheet"]
+layout_mode = 0
 
-[node name="Header" type="HBoxContainer" parent="ClickerHUD/SettingsPanel/VBoxContainer" unique_id=100000091]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
-
-[node name="TitleLabel" type="Label" parent="ClickerHUD/SettingsPanel/VBoxContainer/Header" unique_id=100000092]
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/SettingsSheet/Panel"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("6_cari4")
-theme_override_font_sizes/font_size = 14
-text = "SETTINGS"
-
-[node name="CloseButton" type="Button" parent="ClickerHUD/SettingsPanel/VBoxContainer/Header" unique_id=100000037]
-layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
-text = "X"
-
-[node name="VBox" type="VBoxContainer" parent="ClickerHUD/SettingsPanel/VBoxContainer" unique_id=100000032]
-layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VolumeSlider" type="HSlider" parent="ClickerHUD/SettingsPanel/VBoxContainer/VBox" unique_id=100000033]
+[node name="Handle" type="Control" parent="ClickerHUD/SettingsSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HandleBar" type="ColorRect" parent="ClickerHUD/SettingsSheet/Panel/VBox/Handle"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.35, 0.45, 0.60, 0.8)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="ClickerHUD/SettingsSheet/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/SettingsSheet/Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_alignment = 1
+theme_override_fonts/font = ExtResource("6_cari4")
+theme_override_font_sizes/font_size = 14
+
+[node name="CloseButton" type="Button" parent="ClickerHUD/SettingsSheet/Panel/VBox/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "X"
+
+[node name="ContentSlot" type="VBoxContainer" parent="ClickerHUD/SettingsSheet/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SettingsContent" type="Control" parent="ClickerHUD/SettingsSheet/Panel/VBox/ContentSlot"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("sep_gd")
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/SettingsSheet/Panel/VBox/ContentSlot/SettingsContent"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="VolumeLabel" type="Label" parent="ClickerHUD/SettingsSheet/Panel/VBox/ContentSlot/SettingsContent/VBox"]
+layout_mode = 2
+text = "Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="ClickerHUD/SettingsSheet/Panel/VBox/ContentSlot/SettingsContent/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.0
+max_value = 100.0
 value = 50.0
 
-[node name="MuteButton" type="CheckButton" parent="ClickerHUD/SettingsPanel/VBoxContainer/VBox" unique_id=100000034]
+[node name="MuteButton" type="CheckButton" parent="ClickerHUD/SettingsSheet/Panel/VBox/ContentSlot/SettingsContent/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Mute"
 
-[node name="ResetButton" type="Button" parent="ClickerHUD/SettingsPanel/VBoxContainer/VBox" unique_id=100000035]
+[node name="ResetButton" type="Button" parent="ClickerHUD/SettingsSheet/Panel/VBox/ContentSlot/SettingsContent/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Reset Save"
 
-[node name="ConfirmResetDialog" type="ConfirmationDialog" parent="ClickerHUD/SettingsPanel" unique_id=100000036]
+[node name="OfflineEarningsModal" type="Control" parent="ClickerHUD"]
 unique_name_in_owner = true
-title = "Reset Save?"
-dialog_text = "This will delete all progress. Are you sure?"
-
-[node name="OfflineEarningsPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000038]
-unique_name_in_owner = true
-visible = false
-z_index = 2
+z_index = 5
 layout_mode = 1
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("oep_gd")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/OfflineEarningsPanel" unique_id=100000095]
-layout_mode = 2
+[node name="Backdrop" type="ColorRect" parent="ClickerHUD/OfflineEarningsModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+mouse_filter = 0
 
-[node name="Header" type="HBoxContainer" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer" unique_id=100000096]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/OfflineEarningsModal"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -90.0
+offset_right = 130.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/Header" unique_id=100000097]
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/OfflineEarningsModal/Panel"]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/OfflineEarningsModal/Panel/VBox"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("6_cari4")
 theme_override_font_sizes/font_size = 14
 text = "WELCOME BACK"
-
-[node name="VBox" type="VBoxContainer" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer" unique_id=100000039]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="EarningsLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/VBox" unique_id=100000040]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Welcome back!"
 horizontal_alignment = 1
 
-[node name="TimeLabel" type="Label" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/VBox" unique_id=100000041]
+[node name="EarningsLabel" type="Label" parent="ClickerHUD/OfflineEarningsModal/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "You earned:"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="ClickerHUD/OfflineEarningsModal/Panel/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="CollectButton" type="Button" parent="ClickerHUD/OfflineEarningsPanel/VBoxContainer/VBox" unique_id=100000042]
+[node name="CollectButton" type="Button" parent="ClickerHUD/OfflineEarningsModal/Panel/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Collect!"
 
-[node name="AreasPanel" type="PanelContainer" parent="ClickerHUD" unique_id=100000044]
+[node name="GameConfirmDialog" type="Control" parent="ClickerHUD"]
 unique_name_in_owner = true
-visible = false
-z_index = 2
+z_index = 10
 layout_mode = 1
-anchors_preset = 0
-script = ExtResource("areas_panel_gd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("cd_gd")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ClickerHUD/AreasPanel" unique_id=100000100]
-layout_mode = 2
+[node name="Backdrop" type="ColorRect" parent="ClickerHUD/GameConfirmDialog"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+mouse_filter = 0
 
-[node name="Header" type="HBoxContainer" parent="ClickerHUD/AreasPanel/VBoxContainer" unique_id=100000101]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 36)
+[node name="Panel" type="PanelContainer" parent="ClickerHUD/GameConfirmDialog"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -70.0
+offset_right = 110.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="ClickerHUD/AreasPanel/VBoxContainer/Header" unique_id=100000102]
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/GameConfirmDialog/Panel"]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="ClickerHUD/GameConfirmDialog/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
 theme_override_fonts/font = ExtResource("6_cari4")
-theme_override_font_sizes/font_size = 14
-text = "AREAS"
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
 
-[node name="CloseButton" type="Button" parent="ClickerHUD/AreasPanel/VBoxContainer/Header" unique_id=100000047]
+[node name="BodyLabel" type="Label" parent="ClickerHUD/GameConfirmDialog/Panel/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
-text = "X"
+autowrap_mode = 3
+horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ClickerHUD/AreasPanel/VBoxContainer" unique_id=100000045]
+[node name="Buttons" type="HBoxContainer" parent="ClickerHUD/GameConfirmDialog/Panel/VBox"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="ScrollContent" type="VBoxContainer" parent="ClickerHUD/AreasPanel/VBoxContainer/ScrollContainer" unique_id=100000046]
+[node name="YesButton" type="Button" parent="ClickerHUD/GameConfirmDialog/Panel/VBox/Buttons"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="ClickerHUD/GameConfirmDialog/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="NavBar" type="HBoxContainer" parent="ClickerHUD"]
+unique_name_in_owner = true
+z_index = 4
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 576.0
+offset_right = 0.0
+offset_bottom = 640.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ShopNavBtn" type="Control" parent="ClickerHUD/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("nav_btn_gd")
+id = &"shop"
+label_text = "SHOP"
+icon = ExtResource("tx_shop")
+
+[node name="BG" type="ColorRect" parent="ClickerHUD/NavBar/ShopNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/NavBar/ShopNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="ClickerHUD/NavBar/ShopNavBtn/VBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="NavLabel" type="Label" parent="ClickerHUD/NavBar/ShopNavBtn/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="ClickerHUD/NavBar/ShopNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="WorkersNavBtn" type="Control" parent="ClickerHUD/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("nav_btn_gd")
+id = &"workers"
+label_text = "MINERS"
+icon = ExtResource("tx_workers")
+
+[node name="BG" type="ColorRect" parent="ClickerHUD/NavBar/WorkersNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/NavBar/WorkersNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="ClickerHUD/NavBar/WorkersNavBtn/VBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="NavLabel" type="Label" parent="ClickerHUD/NavBar/WorkersNavBtn/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="ClickerHUD/NavBar/WorkersNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="AreasNavBtn" type="Control" parent="ClickerHUD/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("nav_btn_gd")
+id = &"areas"
+label_text = "AREAS"
+icon = ExtResource("9_r10rm")
+
+[node name="BG" type="ColorRect" parent="ClickerHUD/NavBar/AreasNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/NavBar/AreasNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="ClickerHUD/NavBar/AreasNavBtn/VBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="NavLabel" type="Label" parent="ClickerHUD/NavBar/AreasNavBtn/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="ClickerHUD/NavBar/AreasNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="PrestigeNavBtn" type="Control" parent="ClickerHUD/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("nav_btn_gd")
+id = &"prestige"
+label_text = "PRESTIGE"
+icon = ExtResource("tx_prestige")
+
+[node name="BG" type="ColorRect" parent="ClickerHUD/NavBar/PrestigeNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/NavBar/PrestigeNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="ClickerHUD/NavBar/PrestigeNavBtn/VBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="NavLabel" type="Label" parent="ClickerHUD/NavBar/PrestigeNavBtn/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="ClickerHUD/NavBar/PrestigeNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="SettingsNavBtn" type="Control" parent="ClickerHUD/NavBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("nav_btn_gd")
+id = &"settings"
+label_text = "OPTIONS"
+icon = ExtResource("tx_settings")
+
+[node name="BG" type="ColorRect" parent="ClickerHUD/NavBar/SettingsNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="ClickerHUD/NavBar/SettingsNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="ClickerHUD/NavBar/SettingsNavBtn/VBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="NavLabel" type="Label" parent="ClickerHUD/NavBar/SettingsNavBtn/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="ClickerHUD/NavBar/SettingsNavBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
 
 [node name="Foreground" type="TileMapLayer" parent="." unique_id=338617185]
 z_index = 1

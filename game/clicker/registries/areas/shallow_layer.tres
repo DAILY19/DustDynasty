@@ -1,18 +1,16 @@
-[gd_resource type="Resource" script_class="ClickerTerrainInstruction" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="ClickerTerrainInstruction" format=3 uid="uid://coge7nvgu1ytm"]
 
-[ext_resource type="Script" path="res://game/clicker/resources/clicker_terrain_instruction.gd" id="1_cti"]
+[ext_resource type="Script" uid="uid://ftaar2styqbf" path="res://game/clicker/resources/block_definition.gd" id="1_bhd0x"]
+[ext_resource type="Script" uid="uid://b7cn1wdgmuesr" path="res://game/clicker/resources/clicker_terrain_instruction.gd" id="1_cti"]
 [ext_resource type="Resource" path="res://game/clicker/registries/ores/dirt.tres" id="2_dirt"]
 [ext_resource type="Resource" path="res://game/clicker/registries/ores/stone.tres" id="3_stone"]
 
 [sub_resource type="FastNoiseLite" id="noise_shallow"]
-noise_type = 1
 seed = 1001
 frequency = 0.05
 
 [resource]
 script = ExtResource("1_cti")
-min_depth = 0
-max_depth = 99
-blocks = Array[Resource("res://game/clicker/resources/block_definition.gd")]([ExtResource("3_stone"), ExtResource("2_dirt")])
-noise = SubResource("noise_shallow")
+blocks = Array[ExtResource("1_bhd0x")]([ExtResource("3_stone"), ExtResource("2_dirt")])
 background_color = Color(0.25, 0.15, 0.08, 1)
+noise = SubResource("noise_shallow")
