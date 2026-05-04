@@ -34,13 +34,3 @@ func _on_reset_button_pressed() -> void:
 	)
 
 
-
-func _on_volume_slider_value_changed(value: float) -> void:
-	UserConfig.update_setting(value, "volume")
-
-
-func _on_mute_button_toggled(pressed: bool) -> void:
-	AudioServer.set_bus_mute(0, pressed)
-
-
-

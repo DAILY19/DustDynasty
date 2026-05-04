@@ -124,4 +124,3 @@ func _on_worker_hired(_worker: WorkerDefinition, _count: int) -> void:
 
 func _refresh_dps() -> void:
 	dps_label.text = "%s/s" % ClickerGameState.format_number(ClickerGameState.worker_total_dps)
-

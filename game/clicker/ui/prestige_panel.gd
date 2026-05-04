@@ -52,29 +52,3 @@ func _on_prestige_button_pressed() -> void:
 		"Reset progress and earn Dust?\nPrestige bonuses are kept.",
 		func(): ClickerGameState.prestige()
 	)
-
-
-
-func _build_rows() -> void:
-	Utils.free_children(scroll_content)
-	for prestige in ClickerDataManager.prestige_bonuses:
-		var row: Node = _row_scene.instantiate()
-		scroll_content.add_child(row)
-		row.setup(prestige)
-
-
-func _refresh(_ignored: Variant = null) -> void:
-	var pending: float = ClickerGameState.get_pending_dust()
-	pending_dust_label.text = "Earn on Prestige: %s Dust" % ClickerGameState.format_number(pending)
-	owned_dust_label.text = "Owned Dust: %s" % ClickerGameState.format_number(ClickerGameState.dust)
-	prestige_button.disabled = pending < 1.0
-
-
-func _on_prestige_activated(_count: int) -> void:
-	_refresh()
-	for row in scroll_content.get_children():
-		if row.has_method("refresh"):
-			row.refresh()
-
-
-

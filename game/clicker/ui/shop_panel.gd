@@ -35,6 +35,3 @@ func _refresh_rows(_ignored: Variant = null) -> void:
 
 func _on_upgrade_purchased(_upgrade: UpgradeDefinition, _level: int) -> void:
 	_refresh_rows()
-
-
-
